@@ -121,7 +121,7 @@
                                         <input type="number" v-model="prima" v-on:change="cambioPrimaTiempo" class="form-control border-dark">
                                     </div>
                                </div>
-                               <div class="col-md-3">
+                               <div class="col-md-2">
                                      <div class="form-group">
                                         <label>Tasa de interes anual:</label>
                                         <input type="number" v-model="interes" v-on:change="cambioPrimaTiempo" class="form-control border-dark">
@@ -138,7 +138,7 @@
                                         </div>
                                     </div>
                                </div>
-                               <div class="col-md-3">
+                               <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Años de financiamiento:</label>
                                         <div>
@@ -153,7 +153,13 @@
                                             </select>
                                         </div>
                                     </div>
-                               </div>        
+                               </div>   
+                               <div class="col-md-2">
+                                     <div class="form-group">
+                                        <label>Cuota mensual:</label>
+                                        <input type="number" v-model="informacionLote.valorCuotaMensual" v-on:change="formatearCuotaMensual" class="form-control border-dark">
+                                    </div>
+                               </div>     
                             </div>
                             <div class="row">
                                     <div class="col-md-12">
@@ -199,7 +205,7 @@
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                                <label>Cuota mensual:</label> L. {{informacionLote.valorCuotaMensual}}
+                                                                <label>Cuota mensual:</label>{{cuota_mensual}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -219,7 +225,7 @@
                                                         <div class="form-group">
                                                             <div class="float-right align-self-stretch">
                                                                 <h2>
-                                                                    <label>Total Contado:</label> L. {{informacionLote.contado}}
+                                                                    <label>Total Contado:</label> {{informacionLote.contado}}
                                                                 </h2>
                                                             </div>
                                                         </div>
@@ -294,6 +300,7 @@ export default {
             prima:0,
             dias:30,
             interes:4,
+            cuota_mensual:"",
             cliente:"",
             lotesFinanciados:[],
             creditoContado:0,
@@ -380,15 +387,20 @@ export default {
             axios.post('/lotes/apoyo/II', data).then(respuesta => {
                 console.log(respuesta.data);
                 this.informacionLote = respuesta.data[0]
+                this.cuota_mensual = new Intl.NumberFormat('es-HN', { style: 'currency', currency: 'HNL' }).format(this.informacionLote.valorCuotaMensual)
             })
         },
         infoLotes:function(){
             axios.get("/lotes/apoyo/II/create").then(respuesta =>{
                 this.informacionLote = respuesta.data[0]
+                this.cuota_mensual = new Intl.NumberFormat('es-HN', { style: 'currency', currency: 'HNL' }).format(this.informacionLote.valorCuotaMensual)
                 //console.log(respuesta.data[0])
             })
             //this.loteFinanciado()
             //this.actualizarTabla()
+        },
+        formatearCuotaMensual:function(){
+            this.cuota_mensual = new Intl.NumberFormat('es-HN', { style: 'currency', currency: 'HNL' }).format(this.informacionLote.valorCuotaMensual)
         },
         ejecutarVenta:function(){
             if(this.creditoContado == 0){

@@ -7153,6 +7153,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //props:["lotesFinanciados"],
   data: function data() {
@@ -7169,7 +7175,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       informacionLote: [],
       tiempo: "",
       prima: 0
-    }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _ref;
+    }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cuota_mensual", ""), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _ref;
   },
   mounted: function mounted() {
     var _this = this;
@@ -7247,15 +7253,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.post('/lotes/apoyo/II', data).then(function (respuesta) {
         console.log(respuesta.data);
         _this6.informacionLote = respuesta.data[0];
+        _this6.cuota_mensual = new Intl.NumberFormat('es-HN', {
+          style: 'currency',
+          currency: 'HNL'
+        }).format(_this6.informacionLote.valorCuotaMensual);
       });
     },
     infoLotes: function infoLotes() {
       var _this7 = this;
 
       axios.get("/lotes/apoyo/II/create").then(function (respuesta) {
-        _this7.informacionLote = respuesta.data[0]; //console.log(respuesta.data[0])
+        _this7.informacionLote = respuesta.data[0];
+        _this7.cuota_mensual = new Intl.NumberFormat('es-HN', {
+          style: 'currency',
+          currency: 'HNL'
+        }).format(_this7.informacionLote.valorCuotaMensual); //console.log(respuesta.data[0])
       }); //this.loteFinanciado()
       //this.actualizarTabla()
+    },
+    formatearCuotaMensual: function formatearCuotaMensual() {
+      this.cuota_mensual = new Intl.NumberFormat('es-HN', {
+        style: 'currency',
+        currency: 'HNL'
+      }).format(this.informacionLote.valorCuotaMensual);
     },
     ejecutarVenta: function ejecutarVenta() {
       var _this8 = this;
@@ -71816,7 +71836,7 @@ var render = function () {
                           ]),
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
+                        _c("div", { staticClass: "col-md-2" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", [_vm._v("Tasa de interes anual:")]),
                             _vm._v(" "),
@@ -71887,7 +71907,7 @@ var render = function () {
                           ]),
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
+                        _c("div", { staticClass: "col-md-2" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", [_vm._v("Años de financiamiento:")]),
                             _vm._v(" "),
@@ -71965,6 +71985,42 @@ var render = function () {
                                 ]
                               ),
                             ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-2" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", [_vm._v("Cuota mensual:")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.informacionLote.valorCuotaMensual,
+                                  expression:
+                                    "informacionLote.valorCuotaMensual",
+                                },
+                              ],
+                              staticClass: "form-control border-dark",
+                              attrs: { type: "number" },
+                              domProps: {
+                                value: _vm.informacionLote.valorCuotaMensual,
+                              },
+                              on: {
+                                change: _vm.formatearCuotaMensual,
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.informacionLote,
+                                    "valorCuotaMensual",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
                           ]),
                         ]),
                       ]),
@@ -72063,10 +72119,7 @@ var render = function () {
                                   _c("div", { staticClass: "form-group" }, [
                                     _c("label", [_vm._v("Cuota mensual:")]),
                                     _vm._v(
-                                      " L. " +
-                                        _vm._s(
-                                          _vm.informacionLote.valorCuotaMensual
-                                        ) +
+                                      _vm._s(_vm.cuota_mensual) +
                                         "\n                                                "
                                     ),
                                   ]),
@@ -72099,7 +72152,7 @@ var render = function () {
                                             _vm._v("Total Contado:"),
                                           ]),
                                           _vm._v(
-                                            " L. " +
+                                            " " +
                                               _vm._s(
                                                 _vm.informacionLote.contado
                                               ) +

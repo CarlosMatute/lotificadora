@@ -62,7 +62,7 @@ class controladorLotesApoyoII extends Controller
             "interes" => number_format($totalIntereses, 2, '.', ','),
             "precioCredito" => number_format($pagoTotal, 2, '.', ','),
             "cuotas" => $cuotas,
-            "valorCuotaMensual" => $valorCuotaMensualFormato,
+            "valorCuotaMensual" => $valorCuotaMensual,
             "lotesApartados" => $lotes,
             "contado" => $totalPrecioFormato
         ];
@@ -113,7 +113,7 @@ class controladorLotesApoyoII extends Controller
             "interes" => number_format($totalIntereses, 2, '.', ','),
             "precioCredito" => number_format($pagoTotal, 2, '.', ','),
             "cuotas" => $cuotas,
-            "valorCuotaMensual" => $valorCuotaMensualFormato,
+            "valorCuotaMensual" => $valorCuotaMensual,
             "lotesApartados" => $lotes,
             "interesPorcentaje" => $request->interes,
             "contado" => $totalPrecioFormato

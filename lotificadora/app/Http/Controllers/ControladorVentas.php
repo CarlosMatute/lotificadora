@@ -118,7 +118,7 @@ class ControladorVentas extends Controller
         $venta->cuotas = $request->cuotas;
         $venta->total_intereses = $request->total_intereses;
         $venta->total_pagar = $request->total_pagar;
-        $venta->cuota_mensual = $request->cuota_mensual;
+        $venta->cuota_mensual = number_format($request->cuota_mensual);
         $venta->dias_cobro_mes = $request->dias_cobro_mensual;
         $venta->save();
         
