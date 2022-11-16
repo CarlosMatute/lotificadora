@@ -6795,7 +6795,7 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         var formData = new FormData();
         formData.append('abono', this.abono);
         formData.append('id_venta', this.estadoCreditoDatos.idVenta);
-        axios.post('/venta/apoyo', formData).then(function (respuesta) {
+        axios.post('/venta/' + 'apoyo', formData).then(function (respuesta) {
           _this9.abono = ""; //this.$emit("agregarResidencial")
 
           _this9.estadoCreditoDatos = respuesta.data[0];
