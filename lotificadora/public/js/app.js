@@ -60993,7 +60993,7 @@ var render = function () {
         _c("div", { staticClass: "card-header text-muted text-center" }, [
           _c("h5", { staticClass: "display-5" }, [
             _vm._v(
-              "--- Cuotas del año " + _vm._s(_vm.meses.añoActual) + " ---"
+              "---Si Cuotas del año " + _vm._s(_vm.meses.añoActual) + " ---"
             ),
           ]),
         ]),
