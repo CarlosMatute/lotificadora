@@ -350,7 +350,7 @@ export default {
                         formData.append('abono',this.abono);
                         formData.append('id_venta',this.estadoCreditoDatos.idVenta);
 
-                axios.post('venta/apoyo', formData).then(respuesta => {
+                axios.post('/venta/apoyo/', formData).then(respuesta => {
                     this.abono = ""
                     //this.$emit("agregarResidencial")
                     this.estadoCreditoDatos = respuesta.data[0]

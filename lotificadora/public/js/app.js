@@ -6795,7 +6795,7 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         var formData = new FormData();
         formData.append('abono', this.abono);
         formData.append('id_venta', this.estadoCreditoDatos.idVenta);
-        axios.post('venta/apoyo', formData).then(function (respuesta) {
+        axios.post('/venta/apoyo/', formData).then(function (respuesta) {
           _this9.abono = ""; //this.$emit("agregarResidencial")
 
           _this9.estadoCreditoDatos = respuesta.data[0];
@@ -60992,9 +60992,7 @@ var render = function () {
       _c("div", { staticClass: "card elevation-4 text-left bg-light" }, [
         _c("div", { staticClass: "card-header text-muted text-center" }, [
           _c("h5", { staticClass: "display-5" }, [
-            _vm._v(
-              "---Si Cuotas del año " + _vm._s(_vm.meses.añoActual) + " ---"
-            ),
+            _vm._v("Cuotas del año " + _vm._s(_vm.meses.añoActual) + " "),
           ]),
         ]),
         _vm._v(" "),
