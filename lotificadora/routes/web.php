@@ -31,7 +31,7 @@ Route::get('/venderLotes', [App\Http\Controllers\HomeController::class, 'vender_
 Route::resource('/bloque/apoyo', App\Http\Controllers\controladorBloqueApoyo::class);
 Route::resource('/lote_financiado', App\Http\Controllers\controladorLotesFinanciados::class);
 Route::resource('/venta', App\Http\Controllers\ControladorVentas::class);
-Route::resource('/ventas/apoyo', App\Http\Controllers\ControladorVentasApoyo::class);
+Route::resource('/venta/apoyo', App\Http\Controllers\controladorVentasApoyo::class);
 Route::get('correo', function () {
     $correo = new CobrosMaillable;
 
