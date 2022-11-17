@@ -25,7 +25,7 @@
 
         <div class="card elevation-4 text-left bg-light">
            <div class="card-header text-muted text-center">
-                <h5 class="display-5">---Cuotas del año {{meses.añoActual}} </h5>
+                <h5 class="display-5">Cuotas del año {{meses.añoActual}} </h5>
             </div>
             <div class="card-body">
                 <!--Inicia de enero a abril-->
