@@ -66297,7 +66297,10 @@ var render = function () {
             _c("div", { staticClass: "card elevation-2" }, [
               _c("img", {
                 staticClass: "card-img-top",
-                attrs: { src: "dist/img/" + residencial.imagen, height: "150" },
+                attrs: {
+                  src: "public/dist/img/" + residencial.imagen,
+                  height: "150",
+                },
               }),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
