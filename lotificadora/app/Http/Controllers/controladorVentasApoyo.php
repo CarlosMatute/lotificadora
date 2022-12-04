@@ -623,6 +623,13 @@ class controladorVentasApoyo extends Controller
      */
     public function destroy($id)
     {
-        //
+        $borrarCuota = fechas_cobros::where("id_venta", $id)->delete();
+        $lotesDisponibles = DB::select("update lotes set estado = 'Disponible' where id in (select id_lote from lotes_vendidos where id_venta = :id_venta);",
+            ["id_venta" => $id]);
+        $borrarLotesVendidos = lotes_vendidos::where("id_venta", $id)->delete();
+        $borrarVenta = Venta::find($id);
+        $borrarVenta->delete(); 
+
+        return 'Borrado';
     }
 }

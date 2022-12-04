@@ -150,6 +150,7 @@ class controladorResidencialesApoyo extends Controller
         $residencial = Residenciale::find($id);
 
         $imagen = $residencial->imagen;
+        //File::delete('archivos/'.$nombre_archivo->url_archivo); este debo usar
         unlink($imagen);
 
         $residencial->delete();

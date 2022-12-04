@@ -7953,6 +7953,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7961,7 +7967,8 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       ventas: [],
       verInfoCliente: [],
       estadoCreditoDatos: [],
-      resumenDeVenta: []
+      resumenDeVenta: [],
+      id_venta: ''
     };
   },
   mounted: function mounted() {
@@ -8045,6 +8052,29 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         console.log(respuesta.data[0]);
         _this6.resumenDeVenta = respuesta.data[0];
         $("#resumenVentaContado").modal("show"); //$("#modalEsatdoCredito").trigger('click')
+      });
+    },
+    modalEliminarVenta: function modalEliminarVenta(id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido) {
+      this.id_venta = id;
+      $("#strong_nombre").html(primer_nombre + " " + segundo_nombre + " " + primer_apellido + " " + segundo_apellido);
+      $("#modalAlertaEliminarVenta").modal("show");
+    },
+    cerrarModalEliminar: function cerrarModalEliminar() {
+      $("#modalAlertaEliminarVenta").modal("hide");
+    },
+    eliminarVenta: function eliminarVenta() {
+      var _this7 = this;
+
+      axios["delete"]('/venta/apoyo/' + this.id_venta).then(function (respuesta) {
+        axios.get('/venta').then(function (respuesta) {
+          _this7.myTableClear();
+
+          _this7.ventas = respuesta.data[0];
+
+          _this7.myTable();
+        }); //this.ventas = respuesta.data[0]
+
+        $("#modalAlertaEliminarVenta").modal("hide");
       });
     }
   }
@@ -66298,7 +66328,7 @@ var render = function () {
               _c("img", {
                 staticClass: "card-img-top",
                 attrs: {
-                  src: "public/dist/img/" + residencial.imagen,
+                  src: "/dist/img/" + residencial.imagen,
                   height: "150",
                 },
               }),
@@ -73343,11 +73373,11 @@ var render = function () {
                                   function (venta, i) {
                                     return _c("tr", { key: i }, [
                                       _c("td", { staticClass: "text-left" }, [
-                                        _vm._v(_vm._s(i + 1) + ". "),
+                                        _vm._v(_vm._s(i + 1) + "."),
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-center" }, [
-                                        _vm._v(_vm._s(venta.fechaV) + " "),
+                                        _vm._v(_vm._s(venta.fechaV)),
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-left" }, [
@@ -73363,11 +73393,11 @@ var render = function () {
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-center" }, [
-                                        _vm._v(_vm._s(venta.pago) + " "),
+                                        _vm._v(_vm._s(venta.pago)),
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-center" }, [
-                                        _vm._v(_vm._s(venta.estado) + " "),
+                                        _vm._v(_vm._s(venta.estado)),
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-center" }, [
@@ -73390,14 +73420,37 @@ var render = function () {
                                             }),
                                           ]
                                         ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-danger",
+                                            attrs: { type: "button" },
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.modalEliminarVenta(
+                                                  venta.idV,
+                                                  venta.primer_nombre,
+                                                  venta.segundo_nombre,
+                                                  venta.primer_apellido,
+                                                  venta.segundo_apellido
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-trash",
+                                            }),
+                                          ]
+                                        ),
                                       ]),
                                     ])
                                   }
                                 ),
                                 0
                               ),
-                              _vm._v(" "),
-                              _vm._m(4),
                             ]
                           ),
                         ]
@@ -73432,18 +73485,18 @@ var render = function () {
                               attrs: { id: "ventasCredito" },
                             },
                             [
-                              _vm._m(5),
+                              _vm._m(4),
                               _vm._v(" "),
                               _c(
                                 "tbody",
                                 _vm._l(_vm.ventas.credito, function (venta, i) {
                                   return _c("tr", { key: i }, [
                                     _c("td", { staticClass: "text-left" }, [
-                                      _vm._v(_vm._s(i + 1) + ". "),
+                                      _vm._v(_vm._s(i + 1) + "."),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-left" }, [
-                                      _vm._v(_vm._s(venta.fechaV) + " "),
+                                      _vm._v(_vm._s(venta.fechaV)),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-left" }, [
@@ -73459,11 +73512,11 @@ var render = function () {
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-center" }, [
-                                      _vm._v(_vm._s(venta.pago) + " "),
+                                      _vm._v(_vm._s(venta.pago)),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-center" }, [
-                                      _vm._v(_vm._s(venta.estado) + " "),
+                                      _vm._v(_vm._s(venta.estado)),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-center" }, [
@@ -73482,13 +73535,35 @@ var render = function () {
                                         },
                                         [_c("i", { staticClass: "fa fa-book" })]
                                       ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm btn-danger",
+                                          attrs: { type: "button" },
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.modalEliminarVenta(
+                                                venta.idV,
+                                                venta.primer_nombre,
+                                                venta.segundo_nombre,
+                                                venta.primer_apellido,
+                                                venta.segundo_apellido
+                                              )
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-trash",
+                                          }),
+                                        ]
+                                      ),
                                     ]),
                                   ])
                                 }),
                                 0
                               ),
-                              _vm._v(" "),
-                              _vm._m(6),
                             ]
                           ),
                         ]
@@ -73523,18 +73598,18 @@ var render = function () {
                               attrs: { id: "ventasContado" },
                             },
                             [
-                              _vm._m(7),
+                              _vm._m(5),
                               _vm._v(" "),
                               _c(
                                 "tbody",
                                 _vm._l(_vm.ventas.contado, function (venta, i) {
                                   return _c("tr", { key: i }, [
                                     _c("td", { staticClass: "text-left" }, [
-                                      _vm._v(_vm._s(i + 1) + ". "),
+                                      _vm._v(_vm._s(i + 1) + "."),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-left" }, [
-                                      _vm._v(_vm._s(venta.fechaV) + " "),
+                                      _vm._v(_vm._s(venta.fechaV)),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-left" }, [
@@ -73550,11 +73625,11 @@ var render = function () {
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-center" }, [
-                                      _vm._v(_vm._s(venta.pago) + " "),
+                                      _vm._v(_vm._s(venta.pago)),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-center" }, [
-                                      _vm._v(_vm._s(venta.estado) + " "),
+                                      _vm._v(_vm._s(venta.estado)),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-center" }, [
@@ -73571,13 +73646,35 @@ var render = function () {
                                         },
                                         [_c("i", { staticClass: "fa fa-book" })]
                                       ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm btn-danger",
+                                          attrs: { type: "button" },
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.modalEliminarVenta(
+                                                venta.idV,
+                                                venta.primer_nombre,
+                                                venta.segundo_nombre,
+                                                venta.primer_apellido,
+                                                venta.segundo_apellido
+                                              )
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-trash",
+                                          }),
+                                        ]
+                                      ),
                                     ]),
                                   ])
                                 }),
                                 0
                               ),
-                              _vm._v(" "),
-                              _vm._m(8),
                             ]
                           ),
                         ]
@@ -73590,6 +73687,87 @@ var render = function () {
           ),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "modalAlertaEliminarVenta",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "exampleModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm",
+              attrs: { role: "document" },
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header bg-danger" }, [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "aria-label": "Close" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.cerrarModalEliminar()
+                        },
+                      },
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×"),
+                      ]),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm._m(7),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer bg-dark" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info btn-sm btn-block",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.cerrarModalEliminar()
+                        },
+                      },
+                    },
+                    [_vm._v("Cancelar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-sm btn-block",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.eliminarVenta()
+                        },
+                      },
+                    },
+                    [_vm._v("Eliminar")]
+                  ),
+                ]),
+              ]),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("modal-registrar-venta-component"),
       _vm._v(" "),
@@ -73720,27 +73898,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
         _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Estado Credito")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tfoot", { staticClass: "bg-warning" }, [
-      _c("tr", [
-        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-left" }, [_vm._v("Cliente")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Pago")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Estado Credito")]),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Acciones")]),
       ]),
     ])
   },
@@ -73749,26 +73907,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary" }, [
-      _c("tr", [
-        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Cliente")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Pago")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Detalle Credito")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tfoot", { staticClass: "bg-primary" }, [
       _c("tr", [
         _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
         _vm._v(" "),
@@ -73808,19 +73946,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tfoot", { staticClass: "bg-success" }, [
-      _c("tr", [
-        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
+    return _c(
+      "h5",
+      { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+      [
+        _c("i", { staticClass: "fa fa-exclamation-triangle" }),
         _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha")]),
+        _c("b", [_vm._v(" Advertencia")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c("input", { attrs: { type: "hidden" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("h5", [
+          _c("p", { staticClass: "text-justify" }, [
+            _vm._v("¿Desea realmente eliminar la venta a nombre de "),
+            _c("strong", { attrs: { id: "strong_nombre" } }),
+            _vm._v("?\n                            "),
+          ]),
+        ]),
         _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Cliente")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Pago")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Detalle Venta")]),
+        _c("p", { staticClass: "text-justify" }, [
+          _vm._v(
+            "Si realiza esta accion se eliminaran todos los datos de esta venta\n                                sin posibilidad de recuperarlos.\n                            "
+          ),
+        ]),
       ]),
     ])
   },

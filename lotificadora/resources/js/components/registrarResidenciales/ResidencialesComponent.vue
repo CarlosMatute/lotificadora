@@ -26,7 +26,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col" v-for="(residencial,i) in residenciales" :key="i">
                 <div class="card elevation-2">
-                <img :src="'public/dist/img/'+residencial.imagen" class="card-img-top" height="150">
+                <img :src="'/dist/img/'+residencial.imagen" class="card-img-top" height="150">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-9">
