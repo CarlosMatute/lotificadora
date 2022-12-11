@@ -45,7 +45,8 @@ class controladorResidencialesApoyo extends Controller
         if($request->hasFile('imagen')){
             $file = $request->file('imagen');
             $name = time().$file->getClientOriginalName();
-            $file->move(storage_path('app/public').'', $name);
+            //$file->move(public_path('dist/img').'', $name); //desarrollo
+            $file->move('/home/xafysozx/public_html/pruebaslotificadora/storage', $name); //produccion
          }
          Residenciale::where("imagen",$request->imagenVieja)
          ->update(["imagen"=> $name]);
@@ -153,7 +154,7 @@ class controladorResidencialesApoyo extends Controller
         //File::delete('public/dist/img/'.$imagen); //desarrollo
         //File::delete(public_path('dist/img').'archivos/'.$imagen); //produccion
         //unlink('dist/img/'.$imagen); // desarrollo
-        unlink(storage_path('app/public/').$imagen); // produccion
+        unlink('/home/xafysozx/public_html/pruebaslotificadora/storage/'.$imagen); // produccion
         
         $residencial->delete();
     }
