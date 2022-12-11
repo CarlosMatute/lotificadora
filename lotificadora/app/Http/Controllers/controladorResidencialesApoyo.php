@@ -152,7 +152,7 @@ class controladorResidencialesApoyo extends Controller
         $imagen = $residencial->imagen;
         //File::delete('public/dist/img/'.$imagen); //desarrollo
         //File::delete(public_path('dist/img').'archivos/'.$imagen); //produccion
-        unlink('dist/img/'.$imagen); // desarrollo
+        //unlink('dist/img/'.$imagen); // desarrollo
         unlink('pruebaslotificadora/dist/img/'.$imagen); // produccion
         
         $residencial->delete();
