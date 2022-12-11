@@ -72,7 +72,7 @@ class controladorResidenciales extends Controller
         if($request->hasFile('imagen')){
             $file = $request->file('imagen');
             $name = time().$file->getClientOriginalName();
-            $file->move(public_path('storage').'', $name);
+            $file->move(public_path('../../../public_html/pruebaslotificadora/storage').'', $name);
             //$file->move(storage_path('app/public').'', $name);
             //Storage::disk('public')->put($name, 'Contents');
             //return $name;
