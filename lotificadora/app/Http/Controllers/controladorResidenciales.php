@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Residenciale;
 use App\Models\Bloque;
 use App\Models\Lote;
+use Illuminate\Support\Facades\Storage;
 
 class controladorResidenciales extends Controller
 {
@@ -71,7 +72,8 @@ class controladorResidenciales extends Controller
         if($request->hasFile('imagen')){
             $file = $request->file('imagen');
             $name = time().$file->getClientOriginalName();
-            $file->move(public_path('dist/img').'', $name);
+            $file->move(storage_path('app/public').'', $name);
+            //Storage::disk('public')->put($name, 'Contents');
             //return $name;
         }
         $residencial = new Residenciale();

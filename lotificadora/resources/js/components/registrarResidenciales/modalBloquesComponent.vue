@@ -13,7 +13,7 @@
                         
                         <div class="row">
                                 <div class="col-md-4">
-                                    <img :src="'dist/img/'+residencial.imagen" class="img-fluid elevation-2" alt="..." width="300" height="150">
+                                    <img :src="'/storage/'+residencial.imagen" class="img-fluid elevation-2" alt="..." width="300" height="150">
                                     <button type="button" class="btn btn-link btn-sm" v-on:click="cambiarImagen(residencial.idResidencial)">Cambiar imagen</button>
                                </div>
                                 <div class="col-md-8">

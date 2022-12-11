@@ -4440,6 +4440,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -66327,10 +66328,7 @@ var render = function () {
             _c("div", { staticClass: "card elevation-2" }, [
               _c("img", {
                 staticClass: "card-img-top",
-                attrs: {
-                  src: "/dist/img/" + residencial.imagen,
-                  height: "150",
-                },
+                attrs: { src: "/storage/" + residencial.imagen, height: "150" },
               }),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
@@ -67899,7 +67897,7 @@ var render = function () {
                       _c("img", {
                         staticClass: "img-fluid elevation-2",
                         attrs: {
-                          src: "dist/img/" + residencial.imagen,
+                          src: "/storage/" + residencial.imagen,
                           alt: "...",
                           width: "300",
                           height: "150",
