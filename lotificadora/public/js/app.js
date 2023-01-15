@@ -6655,6 +6655,62 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6673,7 +6729,7 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       informacionLote: [],
       tiempo: "",
       prima: 0
-    }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _defineProperty(_ref, "abono", ""), _defineProperty(_ref, "alerta", 0), _defineProperty(_ref, "resumenDeVenta", []), _ref;
+    }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _defineProperty(_ref, "abono", ""), _defineProperty(_ref, "alerta", 0), _defineProperty(_ref, "resumenDeVenta", []), _defineProperty(_ref, "datosPagoCuotaDB", []), _defineProperty(_ref, "cantidad_pago", ""), _ref;
   },
   mounted: function mounted() {
     var _this = this;
@@ -6684,6 +6740,7 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
     axios.get('/venta/create').then(function (respuesta) {
       console.log(respuesta.data);
     });
+    $("#recibo_cuota").hide();
   },
   methods: {
     myTable: function myTable() {
@@ -6780,16 +6837,36 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 
         _this8.estadoCreditoDatos = respuesta.data[0];
 
-        _this8.myTable(); // this.$emit("actualizarVentas")
+        _this8.myTable();
+
+        _this8.datosPagoCuota(id); // this.$emit("actualizarVentas")
         // $("#modalLotesVeder").trigger('click')
 
+      });
+    },
+    datosPagoCuota: function datosPagoCuota(id) {
+      var _this9 = this;
+
+      $.when(axios.get('/venta/apoyo/II/' + id).then(function (respuesta) {
+        _this9.datosPagoCuotaDB = respuesta.data[0];
+        _this9.cantidad_pago = _this9.datosPagoCuotaDB.datosPagoCuota; //this.cantidad_pago = this.cantidad_pago[0]
+
+        console.log(_this9.datosPagoCuotaDB);
+        var indexUploadCoincidence = 0;
+      })).done(function () {
+        var ficha = document.getElementById('recibo_cuota');
+        var ventimp = window.open(' ', 'popimpr');
+        ventimp.document.write(ficha.innerHTML);
+        ventimp.document.close();
+        ventimp.print();
+        ventimp.close();
       });
     },
     quitarAlerta: function quitarAlerta() {
       this.alerta = 0;
     },
     ejecutarAbono: function ejecutarAbono() {
-      var _this9 = this;
+      var _this10 = this;
 
       if (this.abono <= this.estadoCreditoDatos.deuda && this.abono[0] != "-" && this.abono != "") {
         this.alerta = 0;
@@ -6797,9 +6874,9 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         formData.append('abono', this.abono);
         formData.append('id_venta', this.estadoCreditoDatos.idVenta);
         axios.post('venta/apoyo', formData).then(function (respuesta) {
-          _this9.abono = ""; //this.$emit("agregarResidencial")
+          _this10.abono = ""; //this.$emit("agregarResidencial")
 
-          _this9.estadoCreditoDatos = respuesta.data[0];
+          _this10.estadoCreditoDatos = respuesta.data[0];
           console.log(respuesta.data);
         });
       } else {
@@ -6807,20 +6884,9 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       }
     },
     cancelarPago: function cancelarPago(id) {
-      var _this10 = this;
-
-      axios["delete"]('/venta/' + id).then(function (respuesta) {
-        _this10.myTableClear();
-
-        _this10.estadoCreditoDatos = respuesta.data[0];
-
-        _this10.myTable();
-      });
-    },
-    cancelarCola: function cancelarCola(id) {
       var _this11 = this;
 
-      axios.get('/venta/apoyo/' + id).then(function (respuesta) {
+      axios["delete"]('/venta/' + id).then(function (respuesta) {
         _this11.myTableClear();
 
         _this11.estadoCreditoDatos = respuesta.data[0];
@@ -6828,10 +6894,10 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         _this11.myTable();
       });
     },
-    ejecutarCola: function ejecutarCola(id) {
+    cancelarCola: function cancelarCola(id) {
       var _this12 = this;
 
-      axios.get('/venta/apoyo/' + id + '/edit').then(function (respuesta) {
+      axios.get('/venta/apoyo/' + id).then(function (respuesta) {
         _this12.myTableClear();
 
         _this12.estadoCreditoDatos = respuesta.data[0];
@@ -6839,16 +6905,27 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         _this12.myTable();
       });
     },
+    ejecutarCola: function ejecutarCola(id) {
+      var _this13 = this;
+
+      axios.get('/venta/apoyo/' + id + '/edit').then(function (respuesta) {
+        _this13.myTableClear();
+
+        _this13.estadoCreditoDatos = respuesta.data[0];
+
+        _this13.myTable();
+      });
+    },
     cerrarModal: function cerrarModal() {
       this.$emit("actualizarVentas");
       $("#modalEsatdoCredito").modal("hide"); //$("#modalEsatdoCredito").trigger('click')
     },
     resumenVenta: function resumenVenta(id) {
-      var _this13 = this;
+      var _this14 = this;
 
       axios.get('/lotes/apoyo/II/' + id + '/edit').then(function (respuesta) {
         console.log(respuesta.data[0]);
-        _this13.resumenDeVenta = respuesta.data[0];
+        _this14.resumenDeVenta = respuesta.data[0];
         $("#resumenVenta").modal("show"); //$("#modalEsatdoCredito").trigger('click')
       });
     }
@@ -71143,262 +71220,237 @@ var render = function () {
                       ]),
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "table-responsive table-striped" },
-                      [
-                        _c(
-                          "table",
-                          {
-                            staticClass: "table table-striped table-bordered",
-                            staticStyle: { width: "100%" },
-                            attrs: { id: "letras" },
-                          },
-                          [
-                            _vm._m(5),
-                            _vm._v(" "),
-                            _c(
-                              "tbody",
-                              _vm._l(
-                                _vm.estadoCreditoDatos.fechaCobros,
-                                function (cobroMensual, i) {
-                                  return _c("tr", { key: i }, [
-                                    _c("td", { staticClass: "text-left" }, [
-                                      _vm._v(_vm._s(i + 1) + ". "),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-center" }, [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(cobroMensual.fecha_cobro) +
-                                          " "
-                                      ),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-center" }, [
-                                      _vm._v(
-                                        " L. " +
-                                          _vm._s(cobroMensual.cuota_mensual) +
-                                          "  "
-                                      ),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      { staticClass: "text-center" },
-                                      [
-                                        cobroMensual.fecha_pago == null
-                                          ? [_vm._v("Sin datos")]
-                                          : [
-                                              _vm._v(
-                                                _vm._s(cobroMensual.fecha_pago)
-                                              ),
-                                            ],
-                                      ],
-                                      2
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      { staticClass: "text-center" },
-                                      [
-                                        cobroMensual.cantidad_pago == null
-                                          ? [_vm._v("Sin datos")]
-                                          : [
-                                              _vm._v(
-                                                "L. " +
+                    _c("div", { attrs: { id: "seleccion" } }, [
+                      _c(
+                        "div",
+                        { staticClass: "table-responsive table-striped" },
+                        [
+                          _c(
+                            "table",
+                            {
+                              staticClass: "table table-striped table-bordered",
+                              staticStyle: { width: "100%" },
+                              attrs: { id: "letras" },
+                            },
+                            [
+                              _vm._m(5),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(
+                                  _vm.estadoCreditoDatos.fechaCobros,
+                                  function (cobroMensual, i) {
+                                    return _c("tr", { key: i }, [
+                                      _c("td", { staticClass: "text-left" }, [
+                                        _vm._v(_vm._s(i + 1) + ". "),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(cobroMensual.fecha_cobro) +
+                                            " "
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(
+                                          " L. " +
+                                            _vm._s(cobroMensual.cuota_mensual) +
+                                            "  "
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticClass: "text-center" },
+                                        [
+                                          cobroMensual.fecha_pago == null
+                                            ? [_vm._v("Sin datos")]
+                                            : [
+                                                _vm._v(
                                                   _vm._s(
-                                                    cobroMensual.cantidad_pago
+                                                    cobroMensual.fecha_pago
                                                   )
-                                              ),
-                                            ],
-                                      ],
-                                      2
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      { staticClass: "text-center" },
-                                      [
-                                        cobroMensual.estadoFC == "Pendiente"
-                                          ? [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge badge-info",
-                                                },
-                                                [
-                                                  _vm._v(
+                                                ),
+                                              ],
+                                        ],
+                                        2
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticClass: "text-center" },
+                                        [
+                                          cobroMensual.cantidad_pago == null
+                                            ? [_vm._v("Sin datos")]
+                                            : [
+                                                _vm._v(
+                                                  "L. " +
                                                     _vm._s(
-                                                      cobroMensual.estadoFC
+                                                      cobroMensual.cantidad_pago
                                                     )
-                                                  ),
-                                                ]
-                                              ),
-                                            ]
-                                          : cobroMensual.estadoFC == "Cola"
-                                          ? [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge badge-primary",
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      cobroMensual.estadoFC
-                                                    )
-                                                  ),
-                                                ]
-                                              ),
-                                            ]
-                                          : cobroMensual.estadoFC == "Atrasado"
-                                          ? [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge badge-danger",
-                                                },
-                                                [
-                                                  _c("span", {
+                                                ),
+                                              ],
+                                        ],
+                                        2
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticClass: "text-center" },
+                                        [
+                                          cobroMensual.estadoFC == "Pendiente"
+                                            ? [
+                                                _c(
+                                                  "span",
+                                                  {
                                                     staticClass:
-                                                      "spinner-grow spinner-grow-sm",
-                                                    attrs: {
-                                                      role: "status",
-                                                      "aria-hidden": "true",
-                                                    },
-                                                  }),
-                                                  _vm._v(
-                                                    "  " +
-                                                      _vm._s(
-                                                        cobroMensual.estadoFC
-                                                      )
-                                                  ),
-                                                ]
-                                              ),
-                                            ]
-                                          : cobroMensual.estadoFC ==
-                                            "Dia de cobro"
-                                          ? [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge badge-warning",
-                                                },
-                                                [
-                                                  _c("span", {
-                                                    staticClass:
-                                                      "spinner-border spinner-border-sm",
-                                                    attrs: {
-                                                      role: "status",
-                                                      "aria-hidden": "true",
-                                                    },
-                                                  }),
-                                                  _vm._v(
-                                                    "  " +
-                                                      _vm._s(
-                                                        cobroMensual.estadoFC
-                                                      )
-                                                  ),
-                                                ]
-                                              ),
-                                            ]
-                                          : [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge badge-success",
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      cobroMensual.estadoFC
-                                                    )
-                                                  ),
-                                                ]
-                                              ),
-                                            ],
-                                      ],
-                                      2
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      { staticClass: "text-center" },
-                                      [
-                                        cobroMensual.estadoFC == "Cola"
-                                          ? [
-                                              _c(
-                                                "div",
-                                                {
-                                                  staticClass: "btn-group",
-                                                  attrs: {
-                                                    role: "group",
-                                                    "aria-label":
-                                                      "Basic example",
+                                                      "badge badge-info",
                                                   },
-                                                },
-                                                [
-                                                  _c(
-                                                    "button",
-                                                    {
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        cobroMensual.estadoFC
+                                                      )
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            : cobroMensual.estadoFC == "Cola"
+                                            ? [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "badge badge-primary",
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        cobroMensual.estadoFC
+                                                      )
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            : cobroMensual.estadoFC ==
+                                              "Atrasado"
+                                            ? [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "badge badge-danger",
+                                                  },
+                                                  [
+                                                    _c("span", {
                                                       staticClass:
-                                                        "btn btn-sm btn-primary",
-                                                      attrs: { type: "button" },
-                                                      on: {
-                                                        click: function (
-                                                          $event
-                                                        ) {
-                                                          return _vm.cancelarCola(
-                                                            cobroMensual.idFC
-                                                          )
+                                                        "spinner-grow spinner-grow-sm",
+                                                      attrs: {
+                                                        role: "status",
+                                                        "aria-hidden": "true",
+                                                      },
+                                                    }),
+                                                    _vm._v(
+                                                      "  " +
+                                                        _vm._s(
+                                                          cobroMensual.estadoFC
+                                                        )
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            : cobroMensual.estadoFC ==
+                                              "Dia de cobro"
+                                            ? [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "badge badge-warning",
+                                                  },
+                                                  [
+                                                    _c("span", {
+                                                      staticClass:
+                                                        "spinner-border spinner-border-sm",
+                                                      attrs: {
+                                                        role: "status",
+                                                        "aria-hidden": "true",
+                                                      },
+                                                    }),
+                                                    _vm._v(
+                                                      "  " +
+                                                        _vm._s(
+                                                          cobroMensual.estadoFC
+                                                        )
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            : [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "badge badge-success",
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        cobroMensual.estadoFC
+                                                      )
+                                                    ),
+                                                  ]
+                                                ),
+                                              ],
+                                        ],
+                                        2
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticClass: "text-center" },
+                                        [
+                                          cobroMensual.estadoFC == "Cola"
+                                            ? [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass: "btn-group",
+                                                    attrs: {
+                                                      role: "group",
+                                                      "aria-label":
+                                                        "Basic example",
+                                                    },
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass:
+                                                          "btn btn-sm btn-primary",
+                                                        attrs: {
+                                                          type: "button",
+                                                        },
+                                                        on: {
+                                                          click: function (
+                                                            $event
+                                                          ) {
+                                                            return _vm.cancelarCola(
+                                                              cobroMensual.idFC
+                                                            )
+                                                          },
                                                         },
                                                       },
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "fa fa-reply",
-                                                      }),
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-sm btn-success",
-                                                      attrs: { type: "button" },
-                                                      on: {
-                                                        click: function (
-                                                          $event
-                                                        ) {
-                                                          return _vm.ejecutarCola(
-                                                            cobroMensual.idFC
-                                                          )
-                                                        },
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "fa fa-plus",
-                                                      }),
-                                                    ]
-                                                  ),
-                                                ]
-                                              ),
-                                            ]
-                                          : [
-                                              _vm.estadoCreditoDatos
-                                                .letraActiva ==
-                                              cobroMensual.idFC
-                                                ? [
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "fa fa-reply",
+                                                        }),
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
                                                     _c(
                                                       "button",
                                                       {
@@ -71411,7 +71463,7 @@ var render = function () {
                                                           click: function (
                                                             $event
                                                           ) {
-                                                            return _vm.ejecutarPago(
+                                                            return _vm.ejecutarCola(
                                                               cobroMensual.idFC
                                                             )
                                                           },
@@ -71425,65 +71477,344 @@ var render = function () {
                                                       ]
                                                     ),
                                                   ]
-                                                : _vm.estadoCreditoDatos
-                                                    .ultimopago ==
-                                                  cobroMensual.idFC
-                                                ? [
-                                                    _c(
-                                                      "button",
-                                                      {
-                                                        staticClass:
-                                                          "btn btn-sm btn-primary",
-                                                        attrs: {
-                                                          type: "button",
-                                                        },
-                                                        on: {
-                                                          click: function (
-                                                            $event
-                                                          ) {
-                                                            return _vm.cancelarPago(
-                                                              cobroMensual.idFC
-                                                            )
+                                                ),
+                                              ]
+                                            : [
+                                                _vm.estadoCreditoDatos
+                                                  .letraActiva ==
+                                                cobroMensual.idFC
+                                                  ? [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-sm btn-success",
+                                                          attrs: {
+                                                            type: "button",
+                                                          },
+                                                          on: {
+                                                            click: function (
+                                                              $event
+                                                            ) {
+                                                              return _vm.ejecutarPago(
+                                                                cobroMensual.idFC
+                                                              )
+                                                            },
                                                           },
                                                         },
-                                                      },
-                                                      [
-                                                        _c("i", {
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "fa fa-plus",
+                                                          }),
+                                                        ]
+                                                      ),
+                                                    ]
+                                                  : _vm.estadoCreditoDatos
+                                                      .ultimopago ==
+                                                    cobroMensual.idFC
+                                                  ? [
+                                                      _c(
+                                                        "button",
+                                                        {
                                                           staticClass:
-                                                            "fa fa-reply",
-                                                        }),
-                                                      ]
-                                                    ),
-                                                  ]
-                                                : cobroMensual.estadoFC ==
-                                                  "Pagado"
-                                                ? [_vm._m(6, true)]
-                                                : cobroMensual.estadoFC ==
-                                                    "Pendiente" ||
-                                                  cobroMensual.estadoFC ==
-                                                    "Atrasado" ||
-                                                  cobroMensual.estadoFC ==
-                                                    "Dia de cobro"
-                                                ? [_vm._m(7, true)]
-                                                : _vm._e(),
-                                            ],
-                                      ],
-                                      2
-                                    ),
-                                  ])
-                                }
+                                                            "btn btn-sm btn-primary",
+                                                          attrs: {
+                                                            type: "button",
+                                                          },
+                                                          on: {
+                                                            click: function (
+                                                              $event
+                                                            ) {
+                                                              return _vm.cancelarPago(
+                                                                cobroMensual.idFC
+                                                              )
+                                                            },
+                                                          },
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "fa fa-reply",
+                                                          }),
+                                                        ]
+                                                      ),
+                                                    ]
+                                                  : cobroMensual.estadoFC ==
+                                                    "Pagado"
+                                                  ? [_vm._m(6, true)]
+                                                  : cobroMensual.estadoFC ==
+                                                      "Pendiente" ||
+                                                    cobroMensual.estadoFC ==
+                                                      "Atrasado" ||
+                                                    cobroMensual.estadoFC ==
+                                                      "Dia de cobro"
+                                                  ? [_vm._m(7, true)]
+                                                  : _vm._e(),
+                                              ],
+                                        ],
+                                        2
+                                      ),
+                                    ])
+                                  }
+                                ),
+                                0
                               ),
-                              0
-                            ),
-                          ]
-                        ),
-                      ]
-                    ),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ]),
                   ]),
                 ]),
               ],
               2
             ),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "recibo_cuota" } }, [
+              _c("div", { staticClass: "card" }, [
+                _c(
+                  "div",
+                  { staticClass: "card-body" },
+                  [
+                    _c("nav", { staticClass: "navbar navbar-light bg-light" }, [
+                      _c("div", { staticClass: "navbar-brand" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col-md-6" },
+                            [
+                              _vm._v(
+                                "\n                                        Residencial: Inversiones rivera/ Carvajal, Teléfono 9411-0191"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                        Correo: riveraresidencial0@gmail.com\n                                        "
+                              ),
+                              _c("font", { attrs: { color: "red" } }, [
+                                _vm._v(
+                                  "_____________________________________________________________________________"
+                                ),
+                              ]),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-6" }),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _c("br"),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("center", [
+                      _c(
+                        "strong",
+                        [
+                          _c(
+                            "FONT",
+                            { attrs: { SIZE: "3", FACE: "times new roman" } },
+                            [
+                              _c("u", [
+                                _vm._v(
+                                  "RECIBO POR LPS. " +
+                                    _vm._s(
+                                      _vm.cantidad_pago.cantidad_pago_formato
+                                    )
+                                ),
+                              ]),
+                            ]
+                          ),
+                        ],
+                        1
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "FONT",
+                      {
+                        staticStyle: {
+                          "line-height": "180%",
+                          "margin-right": "100px",
+                        },
+                        attrs: { SIZE: "3", FACE: "times new roman" },
+                      },
+                      [
+                        _vm._l(
+                          _vm.estadoCreditoDatos.resumenVenta,
+                          function (resumen) {
+                            return _c(
+                              "p",
+                              { attrs: { align: "justify" } },
+                              [
+                                _vm._v(
+                                  "\n                                    Yo, "
+                                ),
+                                _c("strong", [
+                                  _vm._v("Allan Javier Rivera Carvajal"),
+                                ]),
+                                _vm._v(
+                                  ", mayor de edad, casado, ingeniero, hondureño, con domicilio en Catacamas y en tránsito por esta ciudad, \n                                    con tarjeta de identidad número 1503-1983-01548, por medio del presente "
+                                ),
+                                _c("strong", [
+                                  _c("u", [_vm._v("HAGO CONSTAR:")]),
+                                ]),
+                                _vm._v(
+                                  " Que he recibido del señor(a)\n                                    "
+                                ),
+                                _c("strong", [
+                                  _vm._v(
+                                    _vm._s(resumen.primer_nombre) +
+                                      " " +
+                                      _vm._s(resumen.segundo_nombre) +
+                                      " " +
+                                      _vm._s(resumen.primer_apellido) +
+                                      " " +
+                                      _vm._s(resumen.segundo_apellido)
+                                  ),
+                                ]),
+                                _vm._v(
+                                  ", \n                                    con número de identidad " +
+                                    _vm._s(resumen.identidad) +
+                                    ", mayor de edad, Soltero, hondureño, con domicilio en \n                                    " +
+                                    _vm._s(resumen.direccion) +
+                                    ", y en tránsito por esta ciudad, la cantidad de "
+                                ),
+                                _c(
+                                  "strong",
+                                  {
+                                    staticStyle: {
+                                      "text-transform": "uppercase",
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.datosPagoCuotaDB.cantidadLetras
+                                      ) +
+                                        " LEMPIRAS EXACTOS \n                                    (Lps. " +
+                                        _vm._s(
+                                          _vm.cantidad_pago
+                                            .cantidad_pago_formato
+                                        ) +
+                                        ")"
+                                    ),
+                                  ]
+                                ),
+                                _vm._v(
+                                  " , \n                                    en concepto de la " +
+                                    _vm._s(_vm.datosPagoCuotaDB.numeroLetra) +
+                                    " letra en el mes de " +
+                                    _vm._s(_vm.datosPagoCuotaDB.mesCobro) +
+                                    ", por la compra de:\n\n                                    "
+                                ),
+                                _vm._l(
+                                  _vm.datosPagoCuotaDB.lotes,
+                                  function (lotes) {
+                                    return [
+                                      _vm._v(
+                                        "\n                                    lote "
+                                      ),
+                                      _c("strong", [
+                                        _vm._v(_vm._s(lotes.lote)),
+                                      ]),
+                                      _vm._v(", bloque "),
+                                      _c("strong", [
+                                        _vm._v(_vm._s(lotes.bloque)),
+                                      ]),
+                                      _vm._v(
+                                        ", ubicado en \n                                    Lotificadora "
+                                      ),
+                                      _c("strong", [
+                                        _vm._v(_vm._s(lotes.residencial)),
+                                      ]),
+                                      _vm._v(
+                                        ", zona esta ciudad de Catacamas, departamento de Olancho, el que mide de la siguiente manera:\n                                    "
+                                      ),
+                                      _c("strong", [_vm._v("AL NORTE:")]),
+                                      _vm._v(
+                                        " " + _vm._s(lotes.norte) + " mts, "
+                                      ),
+                                      _c("strong", [_vm._v("AL SUR: ")]),
+                                      _vm._v(
+                                        _vm._s(lotes.sur) +
+                                          " mts, \n                                    "
+                                      ),
+                                      _c("strong", [_vm._v("AL ESTE:")]),
+                                      _vm._v(
+                                        " " + _vm._s(lotes.este) + " mts y "
+                                      ),
+                                      _c("strong", [_vm._v("AL OESTE:")]),
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(lotes.oeste) +
+                                          " mts, \n                                    con un área superficial de "
+                                      ),
+                                      _c("strong", [
+                                        _vm._v(_vm._s(lotes.norte) + " mts²"),
+                                      ]),
+                                      _vm._v(
+                                        ".\n                                    "
+                                      ),
+                                    ]
+                                  }
+                                ),
+                              ],
+                              2
+                            )
+                          }
+                        ),
+                        _vm._v(" "),
+                        _c("p", { attrs: { align: "justify" } }, [
+                          _vm._v(
+                            "\n                                    Y para constancia firmo el presente recibo en la ciudad de Catacamas, Olancho, a los " +
+                              _vm._s(_vm.datosPagoCuotaDB.diaLetras) +
+                              " (" +
+                              _vm._s(_vm.datosPagoCuotaDB.dia) +
+                              ") días \n                                    del mes de " +
+                              _vm._s(_vm.datosPagoCuotaDB.mes) +
+                              " del año " +
+                              _vm._s(_vm.datosPagoCuotaDB.anioLetras) +
+                              " (" +
+                              _vm._s(_vm.datosPagoCuotaDB.anio) +
+                              ").\n                                "
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _c("br"),
+                        _c("br"),
+                        _c("br"),
+                        _c("br"),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("p", { attrs: { align: "center" } }, [
+                          _c("strong", [
+                            _vm._v(
+                              "\n                                    _____________________________________"
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                                        Allan Javier Rivera Carvajal"
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                                        Id. 1503-1988-01869\n                                    "
+                            ),
+                          ]),
+                        ]),
+                      ],
+                      2
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer bg-warning" }, [
               _c(

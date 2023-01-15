@@ -106,6 +106,8 @@
                                             <h3 class="text-primary float-right align-self-stretch"><i class="fa fa-arrow-up"> </i> <label>L. {{estadoCreditoDatos.pagos}}</label></h3>
                                         </div>
                                     </div>
+                                    
+                            <div id="seleccion">
                                     <div class="table-responsive table-striped">
                                         <table class="table table-striped table-bordered" style="width:100%" id="letras">
                                             <thead class="bg-dark">
@@ -117,8 +119,6 @@
                                                     <td class="text-center">Monto Pago</td>
                                                     <td class="text-center">Estado</td>
                                                     <td class="text-center">Cobrar</td>
-                                                    
-                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -180,7 +180,63 @@
                                         </table>
                                     </div>
                                 </div>
+                                </div>
                             </div>
+                    </div>
+                    <div id="recibo_cuota">
+                        <div class="card">
+                            <div class="card-body">
+                                <nav class="navbar navbar-light bg-light">
+                                    <div class="navbar-brand">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                Residencial: Inversiones rivera/ Carvajal, Teléfono 9411-0191<br>
+                                                Correo: riveraresidencial0@gmail.com
+                                                <font color="red">_____________________________________________________________________________</font>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <!-- <img :src="'/dist/img/rivera_carvajal_logo.jpg'" width="60" height="60" class="d-inline-block align-top" alt="">    -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
+                                    <br><br><br>
+                                    <center><strong><FONT SIZE=3 FACE="times new roman"><u>RECIBO POR LPS. {{cantidad_pago.cantidad_pago_formato}}</u> </FONT></strong></center>
+                                    <br>
+                                    <FONT style="line-height: 180%; margin-right: 100px;" SIZE=3 FACE="times new roman">
+                                        <p align="justify" v-for="(resumen) in estadoCreditoDatos.resumenVenta">
+                                            Yo, <strong>Allan Javier Rivera Carvajal</strong>, mayor de edad, casado, ingeniero, hondureño, con domicilio en Catacamas y en tránsito por esta ciudad, 
+                                            con tarjeta de identidad número 1503-1983-01548, por medio del presente <strong><u>HAGO CONSTAR:</u></strong> Que he recibido del señor(a)
+                                            <strong>{{resumen.primer_nombre}} {{resumen.segundo_nombre}} {{resumen.primer_apellido}} {{resumen.segundo_apellido}}</strong>, 
+                                            con número de identidad {{resumen.identidad}}, mayor de edad, Soltero, hondureño, con domicilio en 
+                                            {{resumen.direccion}}, y en tránsito por esta ciudad, la cantidad de <strong style="text-transform: uppercase;">{{datosPagoCuotaDB.cantidadLetras}} LEMPIRAS EXACTOS 
+                                            (Lps. {{cantidad_pago.cantidad_pago_formato}})</strong> , 
+                                            en concepto de la {{datosPagoCuotaDB.numeroLetra}} letra en el mes de {{datosPagoCuotaDB.mesCobro}}, por la compra de:
+
+                                            <template v-for="(lotes) in datosPagoCuotaDB.lotes">
+                                            lote <strong>{{lotes.lote }}</strong>, bloque <strong>{{lotes.bloque}}</strong>, ubicado en 
+                                            Lotificadora <strong>{{lotes.residencial}}</strong>, zona esta ciudad de Catacamas, departamento de Olancho, el que mide de la siguiente manera:
+                                            <strong>AL NORTE:</strong> {{lotes.norte}} mts, <strong>AL SUR: </strong>{{lotes.sur}} mts, 
+                                            <strong>AL ESTE:</strong> {{lotes.este}} mts y <strong>AL OESTE:</strong> {{lotes.oeste}} mts, 
+                                            con un área superficial de <strong>{{lotes.norte}} mts²</strong>.
+                                            </template>
+                                            
+                                        </p>
+                                        <p align="justify" >
+                                            Y para constancia firmo el presente recibo en la ciudad de Catacamas, Olancho, a los {{datosPagoCuotaDB.diaLetras}} ({{datosPagoCuotaDB.dia}}) días 
+                                            del mes de {{datosPagoCuotaDB.mes}} del año {{datosPagoCuotaDB.anioLetras}} ({{datosPagoCuotaDB.anio}}).
+                                        </p>
+                                        <br><br><br><br><br><br>
+                                        <p align="center" >
+                                            <strong>
+                                            _____________________________________<br>
+                                                Allan Javier Rivera Carvajal<br>
+                                                Id. 1503-1988-01869
+                                            </strong>
+                                        </p>
+                                    </FONT>
+                            </div>
+                        </div>  
                     </div>
                     
                     <div class="modal-footer bg-warning">
@@ -224,7 +280,9 @@ export default {
             accionCreditoContado:"",
             abono:"",
             alerta:0,
-            resumenDeVenta:[]
+            resumenDeVenta:[],
+            datosPagoCuotaDB:[],
+            cantidad_pago:""
 
         }
     },
@@ -238,6 +296,8 @@ export default {
                 console.log(respuesta.data)
                 
             })
+
+            $("#recibo_cuota").hide();
 
     },
     methods:{
@@ -335,11 +395,32 @@ export default {
                 this.myTableClear()
                 this.estadoCreditoDatos = respuesta.data[0]
                 this.myTable();
+                this.datosPagoCuota(id)
                // this.$emit("actualizarVentas")
                // $("#modalLotesVeder").trigger('click')
             })
+        },
+
+        datosPagoCuota:function(id){
+            $.when( 
+                axios.get('/venta/apoyo/II/'+id).then(respuesta => {
+                    this.datosPagoCuotaDB = respuesta.data[0]
+                    this.cantidad_pago = this.datosPagoCuotaDB.datosPagoCuota
+                    //this.cantidad_pago = this.cantidad_pago[0]
+                    console.log(this.datosPagoCuotaDB)
+                    var indexUploadCoincidence=0;
+                })
+                ).done(function (){
+                    var ficha = document.getElementById('recibo_cuota');
+                    var ventimp = window.open(' ', 'popimpr');
+                    ventimp.document.write( ficha.innerHTML );
+                    ventimp.document.close();
+                    ventimp.print( );
+                    ventimp.close();
+                } );
             
         },
+
         quitarAlerta:function(){
             this.alerta = 0
         },
