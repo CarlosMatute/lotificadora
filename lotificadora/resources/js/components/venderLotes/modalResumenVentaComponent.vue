@@ -9,7 +9,8 @@
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="imprimir_resumen_venta">
+                        <center><h1><label>Estado de Cuotas</label></h1></center>
                         <div class="row">
                                 <div class="col-md-8">
                                      <div class="form-group">
@@ -22,12 +23,11 @@
                                      <div class="form-group">
                                         <h3><label>Fecha y hora de venta:</label></h3>
                                         <h4> {{resumenDeVenta.fecha}} </h4>
-                                        
                                     </div>
                                </div>
                         </div>
                         <hr>
-                            <h2><label>Credito</label></h2>
+                            <h2><label>Crédito</label></h2>
                             <div class="row">
                                     <div class="col-md-12">
                                         <div class="card bg-dark">
@@ -80,6 +80,8 @@
                                         </div>
                                     </div>
                             </div>
+                            <hr>
+                            <h2><label>Lotes</label></h2>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive table-striped">
@@ -109,9 +111,59 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr>
+                            <h2><label>Historial de Cuotas</label></h2>
+                            <div class="table-responsive table-striped">
+                                        <table class="table table-sm responsive" style="width:100%" id="historial_cuotas">
+                                            <thead class="bg-dark">
+                                                <tr>
+                                                    <td class="text-left">#</td>
+                                                    <td class="text-center">Fecha Cobro</td>
+                                                    <td class="text-center">Cobro Sugerido</td>
+                                                    <td class="text-center">Fecha Pago</td>
+                                                    <td class="text-center">Monto Pago</td>
+                                                    <td class="text-center">Estado</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(cobroMensual,i) in estadoCreditoDatos.fechaCobros" :key="i">
+                                                    <td class="text-left">{{i+1}}. </td>
+                                                    <td class="text-center"> {{cobroMensual.fecha_cobro}} </td>
+                                                    <td class="text-center"> L. {{cobroMensual.cuota_mensual}}  </td>
+                                                    <td class="text-center"> 
+                                                        <template v-if="cobroMensual.fecha_pago == null">Sin datos</template>
+                                                        <template v-else>{{cobroMensual.fecha_pago}}</template> 
+                                                    </td>
+                                                    <td class="text-center"> 
+                                                        <template v-if="cobroMensual.cantidad_pago == null">Sin datos</template>
+                                                        <template v-else>L. {{cobroMensual.cantidad_pago}}</template>
+                                                    </td>
+                                                    <td class="text-center"> 
+                                                        <template v-if="cobroMensual.estadoFC == 'Pendiente'">
+                                                            <span class="badge badge-info">{{cobroMensual.estadoFC}}</span>
+                                                        </template>
+                                                        <template v-else-if="cobroMensual.estadoFC == 'Cola'">
+                                                            <span class="badge badge-primary">{{cobroMensual.estadoFC}}</span>
+                                                        </template>
+                                                        <template v-else-if="cobroMensual.estadoFC == 'Atrasado'">
+                                                            <span class="badge badge-danger"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>  {{cobroMensual.estadoFC}}</span>
+                                                        </template>
+                                                        <template v-else-if="cobroMensual.estadoFC == 'Dia de cobro'">
+                                                            <span class="badge badge-warning"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>  {{cobroMensual.estadoFC}}</span>
+                                                        </template>
+                                                        <template v-else>
+                                                            <span class="badge badge-success">{{cobroMensual.estadoFC}}</span>
+                                                        </template>
+                                                    </td>
+                                                                      
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                     </div>
                     
                     <div class="modal-footer bg-secondary">
+                        <button type="button" class="btn btn-info btn-sm" v-on:click="imprimir()">Imprimir Resumen de Venta</button>
                         <button type="button" class="btn btn-danger btn-sm" v-on:click="cerrarModal()">Cerrar</button>
                        <!-- <template v-if="cliente == '' || informacionLote == 0">
                             <button type="button" class="btn btn-primary btn-sm" disabled>Realizar Venta</button>
@@ -128,7 +180,7 @@
 
 <script>
 export default {
-    props:["resumenDeVenta"],
+    props:["resumenDeVenta", "estadoCreditoDatos"],
     data(){
         return{
 
@@ -144,7 +196,19 @@ export default {
             this.$emit("actualizarVentas")
             $("#resumenVenta").modal("hide")
             //$("#modalEsatdoCredito").trigger('click')
-        }
+        },
+
+    imprimir:function(){
+
+                    var ficha = document.getElementById('imprimir_resumen_venta');
+                    var ventimp = window.open(' ', 'popimpr');
+                    ventimp.document.write( ficha.innerHTML );
+                    ventimp.document.close();
+                    ventimp.print( );
+                    ventimp.close();
+                
+            
+        },
     }
     
 }

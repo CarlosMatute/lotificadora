@@ -54,8 +54,9 @@ class controladorVentasApoyoII extends Controller
         $numeroLetra = collect(\DB::select("
             SELECT COUNT(*) as letra FROM fechas_cobros 
             where id_venta = (select id_venta from fechas_cobros where id = :id_fecha_pago)
+            and id <= :id_fecha_pago2
             and estado = 'Pagado';
-        ", ["id_fecha_pago" => $id]))->first();
+        ", ["id_fecha_pago" => $id, "id_fecha_pago2" => $id]))->first();
 
         DB::select("SET lc_time_names = 'es_ES';");
 

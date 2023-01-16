@@ -165,9 +165,11 @@
                                                             </template>
                                                             <template v-else-if="estadoCreditoDatos.ultimopago == cobroMensual.idFC">
                                                                 <button type="button" class="btn btn-sm btn-primary" v-on:click="cancelarPago(cobroMensual.idFC)"><i class="fa fa-reply"></i></button>
+                                                                <button type="button" class="btn btn-sm btn-info" v-on:click="datosPagoCuota(cobroMensual.idFC)"><i class="fa fa-receipt"></i></button>
                                                             </template>
                                                             <template v-else-if="cobroMensual.estadoFC == 'Pagado'">
                                                                 <button type="button" class="btn btn-sm btn-light" disabled><i class="fa fa-reply"></i></button>
+                                                                <button type="button" class="btn btn-sm btn-info" v-on:click="datosPagoCuota(cobroMensual.idFC)"><i class="fa fa-receipt"></i></button>
                                                             </template>
                                                             <template v-else-if="cobroMensual.estadoFC == 'Pendiente' || cobroMensual.estadoFC == 'Atrasado' || cobroMensual.estadoFC == 'Dia de cobro'">
                                                                 <button type="button" class="btn btn-sm btn-light" disabled><i class="fa fa-plus"></i></button>
@@ -250,7 +252,7 @@
                     </div>
                 </div>
             </div>
-            <modal-resumen-venta-component :resumenDeVenta="resumenDeVenta"></modal-resumen-venta-component>
+            <modal-resumen-venta-component :resumenDeVenta="resumenDeVenta" :estadoCreditoDatos="estadoCreditoDatos"></modal-resumen-venta-component>
         </div>
     
 </template>

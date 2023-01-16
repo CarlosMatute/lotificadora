@@ -6711,6 +6711,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7708,8 +7710,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["resumenDeVenta"],
+  props: ["resumenDeVenta", "estadoCreditoDatos"],
   data: function data() {
     return {};
   },
@@ -7718,6 +7772,14 @@ __webpack_require__.r(__webpack_exports__);
     cerrarModal: function cerrarModal() {
       this.$emit("actualizarVentas");
       $("#resumenVenta").modal("hide"); //$("#modalEsatdoCredito").trigger('click')
+    },
+    imprimir: function imprimir() {
+      var ficha = document.getElementById('imprimir_resumen_venta');
+      var ventimp = window.open(' ', 'popimpr');
+      ventimp.document.write(ficha.innerHTML);
+      ventimp.document.close();
+      ventimp.print();
+      ventimp.close();
     }
   }
 });
@@ -71539,10 +71601,64 @@ var render = function () {
                                                           }),
                                                         ]
                                                       ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-sm btn-info",
+                                                          attrs: {
+                                                            type: "button",
+                                                          },
+                                                          on: {
+                                                            click: function (
+                                                              $event
+                                                            ) {
+                                                              return _vm.datosPagoCuota(
+                                                                cobroMensual.idFC
+                                                              )
+                                                            },
+                                                          },
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "fa fa-receipt",
+                                                          }),
+                                                        ]
+                                                      ),
                                                     ]
                                                   : cobroMensual.estadoFC ==
                                                     "Pagado"
-                                                  ? [_vm._m(6, true)]
+                                                  ? [
+                                                      _vm._m(6, true),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-sm btn-info",
+                                                          attrs: {
+                                                            type: "button",
+                                                          },
+                                                          on: {
+                                                            click: function (
+                                                              $event
+                                                            ) {
+                                                              return _vm.datosPagoCuota(
+                                                                cobroMensual.idFC
+                                                              )
+                                                            },
+                                                          },
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "fa fa-receipt",
+                                                          }),
+                                                        ]
+                                                      ),
+                                                    ]
                                                   : cobroMensual.estadoFC ==
                                                       "Pendiente" ||
                                                     cobroMensual.estadoFC ==
@@ -71836,7 +71952,10 @@ var render = function () {
       ),
       _vm._v(" "),
       _c("modal-resumen-venta-component", {
-        attrs: { resumenDeVenta: _vm.resumenDeVenta },
+        attrs: {
+          resumenDeVenta: _vm.resumenDeVenta,
+          estadoCreditoDatos: _vm.estadoCreditoDatos,
+        },
       }),
     ],
     1
@@ -73058,208 +73177,423 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-8" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("h3", [
-                      _vm._v(" " + _vm._s(_vm.resumenDeVenta.cliente) + " "),
+            _c(
+              "div",
+              {
+                staticClass: "modal-body",
+                attrs: { id: "imprimir_resumen_venta" },
+              },
+              [
+                _c("center", [
+                  _c("h1", [_c("label", [_vm._v("Estado de Cuotas")])]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-8" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("h3", [
+                        _vm._v(" " + _vm._s(_vm.resumenDeVenta.cliente) + " "),
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", [
+                        _vm._v(
+                          _vm._s(_vm.resumenDeVenta.identidad) +
+                            " - " +
+                            _vm._s(_vm.resumenDeVenta.cel)
+                        ),
+                      ]),
                     ]),
-                    _vm._v(" "),
-                    _c("h4", [
-                      _vm._v(
-                        _vm._s(_vm.resumenDeVenta.identidad) +
-                          " - " +
-                          _vm._s(_vm.resumenDeVenta.cel)
-                      ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("h4", [
+                        _vm._v(" " + _vm._s(_vm.resumenDeVenta.fecha) + " "),
+                      ]),
                     ]),
                   ]),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-4" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c("h4", [
-                      _vm._v(" " + _vm._s(_vm.resumenDeVenta.fecha) + " "),
-                    ]),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "card bg-dark" }, [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Total Contado:")]),
-                            _vm._v(
-                              " L. " +
-                                _vm._s(_vm.resumenDeVenta.total_contado) +
-                                "\n                                                "
-                            ),
+                _c("hr"),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "card bg-dark" }, [
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Total Contado:")]),
+                              _vm._v(
+                                " L. " +
+                                  _vm._s(_vm.resumenDeVenta.total_contado) +
+                                  "\n                                                "
+                              ),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Financiamiento:")]),
+                              _vm._v(
+                                " " +
+                                  _vm._s(
+                                    _vm.resumenDeVenta.anios_financiamiento
+                                  ) +
+                                  " años\n                                                "
+                              ),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Tasa de interes anual:")]),
+                              _vm._v(
+                                " " +
+                                  _vm._s(_vm.resumenDeVenta.tasa_interes) +
+                                  "%\n                                                "
+                              ),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Prima:")]),
+                              _vm._v(
+                                " L. " +
+                                  _vm._s(_vm.resumenDeVenta.prima) +
+                                  "\n                                                "
+                              ),
+                            ]),
                           ]),
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Financiamiento:")]),
-                            _vm._v(
-                              " " +
-                                _vm._s(
-                                  _vm.resumenDeVenta.anios_financiamiento
-                                ) +
-                                " años\n                                                "
-                            ),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Cuotas:")]),
+                              _vm._v(
+                                " " +
+                                  _vm._s(_vm.resumenDeVenta.cuotas) +
+                                  "\n                                                "
+                              ),
+                            ]),
                           ]),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Tasa de interes anual:")]),
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm.resumenDeVenta.tasa_interes) +
-                                "%\n                                                "
-                            ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Total intereses:")]),
+                              _vm._v(
+                                " L. " +
+                                  _vm._s(_vm.resumenDeVenta.total_intereses) +
+                                  "\n                                                "
+                              ),
+                            ]),
                           ]),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Prima:")]),
-                            _vm._v(
-                              " L. " +
-                                _vm._s(_vm.resumenDeVenta.prima) +
-                                "\n                                                "
-                            ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Total a pagar:")]),
+                              _vm._v(
+                                " L. " +
+                                  _vm._s(_vm.resumenDeVenta.total_pagar) +
+                                  "\n                                                "
+                              ),
+                            ]),
                           ]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Cuotas:")]),
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm.resumenDeVenta.cuotas) +
-                                "\n                                                "
-                            ),
-                          ]),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Total intereses:")]),
-                            _vm._v(
-                              " L. " +
-                                _vm._s(_vm.resumenDeVenta.total_intereses) +
-                                "\n                                                "
-                            ),
-                          ]),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Total a pagar:")]),
-                            _vm._v(
-                              " L. " +
-                                _vm._s(_vm.resumenDeVenta.total_pagar) +
-                                "\n                                                "
-                            ),
-                          ]),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Cuota mensual:")]),
-                            _vm._v(
-                              " L. " +
-                                _vm._s(_vm.resumenDeVenta.cuota_mensual) +
-                                "\n                                                "
-                            ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Cuota mensual:")]),
+                              _vm._v(
+                                " L. " +
+                                  _vm._s(_vm.resumenDeVenta.cuota_mensual) +
+                                  "\n                                                "
+                              ),
+                            ]),
                           ]),
                         ]),
                       ]),
                     ]),
                   ]),
                 ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "table-responsive table-striped" }, [
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _vm._m(4),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
                     _c(
-                      "table",
-                      {
-                        staticClass: "table table-sm responsive",
-                        attrs: { id: "lotes" },
-                      },
+                      "div",
+                      { staticClass: "table-responsive table-striped" },
                       [
-                        _vm._m(4),
-                        _vm._v(" "),
                         _c(
-                          "tbody",
-                          _vm._l(_vm.resumenDeVenta.lotes, function (lotes, i) {
+                          "table",
+                          {
+                            staticClass: "table table-sm responsive",
+                            attrs: { id: "lotes" },
+                          },
+                          [
+                            _vm._m(5),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(
+                                _vm.resumenDeVenta.lotes,
+                                function (lotes, i) {
+                                  return _c("tr", { key: i }, [
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(i + 1) + ". "),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-info btn-sm",
+                                          attrs: { type: "button" },
+                                        },
+                                        [
+                                          _vm._v(
+                                            " L-" + _vm._s(lotes.nombre) + " "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _vm._v(" " + _vm._s(lotes.residencial)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-outline-dark btn-sm",
+                                          attrs: { type: "button" },
+                                        },
+                                        [
+                                          _vm._v(
+                                            " " + _vm._s(lotes.bloque) + " "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _vm._v(
+                                        " L. " + _vm._s(lotes.precio) + " "
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _vm._v(
+                                        " " + _vm._s(lotes.tiempo) + " años"
+                                      ),
+                                    ]),
+                                  ])
+                                }
+                              ),
+                              0
+                            ),
+                          ]
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _c("div", { staticClass: "table-responsive table-striped" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-sm responsive",
+                      staticStyle: { width: "100%" },
+                      attrs: { id: "historial_cuotas" },
+                    },
+                    [
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(
+                          _vm.estadoCreditoDatos.fechaCobros,
+                          function (cobroMensual, i) {
                             return _c("tr", { key: i }, [
                               _c("td", { staticClass: "text-left" }, [
                                 _vm._v(_vm._s(i + 1) + ". "),
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-info btn-sm",
-                                    attrs: { type: "button" },
-                                  },
-                                  [_vm._v(" L-" + _vm._s(lotes.nombre) + " ")]
+                                _vm._v(
+                                  " " + _vm._s(cobroMensual.fecha_cobro) + " "
                                 ),
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center" }, [
-                                _vm._v(" " + _vm._s(lotes.residencial)),
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "text-center" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-outline-dark btn-sm",
-                                    attrs: { type: "button" },
-                                  },
-                                  [_vm._v(" " + _vm._s(lotes.bloque) + " ")]
+                                _vm._v(
+                                  " L. " +
+                                    _vm._s(cobroMensual.cuota_mensual) +
+                                    "  "
                                 ),
                               ]),
                               _vm._v(" "),
-                              _c("td", { staticClass: "text-center" }, [
-                                _vm._v(" L. " + _vm._s(lotes.precio) + " "),
-                              ]),
+                              _c(
+                                "td",
+                                { staticClass: "text-center" },
+                                [
+                                  cobroMensual.fecha_pago == null
+                                    ? [_vm._v("Sin datos")]
+                                    : [_vm._v(_vm._s(cobroMensual.fecha_pago))],
+                                ],
+                                2
+                              ),
                               _vm._v(" "),
-                              _c("td", { staticClass: "text-center" }, [
-                                _vm._v(" " + _vm._s(lotes.tiempo) + " años"),
-                              ]),
+                              _c(
+                                "td",
+                                { staticClass: "text-center" },
+                                [
+                                  cobroMensual.cantidad_pago == null
+                                    ? [_vm._v("Sin datos")]
+                                    : [
+                                        _vm._v(
+                                          "L. " +
+                                            _vm._s(cobroMensual.cantidad_pago)
+                                        ),
+                                      ],
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "text-center" },
+                                [
+                                  cobroMensual.estadoFC == "Pendiente"
+                                    ? [
+                                        _c(
+                                          "span",
+                                          { staticClass: "badge badge-info" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    : cobroMensual.estadoFC == "Cola"
+                                    ? [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge badge-primary",
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    : cobroMensual.estadoFC == "Atrasado"
+                                    ? [
+                                        _c(
+                                          "span",
+                                          { staticClass: "badge badge-danger" },
+                                          [
+                                            _c("span", {
+                                              staticClass:
+                                                "spinner-grow spinner-grow-sm",
+                                              attrs: {
+                                                role: "status",
+                                                "aria-hidden": "true",
+                                              },
+                                            }),
+                                            _vm._v(
+                                              "  " +
+                                                _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    : cobroMensual.estadoFC == "Dia de cobro"
+                                    ? [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge badge-warning",
+                                          },
+                                          [
+                                            _c("span", {
+                                              staticClass:
+                                                "spinner-border spinner-border-sm",
+                                              attrs: {
+                                                role: "status",
+                                                "aria-hidden": "true",
+                                              },
+                                            }),
+                                            _vm._v(
+                                              "  " +
+                                                _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    : [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge badge-success",
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ],
+                                ],
+                                2
+                              ),
                             ])
-                          }),
-                          0
+                          }
                         ),
-                      ]
-                    ),
-                  ]),
+                        0
+                      ),
+                    ]
+                  ),
                 ]),
-              ]),
-            ]),
+              ],
+              1
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer bg-secondary" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info btn-sm",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.imprimir()
+                    },
+                  },
+                },
+                [_vm._v("Imprimir Resumen de Venta")]
+              ),
+              _vm._v(" "),
               _c(
                 "button",
                 {
@@ -73307,7 +73641,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h2", [_c("label", [_vm._v("Credito")])])
+    return _c("h2", [_c("label", [_vm._v("Crédito")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", [_c("label", [_vm._v("Lotes")])])
   },
   function () {
     var _vm = this
@@ -73328,6 +73668,32 @@ var staticRenderFns = [
         _c("td", { staticClass: "text-center" }, [
           _vm._v("Años de Financiamiento"),
         ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", [_c("label", [_vm._v("Historial de Cuotas")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-dark" }, [
+      _c("tr", [
+        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha Cobro")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Cobro Sugerido")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha Pago")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Monto Pago")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
       ]),
     ])
   },
