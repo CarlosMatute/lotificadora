@@ -314,7 +314,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         Version Beta
       </div>
       <!-- Default to the left -->
-      <strong>Copyright &copy; 2022 <a href="https://adminlte.io">TECHNO WORLD</a>.</strong>
+      <strong>Copyright &copy; <?php echo date('Y'); ?> <a href="https://adminlte.io"> GRUPO RIVERA CARVAJAL</a>.</strong>
     </footer>
   </div>
 </div>

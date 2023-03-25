@@ -54,6 +54,7 @@ Vue.component('modal-elegir-lote-component', require('./components/venderLotes/m
 Vue.component('modal-estado-credito-component', require('./components/venderLotes/modalEstadoCreditoComponent.vue').default);
 Vue.component('modal-resumen-venta-component', require('./components/venderLotes/modalResumenVentaComponent.vue').default);
 Vue.component('modal-resumen-venta-contado-component', require('./components/venderLotes/modalResumenVentaContadoComponent.vue').default);
+Vue.component('modal-editar-venta-component', require('./components/venderLotes/modalEditarVentaComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

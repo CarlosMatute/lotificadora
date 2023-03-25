@@ -82,7 +82,17 @@ class controladorLotesFinanciados extends Controller
      */
     public function show($id)
     {
-        //
+        $lotes_vendidos = DB::select("
+            select l.id idL, l.nombre nombreL, r.nombre nombreR, b.nombre nombreB,
+            l.precio, l.tiempo
+            from lotes_vendidos lv 
+            join lotes l on lv.id_lote = l.id
+            join bloques b on l.id_bloque = b.id
+            join residenciales r on b.id_residencial = r.id
+            where id_venta = :id_venta
+        ", ["id_venta" => $id]);
+
+        return $lotes_vendidos;
     }
 
     /**

@@ -106,7 +106,35 @@ class controladorVentasApoyoII extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $datosVenta = collect(\DB::select("
+            select v.id id_venta, c.id id_cliente, c.identidad, 
+            replace(v.prima, ',', '') prima, v.tasa_interes, v.dias_cobro_mes, v.anios_financiamiento,
+            v.pago, v.total_pagar, replace(v.cuota_mensual, ',', '') cuota, format((v.anios_financiamiento*12),0) total_cuotas,
+            concat('L.' ,FORMAT((replace(v.total_contado, ',', '') + replace(v.prima, ',', '')), 2)) contado_formato,
+            FORMAT((replace(v.total_contado, ',', '') + replace(v.prima, ',', '')), 2) contado,
+            v.total_intereses, v.total_pagar
+            from ventas v
+            join clientes c on v.id_cliente = c.id
+            where v.id = :id_venta
+        ", ["id_venta" => $id]))->first();
+
+        $lotes_vendidos = DB::select("
+            select l.nombre lote, r.nombre residencial, b.nombre bloque,
+            l.precio, l.tiempo
+            from lotes_vendidos lv 
+            join lotes l on lv.id_lote = l.id
+            join bloques b on l.id_bloque = b.id
+            join residenciales r on b.id_residencial = r.id
+            where id_venta = :id_venta
+        ", ["id_venta" => $id]);
+
+        $data[] = [
+            'datosVenta' => $datosVenta,
+            'lotes_vendidos' => $lotes_vendidos
+        ];
+
+        return $data;
     }
 
     /**

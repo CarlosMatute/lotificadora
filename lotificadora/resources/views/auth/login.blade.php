@@ -51,18 +51,18 @@
                                 </button>
                         <br><br><br>
                         <center>
-                                @if (Route::has('password.request'))
+                                <!-- @if (Route::has('password.request'))
                                     <a class="btn btn-sm btn-link btn-light" href="{{ route('password.request') }}">
                                         {{ __('Olvide mi contraseña') }}
                                     </a>
-                                @endif
+                                @endif -->
                         </center>
 					</div>
 				</form>
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					TECHNO WORLD &copy; 2021<!--<a href="#">Sign Up</a>-->
+					GRUPO RIVERA CARVAJAL &copy; <?php echo date('Y'); ?><!--<a href="#">Sign Up</a>-->
 				</div>
 				<!--<div class="d-flex justify-content-center">
 					<a href="#">Forgot your password?</a>

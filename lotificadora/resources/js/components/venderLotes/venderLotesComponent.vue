@@ -60,6 +60,7 @@
                                                 <td class="text-center">{{venta.estado}}</td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-sm btn-light" v-on:click="estadoCredito(venta.idV)"><i class="fa fa-book"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-info" v-on:click="modalEditarCredito(venta.idV)"><i class="fa fa-edit"></i></button>
                                                     <button type="button" class="btn btn-sm btn-danger" v-on:click="modalEliminarVenta(venta.idV, venta.primer_nombre, venta.segundo_nombre, venta.primer_apellido, venta.segundo_apellido)"><i class="fa fa-trash"></i></button>
                                                 </td>
                                             </tr>
@@ -171,6 +172,7 @@
         <modal-lotes-vender-component @actualizarVentas="actualizarVentas"></modal-lotes-vender-component>
         <modal-estado-credito-component :estadoCreditoDatos="estadoCreditoDatos" @actualizarVentas="actualizarVentas"></modal-estado-credito-component>
         <modal-resumen-venta-contado-component :resumenDeVenta="resumenDeVenta"></modal-resumen-venta-contado-component>
+        <modal-editar-venta-component @actualizarVentas="actualizarVentas" :datosVenta = "datosVenta" :datosLotesVendidos = "datosLotesVendidos"></modal-editar-venta-component>
         <!--<modal-bloques-component @actualizarResidenciales="actualizarResidenciales"></modal-bloques-component>-->
     </div>
 </template>
@@ -186,7 +188,10 @@ export default {
             verInfoCliente:[],
             estadoCreditoDatos:[],
             resumenDeVenta:[],
-            id_venta:''
+            id_venta:'',
+            dataEditarVenta:[],
+            datosVenta:[],
+            datosLotesVendidos:[]
         }
     },
     mounted(){
@@ -264,6 +269,17 @@ export default {
             this.id_venta = id
             $("#strong_nombre").html(primer_nombre+" "+segundo_nombre+" "+primer_apellido+" "+segundo_apellido)
             $("#modalAlertaEliminarVenta").modal("show")
+        },
+
+        modalEditarCredito:function(id){
+            axios.get('/venta/apoyo/II/'+id+'/edit').then(respuesta => {
+            this.dataEditarVenta = respuesta.data[0]
+            this.datosVenta = this.dataEditarVenta.datosVenta
+            this.datosLotesVendidos = this.dataEditarVenta.lotes_vendidos
+            console.log(this.datosVenta)
+            $("#modalEditarVenta").modal("show")
+            //$("#modalEsatdoCredito").trigger('click')
+            })
         },
 
         cerrarModalEliminar:function(){

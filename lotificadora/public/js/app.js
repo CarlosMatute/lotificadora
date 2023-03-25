@@ -6189,6 +6189,457 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["datosVenta", "datosLotesVendidos"],
+  data: function data() {
+    var _ref;
+
+    return _ref = {
+      nombre: "",
+      nBloques: "",
+      descripcion: "",
+      imagen: '',
+      imagenMiniatura: '',
+      dias: 1,
+      clientes: [],
+      informacionLote: [],
+      tiempo: "",
+      prima: 0
+    }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cuota_mensual", ""), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _ref;
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/clientes').then(function (respuesta) {
+      _this.clientes = respuesta.data; //console.log(respuesta.data)
+    });
+    this.datosVenta.pago == 'Credito' ? this.creditoContado = 0 : this.creditoContado = 1;
+    this.cuota_mensual = new Intl.NumberFormat('es-HN', {
+      style: 'currency',
+      currency: 'HNL'
+    }).format(this.datosVenta.cuota);
+  },
+  methods: {
+    cambioCreditoContado: function cambioCreditoContado() {
+      if (this.creditoContado == 1) {
+        this.creditoContado = 0;
+      } else {
+        this.creditoContado = 1;
+      }
+    },
+    abrirModal: function abrirModal(id_venta) {
+      var _this2 = this;
+
+      axios.get('/lote_financiado/' + id_venta).then(function (respuesta) {
+        _this2.lotesFinanciados = respuesta.data;
+        console.log(respuesta.data);
+      });
+      $("#modalElegirLote").modal("show");
+    },
+    actualizarTabla: function actualizarTabla() {
+      var _this3 = this;
+
+      axios.get('/lote_financiado/').then(function (respuesta) {
+        _this3.lotesFinanciados = respuesta.data; //console.log("lotes financiados")
+        // console.log(respuesta.data)
+      });
+    },
+    obtenerImagen: function obtenerImagen(e) {
+      var file = e.target.files[0];
+      this.imagen = file;
+      this.cargarImagen(file);
+      console.log(file);
+    },
+    cargarImagen: function cargarImagen(file) {
+      var _this4 = this;
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this4.imagenMiniatura = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    agregarResidencial: function agregarResidencial() {
+      var _this5 = this;
+
+      var formData = new FormData();
+      formData.append('nombre', this.nombre);
+      formData.append('nBloques', this.nBloques);
+      formData.append('descripcion', this.descripcion);
+      formData.append('imagen', this.imagen);
+      axios.post('residenciales', formData).then(function (respuesta) {
+        console.log(respuesta.data);
+        _this5.nombre = "", _this5.nBloques = "", _this5.descripcion = "", _this5.imagen = "", _this5.imagenMiniatura = "";
+
+        _this5.$emit("agregarResidencial");
+
+        $("#modalRegistrarResidencial").trigger('click');
+      }); // $("#modalRegistrarResidencial").trigger('click')
+    },
+    cambioPrimaTiempo: function cambioPrimaTiempo() {
+      var _this6 = this;
+
+      var data = {
+        "prima": this.datosVenta.prima,
+        "tiempo": this.datosVenta.anios_financiamiento,
+        "interes": this.datosVenta.tasa_interes / 100
+      };
+      axios.post('/lotes/apoyo/II', data).then(function (respuesta) {
+        console.log(respuesta.data[0]);
+        _this6.informacionLote = respuesta.data[0];
+        _this6.datosVenta.anios_financiamiento = _this6.informacionLote.tiempo;
+        _this6.datosVenta.total_cuotas = _this6.informacionLote.cuotas;
+        _this6.cuota_mensual = new Intl.NumberFormat('es-HN', {
+          style: 'currency',
+          currency: 'HNL'
+        }).format(_this6.datosVenta.cuota);
+      });
+    },
+    infoLotes: function infoLotes() {
+      var _this7 = this;
+
+      axios.get("/lotes/apoyo/II/create").then(function (respuesta) {
+        _this7.informacionLote = respuesta.data[0];
+        _this7.cuota_mensual = new Intl.NumberFormat('es-HN', {
+          style: 'currency',
+          currency: 'HNL'
+        }).format(_this7.datosVenta.cuota); //console.log(respuesta.data[0])
+      }); //this.loteFinanciado()
+      //this.actualizarTabla()
+    },
+    formatearCuotaMensual: function formatearCuotaMensual() {
+      this.cuota_mensual = new Intl.NumberFormat('es-HN', {
+        style: 'currency',
+        currency: 'HNL'
+      }).format(this.datosVenta.cuota);
+    },
+    editarVenta: function editarVenta() {
+      $("#modalAlertaEditarVenta").modal("show");
+    },
+    cerrarModalEditar: function cerrarModalEditar() {
+      $("#modalAlertaEditarVenta").modal("hide");
+    },
+    cambiarVenta: function cambiarVenta(id_venta) {
+      //alert(id_venta)
+      var data = null;
+
+      if (this.creditoContado == 0) {
+        this.accionCreditoContado = 0;
+        data = {
+          "cliente": this.datosVenta.identidad,
+          "total_contado": this.datosVenta.contado,
+          "anios_financiamiento": this.informacionLote.tiempo,
+          "tasa_interes": this.datosVenta.tasa_interes,
+          "prima": this.datosVenta.prima,
+          "cuotas": this.datosVenta.total_cuotas,
+          "total_intereses": this.datosVenta.total_intereses,
+          "cuota_mensual": this.datosVenta.cuota,
+          "dias_cobro_mensual": this.datosVenta.dias_cobro_mes,
+          "total_pagar": this.datosVenta.total_pagar,
+          "accionCreditoContado": this.accionCreditoContado
+        };
+      } else {
+        this.accionCreditoContado = 1;
+        data = {
+          "cliente": this.datosVenta.identidad,
+          "total_contado": this.datosVenta.contado,
+          "anios_financiamiento": this.informacionLote.tiempo,
+          "tasa_interes": this.datosVenta.tasa_interes,
+          "prima": this.datosVenta.prima,
+          "cuotas": this.datosVenta.total_cuotas,
+          "total_intereses": this.datosVenta.total_intereses,
+          "cuota_mensual": this.datosVenta.cuota,
+          "dias_cobro_mensual": this.datosVenta.dias_cobro_mes,
+          "total_pagar": this.datosVenta.total_pagar,
+          "accionCreditoContado": this.accionCreditoContado
+        };
+      }
+
+      axios({
+        method: "put",
+        url: "venta/apoyo/" + id_venta,
+        data: data
+      }).then(function (respuesta) {
+        console.log(respuesta.data); //    $("#modalEditarCliente").trigger('click')
+        //     this.$emit("actualizarExpediente",data.idCliente)
+      });
+    }
+  },
+  computed: {
+    img: function img() {
+      return this.imagenMiniatura;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalElegirLoteComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalElegirLoteComponent.vue?vue&type=script&lang=js& ***!
@@ -8099,6 +8550,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -8108,7 +8561,10 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       verInfoCliente: [],
       estadoCreditoDatos: [],
       resumenDeVenta: [],
-      id_venta: ''
+      id_venta: '',
+      dataEditarVenta: [],
+      datosVenta: [],
+      datosLotesVendidos: []
     };
   },
   mounted: function mounted() {
@@ -8199,19 +8655,30 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       $("#strong_nombre").html(primer_nombre + " " + segundo_nombre + " " + primer_apellido + " " + segundo_apellido);
       $("#modalAlertaEliminarVenta").modal("show");
     },
+    modalEditarCredito: function modalEditarCredito(id) {
+      var _this7 = this;
+
+      axios.get('/venta/apoyo/II/' + id + '/edit').then(function (respuesta) {
+        _this7.dataEditarVenta = respuesta.data[0];
+        _this7.datosVenta = _this7.dataEditarVenta.datosVenta;
+        _this7.datosLotesVendidos = _this7.dataEditarVenta.lotes_vendidos;
+        console.log(_this7.datosVenta);
+        $("#modalEditarVenta").modal("show"); //$("#modalEsatdoCredito").trigger('click')
+      });
+    },
     cerrarModalEliminar: function cerrarModalEliminar() {
       $("#modalAlertaEliminarVenta").modal("hide");
     },
     eliminarVenta: function eliminarVenta() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios["delete"]('/venta/apoyo/' + this.id_venta).then(function (respuesta) {
         axios.get('/venta').then(function (respuesta) {
-          _this7.myTableClear();
+          _this8.myTableClear();
 
-          _this7.ventas = respuesta.data[0];
+          _this8.ventas = respuesta.data[0];
 
-          _this7.myTable();
+          _this8.myTable();
         }); //this.ventas = respuesta.data[0]
 
         $("#modalAlertaEliminarVenta").modal("hide");
@@ -8281,6 +8748,7 @@ Vue.component('modal-elegir-lote-component', (__webpack_require__(/*! ./componen
 Vue.component('modal-estado-credito-component', (__webpack_require__(/*! ./components/venderLotes/modalEstadoCreditoComponent.vue */ "./resources/js/components/venderLotes/modalEstadoCreditoComponent.vue")["default"]));
 Vue.component('modal-resumen-venta-component', (__webpack_require__(/*! ./components/venderLotes/modalResumenVentaComponent.vue */ "./resources/js/components/venderLotes/modalResumenVentaComponent.vue")["default"]));
 Vue.component('modal-resumen-venta-contado-component', (__webpack_require__(/*! ./components/venderLotes/modalResumenVentaContadoComponent.vue */ "./resources/js/components/venderLotes/modalResumenVentaContadoComponent.vue")["default"]));
+Vue.component('modal-editar-venta-component', (__webpack_require__(/*! ./components/venderLotes/modalEditarVentaComponent.vue */ "./resources/js/components/venderLotes/modalEditarVentaComponent.vue")["default"]));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -59828,6 +60296,45 @@ component.options.__file = "resources/js/components/registrarResidenciales/modal
 
 /***/ }),
 
+/***/ "./resources/js/components/venderLotes/modalEditarVentaComponent.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/venderLotes/modalEditarVentaComponent.vue ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _modalEditarVentaComponent_vue_vue_type_template_id_5c46eb7c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modalEditarVentaComponent.vue?vue&type=template&id=5c46eb7c& */ "./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=template&id=5c46eb7c&");
+/* harmony import */ var _modalEditarVentaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modalEditarVentaComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _modalEditarVentaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _modalEditarVentaComponent_vue_vue_type_template_id_5c46eb7c___WEBPACK_IMPORTED_MODULE_0__.render,
+  _modalEditarVentaComponent_vue_vue_type_template_id_5c46eb7c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/venderLotes/modalEditarVentaComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/venderLotes/modalElegirLoteComponent.vue":
 /*!**************************************************************************!*\
   !*** ./resources/js/components/venderLotes/modalElegirLoteComponent.vue ***!
@@ -60469,6 +60976,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_modalEditarVentaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./modalEditarVentaComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_modalEditarVentaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/venderLotes/modalElegirLoteComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************!*\
   !*** ./resources/js/components/venderLotes/modalElegirLoteComponent.vue?vue&type=script&lang=js& ***!
@@ -60968,6 +61491,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modalReservarLoteComponent_vue_vue_type_template_id_4c806820___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modalReservarLoteComponent_vue_vue_type_template_id_4c806820___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./modalReservarLoteComponent.vue?vue&type=template&id=4c806820& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarResidenciales/modalReservarLoteComponent.vue?vue&type=template&id=4c806820&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=template&id=5c46eb7c&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=template&id=5c46eb7c& ***!
+  \**********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modalEditarVentaComponent_vue_vue_type_template_id_5c46eb7c___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modalEditarVentaComponent_vue_vue_type_template_id_5c46eb7c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modalEditarVentaComponent_vue_vue_type_template_id_5c46eb7c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./modalEditarVentaComponent.vue?vue&type=template&id=5c46eb7c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=template&id=5c46eb7c&");
 
 
 /***/ }),
@@ -70292,6 +70832,879 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=template&id=5c46eb7c&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=template&id=5c46eb7c& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "modalEditarVenta",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true",
+      },
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "modal-dialog modal-dialog modal-dialog-scrollable modal-xl",
+          attrs: { role: "document" },
+        },
+        [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-body" },
+              [
+                _c(
+                  "div",
+                  { staticClass: "row" },
+                  [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Cliente:")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.datosVenta.identidad,
+                              expression: "datosVenta.identidad",
+                            },
+                          ],
+                          staticClass: "form-control border-dark",
+                          attrs: {
+                            list: "input_clientes",
+                            id: "browser",
+                            autocomplete: "off",
+                          },
+                          domProps: { value: _vm.datosVenta.identidad },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.datosVenta,
+                                "identidad",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "datalist",
+                          { attrs: { id: "input_clientes" } },
+                          _vm._l(_vm.clientes, function (cliente) {
+                            return _c(
+                              "option",
+                              { domProps: { value: cliente.identidad } },
+                              [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(cliente.primer_nombre) +
+                                    " " +
+                                    _vm._s(cliente.segundo_nombre) +
+                                    " " +
+                                    _vm._s(cliente.primer_apellido) +
+                                    " " +
+                                    _vm._s(cliente.segundo_apellido)
+                                ),
+                              ]
+                            )
+                          }),
+                          0
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Agregar Lotes:")]),
+                        _vm._v(
+                          " En desarrollo\n                                        "
+                        ),
+                        _c("div", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-secondary btn-block",
+                              attrs: { type: "button", disabled: "" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.abrirModal(_vm.datosVenta.id_venta)
+                                },
+                              },
+                            },
+                            [_vm._v("Lotes")]
+                          ),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _vm.creditoContado == 1
+                      ? [
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Contado/Credito:")]),
+                              _vm._v(" "),
+                              _c("div", [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary btn-block",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.cambioCreditoContado()
+                                      },
+                                    },
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-credit-card",
+                                    }),
+                                  ]
+                                ),
+                              ]),
+                            ]),
+                          ]),
+                        ]
+                      : [
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Contado/Credito:")]),
+                              _vm._v(" "),
+                              _c("div", [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-success btn-block",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.cambioCreditoContado()
+                                      },
+                                    },
+                                  },
+                                  [_c("i", { staticClass: "fa fa-handshake" })]
+                                ),
+                              ]),
+                            ]),
+                          ]),
+                        ],
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _vm.creditoContado == 1
+                  ? [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", [_vm._v("Prima:")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.datosVenta.prima,
+                                  expression: "datosVenta.prima",
+                                },
+                              ],
+                              staticClass: "form-control border-dark",
+                              attrs: { type: "number" },
+                              domProps: { value: _vm.datosVenta.prima },
+                              on: {
+                                change: _vm.cambioPrimaTiempo,
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.datosVenta,
+                                    "prima",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-2" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", [_vm._v("Tasa de interes anual:")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.datosVenta.tasa_interes,
+                                  expression: "datosVenta.tasa_interes",
+                                },
+                              ],
+                              staticClass: "form-control border-dark",
+                              attrs: { type: "number" },
+                              domProps: { value: _vm.datosVenta.tasa_interes },
+                              on: {
+                                change: _vm.cambioPrimaTiempo,
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.datosVenta,
+                                    "tasa_interes",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", [_vm._v("Dias cobro al mes:")]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.datosVenta.dias_cobro_mes,
+                                    expression: "datosVenta.dias_cobro_mes",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "range", min: "1", max: "30" },
+                                domProps: {
+                                  value: _vm.datosVenta.dias_cobro_mes,
+                                },
+                                on: {
+                                  __r: function ($event) {
+                                    return _vm.$set(
+                                      _vm.datosVenta,
+                                      "dias_cobro_mes",
+                                      $event.target.value
+                                    )
+                                  },
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "input-group-prepend" },
+                                [
+                                  _vm._v(
+                                    "\n                                         "
+                                  ),
+                                  _c(
+                                    "button",
+                                    { staticClass: "form-control form-group" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.datosVenta.dias_cobro_mes)
+                                      ),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                            ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-2" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", [_vm._v("Años de financiamiento:")]),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.datosVenta.anios_financiamiento,
+                                      expression:
+                                        "datosVenta.anios_financiamiento",
+                                    },
+                                  ],
+                                  staticClass: "form-control border-dark",
+                                  on: {
+                                    change: [
+                                      function ($event) {
+                                        var $$selectedVal =
+                                          Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function (o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function (o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                        _vm.$set(
+                                          _vm.datosVenta,
+                                          "anios_financiamiento",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      _vm.cambioPrimaTiempo,
+                                    ],
+                                  },
+                                },
+                                [
+                                  _c("option", { attrs: { selected: "" } }, [
+                                    _vm._v("--Elija un año--"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 1 } }, [
+                                    _vm._v("1 año"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 2 } }, [
+                                    _vm._v("2 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 3 } }, [
+                                    _vm._v("3 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 4 } }, [
+                                    _vm._v("4 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 5 } }, [
+                                    _vm._v("5 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 6 } }, [
+                                    _vm._v("6 años"),
+                                  ]),
+                                ]
+                              ),
+                            ]),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-2" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", [_vm._v("Cuota mensual:")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.datosVenta.cuota,
+                                  expression: "datosVenta.cuota",
+                                },
+                              ],
+                              staticClass: "form-control border-dark",
+                              attrs: { type: "number" },
+                              domProps: { value: _vm.datosVenta.cuota },
+                              on: {
+                                change: _vm.formatearCuotaMensual,
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.datosVenta,
+                                    "cuota",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "card bg-dark" }, [
+                            _c("div", { staticClass: "card-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [_vm._v("Total Contado:")]),
+                                    _vm._v(
+                                      " L. " +
+                                        _vm._s(_vm.datosVenta.contado_formato) +
+                                        "\n                                                "
+                                    ),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [_vm._v("Financiamiento:")]),
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          _vm.datosVenta.anios_financiamiento
+                                        ) +
+                                        " años\n                                                "
+                                    ),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [
+                                      _vm._v("Tasa de interes anual:"),
+                                    ]),
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(_vm.datosVenta.tasa_interes) +
+                                        "%\n                                                "
+                                    ),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [_vm._v("Prima:")]),
+                                    _vm._v(
+                                      " L. " +
+                                        _vm._s(_vm.datosVenta.prima) +
+                                        "\n                                                "
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [_vm._v("Cuotas:")]),
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(_vm.datosVenta.total_cuotas) +
+                                        "\n                                                "
+                                    ),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [_vm._v("Total intereses:")]),
+                                    _vm._v(
+                                      " L. " +
+                                        _vm._s(_vm.datosVenta.total_intereses) +
+                                        "\n                                                "
+                                    ),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [_vm._v("Total a pagar:")]),
+                                    _vm._v(
+                                      " L. " +
+                                        _vm._s(_vm.datosVenta.total_pagar) +
+                                        "\n                                                "
+                                    ),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-3" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [_vm._v("Cuota mensual:")]),
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(_vm.datosVenta.cuota) +
+                                        "\n                                                "
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                            ]),
+                          ]),
+                        ]),
+                      ]),
+                    ]
+                  : [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "card bg-dark" }, [
+                            _c("div", { staticClass: "card-body" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "float-right align-self-stretch",
+                                      },
+                                      [
+                                        _c("h2", [
+                                          _c("label", [
+                                            _vm._v("Total Contado:"),
+                                          ]),
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(
+                                                _vm.datosVenta.contado_formato
+                                              ) +
+                                              "\n                                                        "
+                                          ),
+                                        ]),
+                                      ]
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                            ]),
+                          ]),
+                        ]),
+                      ]),
+                    ],
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "div",
+                      { staticClass: "table-responsive table-striped" },
+                      [
+                        _c(
+                          "table",
+                          {
+                            staticClass: "table table-sm responsive",
+                            attrs: { id: "lotes" },
+                          },
+                          [
+                            _vm._m(3),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(
+                                _vm.datosLotesVendidos,
+                                function (lotes, i) {
+                                  return _c("tr", { key: i }, [
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(i + 1) + ". "),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-info btn-sm",
+                                          attrs: { type: "button" },
+                                        },
+                                        [
+                                          _vm._v(
+                                            " L-" + _vm._s(lotes.lote) + " "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _vm._v(" " + _vm._s(lotes.residencial)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-outline-dark btn-sm",
+                                          attrs: { type: "button" },
+                                        },
+                                        [
+                                          _vm._v(
+                                            " " + _vm._s(lotes.bloque) + " "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _vm._v(
+                                        " L. " + _vm._s(lotes.precio) + " "
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _vm._v(
+                                        " " + _vm._s(lotes.tiempo) + " años"
+                                      ),
+                                    ]),
+                                  ])
+                                }
+                              ),
+                              0
+                            ),
+                          ]
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer bg-warning" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger btn-sm",
+                  attrs: { type: "button", "data-dismiss": "modal" },
+                },
+                [_vm._v("Cerrar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-sm",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.editarVenta()
+                    },
+                  },
+                },
+                [_vm._v("Editar Venta")]
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "modal fade",
+                attrs: {
+                  id: "modalAlertaEditarVenta",
+                  tabindex: "-1",
+                  role: "dialog",
+                  "aria-labelledby": "exampleModalLabel",
+                  "aria-hidden": "true",
+                },
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm",
+                    attrs: { role: "document" },
+                  },
+                  [
+                    _c("div", { staticClass: "modal-content" }, [
+                      _c("div", { staticClass: "modal-header bg-danger" }, [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "close",
+                            attrs: { type: "button", "aria-label": "Close" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.cerrarModalEditar()
+                              },
+                            },
+                          },
+                          [
+                            _c("span", { attrs: { "aria-hidden": "true" } }, [
+                              _vm._v("×"),
+                            ]),
+                          ]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-footer bg-dark" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info btn-sm btn-block",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.cerrarModalEditar()
+                              },
+                            },
+                          },
+                          [_vm._v("Cancelar")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-sm btn-block",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.cambiarVenta(_vm.datosVenta.id_venta)
+                              },
+                            },
+                          },
+                          [_vm._v("Editar")]
+                        ),
+                      ]),
+                    ]),
+                  ]
+                ),
+              ]
+            ),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("modal-elegir-lote-component", {
+        attrs: { lotesFinanciados: _vm.lotesFinanciados },
+        on: { infoLotes: _vm.infoLotes },
+      }),
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header bg-dark" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_c("i", { staticClass: "fa fa-edit" }), _vm._v(" Editar Venta")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", [_c("label", [_vm._v("Credito")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", [_c("label", [_vm._v("Contado")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-dark" }, [
+      _c("tr", [
+        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Lote")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Residencial")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Bloque")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [
+          _vm._v("Años de Financiamiento"),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h5",
+      { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+      [
+        _c("i", { staticClass: "fa fa-exclamation-triangle" }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Advertencia")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c("input", { attrs: { type: "hidden" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("h5", [
+          _c("p", { staticClass: "text-justify" }, [
+            _vm._v("¿Desea realmente editar esta venta?"),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalElegirLoteComponent.vue?vue&type=template&id=67e2f8b7&":
 /*!************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/venderLotes/modalElegirLoteComponent.vue?vue&type=template&id=67e2f8b7& ***!
@@ -74119,6 +75532,26 @@ var render = function () {
                                         _c(
                                           "button",
                                           {
+                                            staticClass: "btn btn-sm btn-info",
+                                            attrs: { type: "button" },
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.modalEditarCredito(
+                                                  venta.idV
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-edit",
+                                            }),
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "button",
+                                          {
                                             staticClass:
                                               "btn btn-sm btn-danger",
                                             attrs: { type: "button" },
@@ -74482,6 +75915,14 @@ var render = function () {
       _vm._v(" "),
       _c("modal-resumen-venta-contado-component", {
         attrs: { resumenDeVenta: _vm.resumenDeVenta },
+      }),
+      _vm._v(" "),
+      _c("modal-editar-venta-component", {
+        attrs: {
+          datosVenta: _vm.datosVenta,
+          datosLotesVendidos: _vm.datosLotesVendidos,
+        },
+        on: { actualizarVentas: _vm.actualizarVentas },
       }),
     ],
     1
