@@ -30,7 +30,7 @@
                                             </div>
                                         </div>
                                 </div>
-                                <template v-if="creditoContado == 1">
+                                <template v-if="this.datosVenta.pago == 'Credito'">
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Contado/Credito:</label>
@@ -54,7 +54,7 @@
                     </div>
                     <hr>
                     <!--<input type="hidden" v-model="informacionLote.idLote">-->
-                    <template v-if="creditoContado == 1">
+                    <template v-if="this.datosVenta.pago == 'Credito'">
                         <h2><label>Credito</label></h2>
                         <div class="row">
                             <div class="col-md-3">
@@ -229,6 +229,7 @@
                                 <div class="row">
                                     <h5>
                                         <p class="text-justify">¿Desea realmente editar esta venta?</p>
+                                        <p class="text-justify">El historial de cuotas de reiniciará.</p>
                                     </h5>
                                     <!-- <p class="text-justify">Si realiza esta accion se eliminaran todos los datos de esta venta sin posibilidad de recuperarlos.</p> -->
                                 </div>
@@ -286,8 +287,10 @@ methods:{
     cambioCreditoContado:function(){
         if(this.creditoContado == 1){
             this.creditoContado = 0
+            this.datosVenta.pago = 'Contado'
         }else{
             this.creditoContado = 1
+            this.datosVenta.pago = 'Credito'
         }
         
     },
@@ -356,6 +359,7 @@ methods:{
             this.informacionLote = respuesta.data[0]
             this.datosVenta.anios_financiamiento = this.informacionLote.tiempo;
             this.datosVenta.total_cuotas = this.informacionLote.cuotas;
+            this.datosVenta.total_intereses = this.informacionLote.interes;
             this.cuota_mensual = new Intl.NumberFormat('es-HN', { style: 'currency', currency: 'HNL' }).format(this.datosVenta.cuota)
         })
     },
@@ -386,9 +390,10 @@ methods:{
         if(this.creditoContado == 0){
             this.accionCreditoContado = 0
             data={
+                "id_venta":this.datosVenta.id_venta,
                 "cliente":this.datosVenta.identidad,
                 "total_contado":this.datosVenta.contado,
-                "anios_financiamiento":this.informacionLote.tiempo,
+                "anios_financiamiento":this.datosVenta.anios_financiamiento,
                 "tasa_interes":this.datosVenta.tasa_interes,
                 "prima":this.datosVenta.prima,
                 "cuotas":this.datosVenta.total_cuotas,
@@ -402,9 +407,10 @@ methods:{
          }else{
             this.accionCreditoContado = 1
             data={
+                "id_venta":this.datosVenta.id_venta,
                 "cliente":this.datosVenta.identidad,
                 "total_contado":this.datosVenta.contado,
-                "anios_financiamiento":this.informacionLote.tiempo,
+                "anios_financiamiento":this.datosVenta.anios_financiamiento,
                 "tasa_interes":this.datosVenta.tasa_interes,
                 "prima":this.datosVenta.prima,
                 "cuotas":this.datosVenta.total_cuotas,
@@ -422,8 +428,10 @@ methods:{
                    data:data
                }).then(respuesta => {
                    console.log(respuesta.data)
-            //    $("#modalEditarCliente").trigger('click')
-            //     this.$emit("actualizarExpediente",data.idCliente)
+                   alert(respuesta.data);
+            $("#modalEditarVenta").modal("hide")
+            $("#modalAlertaEditarVenta").modal("hide")
+            this.$emit("actualizarVentas")
             })
     }
 },

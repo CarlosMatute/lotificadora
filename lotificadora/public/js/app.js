@@ -6453,6 +6453,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["datosVenta", "datosLotesVendidos"],
   data: function data() {
@@ -6487,8 +6488,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     cambioCreditoContado: function cambioCreditoContado() {
       if (this.creditoContado == 1) {
         this.creditoContado = 0;
+        this.datosVenta.pago = 'Contado';
       } else {
         this.creditoContado = 1;
+        this.datosVenta.pago = 'Credito';
       }
     },
     abrirModal: function abrirModal(id_venta) {
@@ -6555,6 +6558,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this6.informacionLote = respuesta.data[0];
         _this6.datosVenta.anios_financiamiento = _this6.informacionLote.tiempo;
         _this6.datosVenta.total_cuotas = _this6.informacionLote.cuotas;
+        _this6.datosVenta.total_intereses = _this6.informacionLote.interes;
         _this6.cuota_mensual = new Intl.NumberFormat('es-HN', {
           style: 'currency',
           currency: 'HNL'
@@ -6586,15 +6590,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       $("#modalAlertaEditarVenta").modal("hide");
     },
     cambiarVenta: function cambiarVenta(id_venta) {
+      var _this8 = this;
+
       //alert(id_venta)
       var data = null;
 
       if (this.creditoContado == 0) {
         this.accionCreditoContado = 0;
         data = {
+          "id_venta": this.datosVenta.id_venta,
           "cliente": this.datosVenta.identidad,
           "total_contado": this.datosVenta.contado,
-          "anios_financiamiento": this.informacionLote.tiempo,
+          "anios_financiamiento": this.datosVenta.anios_financiamiento,
           "tasa_interes": this.datosVenta.tasa_interes,
           "prima": this.datosVenta.prima,
           "cuotas": this.datosVenta.total_cuotas,
@@ -6607,9 +6614,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         this.accionCreditoContado = 1;
         data = {
+          "id_venta": this.datosVenta.id_venta,
           "cliente": this.datosVenta.identidad,
           "total_contado": this.datosVenta.contado,
-          "anios_financiamiento": this.informacionLote.tiempo,
+          "anios_financiamiento": this.datosVenta.anios_financiamiento,
           "tasa_interes": this.datosVenta.tasa_interes,
           "prima": this.datosVenta.prima,
           "cuotas": this.datosVenta.total_cuotas,
@@ -6626,8 +6634,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         url: "venta/apoyo/" + id_venta,
         data: data
       }).then(function (respuesta) {
-        console.log(respuesta.data); //    $("#modalEditarCliente").trigger('click')
-        //     this.$emit("actualizarExpediente",data.idCliente)
+        console.log(respuesta.data);
+        alert(respuesta.data);
+        $("#modalEditarVenta").modal("hide");
+        $("#modalAlertaEditarVenta").modal("hide");
+
+        _this8.$emit("actualizarVentas");
       });
     }
   },
@@ -70964,7 +70976,7 @@ var render = function () {
                       ]),
                     ]),
                     _vm._v(" "),
-                    _vm.creditoContado == 1
+                    this.datosVenta.pago == "Credito"
                       ? [
                           _c("div", { staticClass: "col-md-2" }, [
                             _c("div", { staticClass: "form-group" }, [
@@ -71021,7 +71033,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),
-                _vm.creditoContado == 1
+                this.datosVenta.pago == "Credito"
                   ? [
                       _vm._m(1),
                       _vm._v(" "),
@@ -71693,6 +71705,10 @@ var staticRenderFns = [
         _c("h5", [
           _c("p", { staticClass: "text-justify" }, [
             _vm._v("¿Desea realmente editar esta venta?"),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-justify" }, [
+            _vm._v("El historial de cuotas de reiniciará."),
           ]),
         ]),
       ]),

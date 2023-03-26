@@ -612,7 +612,86 @@ class controladorVentasApoyo extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request->all();
+        $msg = null;
+
+            DB::beginTransaction();
+            try{ 
+            DB::select("update ventas set id_cliente = (select id from clientes where identidad = :identidad),
+            pago = (case when :pago = 1 then 'Credito' else 'Contado' end), 
+            estado = (case when :pago2 = 1 then 'Pendiente' else 'Pagado' end), total_contado = :total_contado, anios_financiamiento = :anios_financiamiento,
+            tasa_interes = :tasa_interes, prima = :prima, cuotas = :cuotas, total_intereses = :total_interes, total_pagar = :total_pagar, 
+            cuota_mensual = :cuota_mensual, dias_cobro_mes = :dias_cobro_mensual, updated_at = now()
+            where id = :id_venta",
+            ["identidad" => $request->cliente, 
+            'pago' => $request->accionCreditoContado,
+            'pago2' => $request->accionCreditoContado,
+            'total_contado' => $request->total_contado,
+            "anios_financiamiento" => $request->anios_financiamiento,
+            'tasa_interes' => $request->tasa_interes,
+            'prima' => $request->prima,
+            'cuotas' => $request->cuotas,
+            'total_interes' => $request->total_intereses,
+            'total_pagar' => $request->total_pagar,
+            'cuota_mensual' => $request->cuota_mensual,
+            'dias_cobro_mensual' => $request->dias_cobro_mensual,
+            'id_venta' => $id]);
+
+            DB::select("delete from fechas_cobros where id_venta = :id_venta", ["id_venta" => $id]);
+
+            if($request->accionCreditoContado == 1){
+
+                $meses = $request->anios_financiamiento*12;
+                //Proceso de dias de cobro
+                $hoy = DATE("Y-m");
+                $hoyCompuesto = $hoy."-".$request->dias_cobro_mensual;
+
+                //Insercion de fechas de cobro
+                if($hoyCompuesto[6] == 2 && $request->dias_cobro_mensual >= 29){
+                    for($i=0; $i<$meses; $i++){
+                        $date_now = $hoyCompuesto;
+                        $date_future = strtotime('+ '.$i.' month', strtotime($date_now));
+                        $date_future = date('Y-m-d', $date_future);  
+                        $fecha = new fechas_cobros();
+                        $fecha->id_venta = $id; 
+                        
+                        if($date_future[5] == 0 && $date_future[6] == 2 && $request->dias_cobro_mensual >= 29){
+                            $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5]."2-28";
+                        }else{
+                            $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5].$date_future[6]."-".$request->dias_cobro_mensual;
+                        }
+                        $fecha->estado = "Pendiente";
+                        $fecha->save();
+                    }
+                }else{
+                    for($i=1; $i<=$meses; $i++){
+                        $date_now = $hoy;
+                        $date_future = strtotime('+ '.$i.' month', strtotime($date_now));
+                        $date_future = date('Y-m', $date_future); 
+                        $fecha = new fechas_cobros();
+                        $fecha->id_venta = $id;  
+
+                        if($date_future[5] != 0 || $date_future[6] != 2 || $request->dias_cobro_mensual <= 28){
+                            $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5].$date_future[6]."-".$request->dias_cobro_mensual;
+
+                        }else{
+                            $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5]."2-28";
+                        }
+                        $fecha->estado = "Pendiente";
+                        $fecha->save();
+                    
+                    }
+                }
+                
+            }
+
+            $msg = 'Venta editada Exitosamente';
+            DB::commit();
+            }catch (Exception $e){
+                DB::rollback();
+                $msg=$e->getMessage();
+            }
+
+        return $msg;
     }
 
     /**
