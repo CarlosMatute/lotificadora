@@ -75,9 +75,20 @@ class controladorVentasApoyoII extends Controller
         join residenciales r on b.id_residencial = r.id
         ", ["id_fecha_pago" => $id]);
 
+        // //Inicia fecha actual desarrollo
+        // $fechaActual = collect(\DB::select("
+        //     select date_format(now(), '%d') AS dia, date_format(now(), '%M') AS mes, date_format(now(), '%Y') AS anio
+        // "))->first();
+        // //Finaliza fecha actual desarrollo
+
+        //Inicia fecha actual produccion
         $fechaActual = collect(\DB::select("
-            select date_format(now(), '%d') AS dia, date_format(now(), '%M') AS mes, date_format(now(), '%Y') AS anio
+            select 
+            date_format(DATE_SUB(now(),INTERVAL 8 HOUR), '%d') AS dia, 
+            date_format(DATE_SUB(now(),INTERVAL 8 HOUR), '%M') AS mes, 
+            date_format(DATE_SUB(now(),INTERVAL 8 HOUR), '%Y') AS anio
         "))->first();
+        //Finaliza fecha actual produccion
 
         $numnero_letras = new NumberFormatter("es", NumberFormatter::SPELLOUT);
         $numero_letra_letras = new NumberFormatter("es", NumberFormatter::ORDINAL);
