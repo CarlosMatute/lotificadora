@@ -27,24 +27,24 @@
                 <div class="small-box elevation-4 bg-info">
                     <div class="inner">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-lg-4 col-md-12">
                                 <h3 class="text-capitalize">{{meses.mesActual}}</h3>
                                 <p>Balance del Mes Actual</p>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-lg-2 col-md-4">
                                 <strong><h4>L.{{meses.totalPagado}}</h4></strong>
                                 <p>Total Cobrado</p>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-lg-2 col-md-4">
                                 <strong><h4>L.{{meses.totalRestante}}</h4></strong>
                                 <p>Total Restante</p>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-lg-2 col-md-4">
                                 <strong><h4>L.{{meses.totalCobrar}}</h4></strong>
                                 <p>Total a Cobrar</p>
                             </div>
-                            <div class="col-md-2">
-                                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                            <div class="col-lg-2 col-md-12">
+                                <div class="card bg-light mb-3">
                                     <div class="card-body">
                                         <center><h5 style="color: rgb(0, 166, 90)"><strong>{{meses.porcentajeCobrado}}%</strong></h5></center>
                                         <div class="progress" style="height: 10px;" id="prueba">

@@ -61757,7 +61757,7 @@ var render = function () {
           _c("div", { staticClass: "small-box elevation-4 bg-info" }, [
             _c("div", { staticClass: "inner" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "col-lg-4 col-md-12" }, [
                   _c("h3", { staticClass: "text-capitalize" }, [
                     _vm._v(_vm._s(_vm.meses.mesActual)),
                   ]),
@@ -61765,7 +61765,7 @@ var render = function () {
                   _c("p", [_vm._v("Balance del Mes Actual")]),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "col-lg-2 col-md-4" }, [
                   _c("strong", [
                     _c("h4", [_vm._v("L." + _vm._s(_vm.meses.totalPagado))]),
                   ]),
@@ -61773,7 +61773,7 @@ var render = function () {
                   _c("p", [_vm._v("Total Cobrado")]),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "col-lg-2 col-md-4" }, [
                   _c("strong", [
                     _c("h4", [_vm._v("L." + _vm._s(_vm.meses.totalRestante))]),
                   ]),
@@ -61781,7 +61781,7 @@ var render = function () {
                   _c("p", [_vm._v("Total Restante")]),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "col-lg-2 col-md-4" }, [
                   _c("strong", [
                     _c("h4", [_vm._v("L." + _vm._s(_vm.meses.totalCobrar))]),
                   ]),
@@ -61789,42 +61789,35 @@ var render = function () {
                   _c("p", [_vm._v("Total a Cobrar")]),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "card bg-light mb-3",
-                      staticStyle: { "max-width": "18rem" },
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "card-body" },
-                        [
-                          _c("center", [
-                            _c(
-                              "h5",
-                              { staticStyle: { color: "rgb(0, 166, 90)" } },
-                              [
-                                _c("strong", [
-                                  _vm._v(
-                                    _vm._s(_vm.meses.porcentajeCobrado) + "%"
-                                  ),
-                                ]),
-                              ]
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", {
-                            staticClass: "progress",
-                            staticStyle: { height: "10px" },
-                            attrs: { id: "prueba" },
-                          }),
-                        ],
-                        1
-                      ),
-                    ]
-                  ),
+                _c("div", { staticClass: "col-lg-2 col-md-12" }, [
+                  _c("div", { staticClass: "card bg-light mb-3" }, [
+                    _c(
+                      "div",
+                      { staticClass: "card-body" },
+                      [
+                        _c("center", [
+                          _c(
+                            "h5",
+                            { staticStyle: { color: "rgb(0, 166, 90)" } },
+                            [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(_vm.meses.porcentajeCobrado) + "%"
+                                ),
+                              ]),
+                            ]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", {
+                          staticClass: "progress",
+                          staticStyle: { height: "10px" },
+                          attrs: { id: "prueba" },
+                        }),
+                      ],
+                      1
+                    ),
+                  ]),
                 ]),
               ]),
             ]),
