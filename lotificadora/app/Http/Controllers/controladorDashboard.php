@@ -205,9 +205,23 @@ class controladorDashboard extends Controller
         }
         //Finaliza estados de diciembre
         
-
-        
         // $enero = fechas_cobros::whereMonth('fecha_cobro', '01')->get();
+
+        //setear base a español
+        DB::select("SET lc_time_names = 'es_ES';");
+        //Movimientos del mes actual
+        $movimientos = collect(\DB::select("
+        with total as (
+            select coalesce(sum(CAST(replace(cuota_mensual, ',', '') AS UNSIGNED)), 0) total_cobrar from ventas where id in 
+                    (select id_venta from fechas_cobros where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y') and estado = 'Pendiente')
+        ), pagado as (
+                select coalesce(sum(cantidad_pago), 0) total_pagado from fechas_cobros where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y') and estado = 'Pagado'
+        )
+        select DATE_FORMAT(now(), '%M') mes_actual, FORMAT(total_cobrar,2) total_cobrar, FORMAT(total_pagado,2) total_pagado, FORMAT((total_cobrar - total_pagado),2) restante,
+        ROUND((total_pagado*100/total_cobrar), 1) porcentaje_cobrado
+        from total 
+        join pagado on true
+        "))->first();
 
 
         $data[]=[
@@ -223,7 +237,12 @@ class controladorDashboard extends Controller
             "octubre"=>$octubreEstado,
             "noviembre"=>$noviembreEstado,
             "diciembre"=>$diciembreEstado,
-            "añoActual"=>date("Y")
+            "añoActual"=>date("Y"),
+            "mesActual"=>$movimientos->mes_actual,
+            "totalCobrar"=>$movimientos->total_cobrar,
+            "totalPagado"=>$movimientos->total_pagado,
+            "totalRestante"=>$movimientos->restante,
+            "porcentajeCobrado"=>$movimientos->porcentaje_cobrado
         ];
 
         return $data;

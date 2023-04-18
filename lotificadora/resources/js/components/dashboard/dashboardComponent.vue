@@ -22,6 +22,43 @@
                 </div>
             </div>
         </div>-->
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="small-box elevation-4 bg-info">
+                    <div class="inner">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="text-capitalize">{{meses.mesActual}}</h3>
+                                <p>Balance del Mes Actual</p>
+                            </div>
+                            <div class="col-md-2">
+                                <strong><h4>L.{{meses.totalPagado}}</h4></strong>
+                                <p>Total Cobrado</p>
+                            </div>
+                            <div class="col-md-2">
+                                <strong><h4>L.{{meses.totalRestante}}</h4></strong>
+                                <p>Total Restante</p>
+                            </div>
+                            <div class="col-md-2">
+                                <strong><h4>L.{{meses.totalCobrar}}</h4></strong>
+                                <p>Total a Cobrar</p>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                    <div class="card-body">
+                                        <center><h5 style="color: rgb(0, 166, 90)"><strong>{{meses.porcentajeCobrado}}%</strong></h5></center>
+                                        <div class="progress" style="height: 10px;" id="prueba">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- <a href="#" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i> </a> -->
+                </div>
+            </div>
+        </div>
 
         <div class="card elevation-4 text-left bg-light">
            <div class="card-header text-muted text-center">
@@ -502,13 +539,17 @@ export default {
             clientes:[],
             verInfoCliente:[],
             meses:[],
-            cuotasMes:[]
+            cuotasMes:[],
+            mesActual:""
         }
     },
     mounted(){
             axios.get('/dashboard').then(respuesta=>{
                 //console.log(respuesta.data[0])
                 this.meses = respuesta.data[0]
+                var porcentaje = respuesta.data[0]
+                //console.log(porcentaje)
+                $("#prueba").html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: '+porcentaje.porcentajeCobrado+'%"></div>');
             })
 
     },

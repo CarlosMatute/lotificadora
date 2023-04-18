@@ -2377,6 +2377,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2385,7 +2422,8 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       clientes: [],
       verInfoCliente: [],
       meses: [],
-      cuotasMes: []
+      cuotasMes: [],
+      mesActual: ""
     };
   },
   mounted: function mounted() {
@@ -2394,6 +2432,9 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
     axios.get('/dashboard').then(function (respuesta) {
       //console.log(respuesta.data[0])
       _this.meses = respuesta.data[0];
+      var porcentaje = respuesta.data[0]; //console.log(porcentaje)
+
+      $("#prueba").html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ' + porcentaje.porcentajeCobrado + '%"></div>');
     });
   },
   methods: {
@@ -61711,6 +61752,86 @@ var render = function () {
     "div",
     { staticClass: "container" },
     [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-12 col-12" }, [
+          _c("div", { staticClass: "small-box elevation-4 bg-info" }, [
+            _c("div", { staticClass: "inner" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("h3", { staticClass: "text-capitalize" }, [
+                    _vm._v(_vm._s(_vm.meses.mesActual)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Balance del Mes Actual")]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [
+                  _c("strong", [
+                    _c("h4", [_vm._v("L." + _vm._s(_vm.meses.totalPagado))]),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Total Cobrado")]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [
+                  _c("strong", [
+                    _c("h4", [_vm._v("L." + _vm._s(_vm.meses.totalRestante))]),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Total Restante")]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [
+                  _c("strong", [
+                    _c("h4", [_vm._v("L." + _vm._s(_vm.meses.totalCobrar))]),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Total a Cobrar")]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "card bg-light mb-3",
+                      staticStyle: { "max-width": "18rem" },
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "card-body" },
+                        [
+                          _c("center", [
+                            _c(
+                              "h5",
+                              { staticStyle: { color: "rgb(0, 166, 90)" } },
+                              [
+                                _c("strong", [
+                                  _vm._v(
+                                    _vm._s(_vm.meses.porcentajeCobrado) + "%"
+                                  ),
+                                ]),
+                              ]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", {
+                            staticClass: "progress",
+                            staticStyle: { height: "10px" },
+                            attrs: { id: "prueba" },
+                          }),
+                        ],
+                        1
+                      ),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "card elevation-4 text-left bg-light" }, [
         _c("div", { staticClass: "card-header text-muted text-center" }, [
           _c("h5", { staticClass: "display-5" }, [

@@ -58,6 +58,7 @@ class controladorVentasApoyoII extends Controller
             and estado = 'Pagado';
         ", ["id_fecha_pago" => $id, "id_fecha_pago2" => $id]))->first();
 
+        //setear base a español
         DB::select("SET lc_time_names = 'es_ES';");
 
         $mesCobro = collect(\DB::select("
