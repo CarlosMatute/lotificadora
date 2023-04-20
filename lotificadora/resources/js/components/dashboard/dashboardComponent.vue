@@ -55,10 +55,86 @@
                         </div>
                     </div>
                     
-                    <!-- <a href="#" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i> </a> -->
+                    <a href="#" v-on:click="verMasMeses()" class="small-box-footer"> Ver más <i class="fas fa-arrow-circle-right"></i> </a>
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modalMovimientosMeses" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog modal-dialog-scrollable modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-balance-scale"></i>
+                         Balances Mensuales 
+                         </h5>
+                        <button type="button" class="close" v-on:click="cerrarModal()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"> 
+                        <!-- <div class="form-group">
+                            <label>Date range:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </span>
+                                </div>
+                                <input type="number" class="form-control float-right" id="reservation" maxlength="4"/>
+                            </div>
+                        </div> -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div v-for="(movimientosMes,i) in movimientosMeses" :key="i">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-12">
+                                                <div class="small-box elevation-4 bg-info">
+                                                    <div class="inner">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-12">
+                                                                <h3 class="text-capitalize">{{movimientosMes.mes}}</h3>
+                                                                <p>{{movimientosMes.anio}}</p>
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-4">
+                                                                <strong><h4>L.{{movimientosMes.total_pagado}}</h4></strong>
+                                                                <p>Total Cobrado</p>
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-4">
+                                                                <strong><h4>L.{{movimientosMes.restante}}</h4></strong>
+                                                                <p>Total Restante</p>
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-4">
+                                                                <strong><h4>L.{{movimientosMes.total_cobrar}}</h4></strong>
+                                                                <p>Total a Cobrar</p>
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-12">
+                                                                <div class="card bg-light mb-3">
+                                                                    <div class="card-body">
+                                                                        <center><h3 style="color: rgb(0, 166, 90)"><strong>{{movimientosMes.porcentaje_cobrado}}%</strong></h3></center>
+                                                                        <!-- <div class="progress" style="height: 10px;" id="hey">
+                                                                        </div> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- <a href="#" v-on:click="verMasMeses()" class="small-box-footer"> Ver más <i class="fas fa-arrow-circle-right"></i> </a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    
+                    <div class="modal-footer bg-warning">
+                        <button type="button" class="btn btn-danger btn-sm" v-on:click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="card elevation-4 text-left bg-light">
            <div class="card-header text-muted text-center">
@@ -540,7 +616,8 @@ export default {
             verInfoCliente:[],
             meses:[],
             cuotasMes:[],
-            mesActual:""
+            mesActual:"",
+            movimientosMeses:[]
         }
     },
     mounted(){
@@ -572,6 +649,19 @@ export default {
                 this.meses = respuesta.data[0]
             })
             
+        },
+
+        verMasMeses:function(){
+            axios.get('/dashboard/'+0+'/edit').then(respuesta=>{
+                this.movimientosMeses = respuesta.data
+                $("#hey").html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: '+15+'%"></div>');
+                $("#modalMovimientosMeses").modal("show")
+            })
+        },
+
+        cerrarModal:function(){
+            $("#modalMovimientosMeses").modal("hide")
+            //$("#modalEsatdoCredito").trigger('click')
         }
     }
     

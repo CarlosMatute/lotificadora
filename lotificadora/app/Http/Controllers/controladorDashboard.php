@@ -212,8 +212,9 @@ class controladorDashboard extends Controller
         //Movimientos del mes actual
         $movimientos = collect(\DB::select("
         with total as (
-            select coalesce(sum(CAST(replace(cuota_mensual, ',', '') AS UNSIGNED)), 0) total_cobrar from ventas where id in 
-                    (select id_venta from fechas_cobros where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y') and estado = 'Pendiente')
+            select coalesce(sum(CAST(replace(v.cuota_mensual, ',', '') AS UNSIGNED)), 0) total_cobrar from ventas v
+                join fechas_cobros fc on v.id = fc.id_venta
+                where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y')
         ), pagado as (
                 select coalesce(sum(cantidad_pago), 0) total_pagado from fechas_cobros where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y') and estado = 'Pagado'
         )
@@ -304,7 +305,27 @@ class controladorDashboard extends Controller
      */
     public function edit($id)
     {
-        //
+        //setear base a español
+        DB::select("SET lc_time_names = 'es_ES';");
+        $meses_anio_actual = DB::select("
+        with total as (
+            select DATE_FORMAT(fc.fecha_cobro,'%M') mes, coalesce(sum(CAST(replace(v.cuota_mensual, ',', '') AS UNSIGNED)), 0) total_cobrar from ventas v
+                right join fechas_cobros fc on v.id = fc.id_venta
+                where DATE_FORMAT(fc.fecha_cobro,'%Y') = '2023'
+                group by DATE_FORMAT(fc.fecha_cobro,'%M')
+                order by fc.fecha_cobro
+        ), pagado as (
+                select DATE_FORMAT(fecha_cobro,'%M') mes, coalesce(sum(cantidad_pago), 0) total_pagado from fechas_cobros where DATE_FORMAT(fecha_cobro,'%Y') = '2023' and estado = 'Pagado'
+                group by DATE_FORMAT(fecha_cobro,'%M')
+                order by fecha_cobro
+        )
+        select '2023' anio, t.mes, FORMAT(total_cobrar,2) total_cobrar, FORMAT(total_pagado,2) total_pagado, FORMAT((total_cobrar - total_pagado),2) restante,
+        ROUND((total_pagado*100/total_cobrar), 1) porcentaje_cobrado
+        from total t
+        join pagado p on t.mes = p.mes
+        ");
+
+        return $meses_anio_actual;
     }
 
     /**
