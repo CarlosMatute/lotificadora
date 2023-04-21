@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     
-                    <a href="#" v-on:click="verMasMeses()" class="small-box-footer"> Ver más <i class="fas fa-arrow-circle-right"></i> </a>
+                    <a href="#" v-on:click="verMasMeses(0)" class="small-box-footer"> Ver más <i class="fas fa-arrow-circle-right"></i> </a>
                 </div>
             </div>
         </div>
@@ -65,65 +65,88 @@
                 <div class="modal-content">
                     <div class="modal-header bg-dark">
                         <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-balance-scale"></i>
-                         Balances Mensuales 
+                         Balances Mensuales por Año
                          </h5>
                         <button type="button" class="close" v-on:click="cerrarModal()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body"> 
-                        <!-- <div class="form-group">
-                            <label>Date range:</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="far fa-calendar-alt"></i>
-                                    </span>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <label>Escribe un año:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                        <input type="number" v-model="nuevoAnio" class="form-control float-right" id="reservation" maxlength="4"/>
+                                        <div class="input-group-prepend">
+                                            <button type="button" v-on:click="verMasMeses(nuevoAnio)" class="btn btn-primary">Ir &nbsp; <i class="fa fa-arrow-circle-right"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="number" class="form-control float-right" id="reservation" maxlength="4"/>
                             </div>
-                        </div> -->
+                            <div class="col-lg-6 col-md-12 text-right">
+                                <label>Año seleccionado:</label>
+                                <h1 id="anio"></h1>
+                            </div>
+                        </div>
+                        
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div v-for="(movimientosMes,i) in movimientosMeses" :key="i">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-12">
-                                                <div class="small-box elevation-4 bg-info">
-                                                    <div class="inner">
-                                                        <div class="row">
-                                                            <div class="col-lg-4 col-md-12">
-                                                                <h3 class="text-capitalize">{{movimientosMes.mes}}</h3>
-                                                                <p>{{movimientosMes.anio}}</p>
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-4">
-                                                                <strong><h4>L.{{movimientosMes.total_pagado}}</h4></strong>
-                                                                <p>Total Cobrado</p>
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-4">
-                                                                <strong><h4>L.{{movimientosMes.restante}}</h4></strong>
-                                                                <p>Total Restante</p>
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-4">
-                                                                <strong><h4>L.{{movimientosMes.total_cobrar}}</h4></strong>
-                                                                <p>Total a Cobrar</p>
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-12">
-                                                                <div class="card bg-light mb-3">
-                                                                    <div class="card-body">
-                                                                        <center><h3 style="color: rgb(0, 166, 90)"><strong>{{movimientosMes.porcentaje_cobrado}}%</strong></h3></center>
-                                                                        <!-- <div class="progress" style="height: 10px;" id="hey">
-                                                                        </div> -->
+                                    <template v-if="movimientosMeses.length != 0">
+                                        <div v-for="(movimientosMes,i) in movimientosMeses" :key="i">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-12">
+                                                    <div class="small-box elevation-4 bg-info">
+                                                        <div class="inner">
+                                                            <div class="row">
+                                                                <div class="col-lg-4 col-md-12">
+                                                                    <h3 class="text-capitalize">{{movimientosMes.mes}}</h3>
+                                                                    <p>{{movimientosMes.anio}}</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-4">
+                                                                    <strong><h4>L.{{movimientosMes.total_pagado}}</h4></strong>
+                                                                    <p>Total Cobrado</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-4">
+                                                                    <strong><h4>L.{{movimientosMes.restante}}</h4></strong>
+                                                                    <p>Total Restante</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-4">
+                                                                    <strong><h4>L.{{movimientosMes.total_cobrar}}</h4></strong>
+                                                                    <p>Total a Cobrar</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-12">
+                                                                    <div class="card bg-light mb-3">
+                                                                        <div class="card-body">
+                                                                            <center><h3 style="color: rgb(0, 166, 90)"><strong>{{movimientosMes.porcentaje_cobrado}}%</strong></h3></center>
+                                                                            <div class="progress" style="height: 10px;" :id="i+1">
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        
+                                                        <!-- <a href="#" v-on:click="verMasMeses()" class="small-box-footer"> Ver más <i class="fas fa-arrow-circle-right"></i> </a> -->
                                                     </div>
-                                                    
-                                                    <!-- <a href="#" v-on:click="verMasMeses()" class="small-box-footer"> Ver más <i class="fas fa-arrow-circle-right"></i> </a> -->
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </template>
+                                    <template v-else>
+                                        <hr>
+                                        <div class="alert alert-danger alert-dismissible">
+                                            <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
+                                            <h5><i class="icon fas fa-ban"></i> ¡Alerta!</h5>
+                                            No existen datos para el año seleccionado, por favor intente nuevamente ingresando otro año.
+                                        </div>
+                                    </template>
+                                    
                                 </div>
                             </div>
                     </div>
@@ -617,7 +640,8 @@ export default {
             meses:[],
             cuotasMes:[],
             mesActual:"",
-            movimientosMeses:[]
+            movimientosMeses:[],
+            nuevoAnio:""
         }
     },
     mounted(){
@@ -626,6 +650,7 @@ export default {
                 this.meses = respuesta.data[0]
                 var porcentaje = respuesta.data[0]
                 //console.log(porcentaje)
+                
                 $("#prueba").html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: '+porcentaje.porcentajeCobrado+'%"></div>');
             })
 
@@ -651,12 +676,21 @@ export default {
             
         },
 
-        verMasMeses:function(){
-            axios.get('/dashboard/'+0+'/edit').then(respuesta=>{
+        verMasMeses:function(anio){
+            axios.get('/dashboard/'+anio+'/edit').then(respuesta=>{
                 this.movimientosMeses = respuesta.data
-                $("#hey").html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: '+15+'%"></div>');
-                $("#modalMovimientosMeses").modal("show")
+                var movimientos = respuesta.data
+                    setTimeout( function() {
+                        anio = anio == 0 ? 2023 : anio
+                        $("#anio").html(anio);
+                        for(var i = 1; i <= movimientos.length; i++){
+                            $("#"+i).html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: '+movimientos[i-1].porcentaje_cobrado+'%"></div>');
+                        }
+                    $("#modalMovimientosMeses").modal("show")
+                    }, 50);
+                this.nuevoAnio = ""
             })
+            
         },
 
         cerrarModal:function(){

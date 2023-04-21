@@ -2490,6 +2490,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2500,7 +2523,8 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       meses: [],
       cuotasMes: [],
       mesActual: "",
-      movimientosMeses: []
+      movimientosMeses: [],
+      nuevoAnio: ""
     };
   },
   mounted: function mounted() {
@@ -2536,13 +2560,23 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         _this3.meses = respuesta.data[0];
       });
     },
-    verMasMeses: function verMasMeses() {
+    verMasMeses: function verMasMeses(anio) {
       var _this4 = this;
 
-      axios.get('/dashboard/' + 0 + '/edit').then(function (respuesta) {
+      axios.get('/dashboard/' + anio + '/edit').then(function (respuesta) {
         _this4.movimientosMeses = respuesta.data;
-        $("#hey").html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ' + 15 + '%"></div>');
-        $("#modalMovimientosMeses").modal("show");
+        var movimientos = respuesta.data;
+        setTimeout(function () {
+          anio = anio == 0 ? 2023 : anio;
+          $("#anio").html(anio);
+
+          for (var i = 1; i <= movimientos.length; i++) {
+            $("#" + i).html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ' + movimientos[i - 1].porcentaje_cobrado + '%"></div>');
+          }
+
+          $("#modalMovimientosMeses").modal("show");
+        }, 50);
+        _this4.nuevoAnio = "";
       });
     },
     cerrarModal: function cerrarModal() {
@@ -61918,7 +61952,7 @@ var render = function () {
                 attrs: { href: "#" },
                 on: {
                   click: function ($event) {
-                    return _vm.verMasMeses()
+                    return _vm.verMasMeses(0)
                   },
                 },
               },
@@ -61978,157 +62012,286 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-6 col-md-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Escribe un año:")]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group" }, [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.nuevoAnio,
+                                expression: "nuevoAnio",
+                              },
+                            ],
+                            staticClass: "form-control float-right",
+                            attrs: {
+                              type: "number",
+                              id: "reservation",
+                              maxlength: "4",
+                            },
+                            domProps: { value: _vm.nuevoAnio },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.nuevoAnio = $event.target.value
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "input-group-prepend" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.verMasMeses(_vm.nuevoAnio)
+                                  },
+                                },
+                              },
+                              [
+                                _vm._v("Ir   "),
+                                _c("i", {
+                                  staticClass: "fa fa-arrow-circle-right",
+                                }),
+                              ]
+                            ),
+                          ]),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
                     _c(
                       "div",
                       { staticClass: "col-md-12" },
-                      _vm._l(
-                        _vm.movimientosMeses,
-                        function (movimientosMes, i) {
-                          return _c("div", { key: i }, [
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-lg-12 col-12" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "small-box elevation-4 bg-info",
-                                  },
-                                  [
-                                    _c("div", { staticClass: "inner" }, [
-                                      _c("div", { staticClass: "row" }, [
+                      [
+                        _vm.movimientosMeses.length != 0
+                          ? _vm._l(
+                              _vm.movimientosMeses,
+                              function (movimientosMes, i) {
+                                return _c("div", { key: i }, [
+                                  _c("div", { staticClass: "row" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "col-lg-12 col-12" },
+                                      [
                                         _c(
                                           "div",
-                                          { staticClass: "col-lg-4 col-md-12" },
-                                          [
-                                            _c(
-                                              "h3",
-                                              {
-                                                staticClass: "text-capitalize",
-                                              },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(movimientosMes.mes)
-                                                ),
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c("p", [
-                                              _vm._v(
-                                                _vm._s(movimientosMes.anio)
-                                              ),
-                                            ]),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "col-lg-2 col-md-4" },
-                                          [
-                                            _c("strong", [
-                                              _c("h4", [
-                                                _vm._v(
-                                                  "L." +
-                                                    _vm._s(
-                                                      movimientosMes.total_pagado
-                                                    )
-                                                ),
-                                              ]),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("p", [_vm._v("Total Cobrado")]),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "col-lg-2 col-md-4" },
-                                          [
-                                            _c("strong", [
-                                              _c("h4", [
-                                                _vm._v(
-                                                  "L." +
-                                                    _vm._s(
-                                                      movimientosMes.restante
-                                                    )
-                                                ),
-                                              ]),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("p", [_vm._v("Total Restante")]),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "col-lg-2 col-md-4" },
-                                          [
-                                            _c("strong", [
-                                              _c("h4", [
-                                                _vm._v(
-                                                  "L." +
-                                                    _vm._s(
-                                                      movimientosMes.total_cobrar
-                                                    )
-                                                ),
-                                              ]),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("p", [_vm._v("Total a Cobrar")]),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "col-lg-2 col-md-12" },
+                                          {
+                                            staticClass:
+                                              "small-box elevation-4 bg-info",
+                                          },
                                           [
                                             _c(
                                               "div",
-                                              {
-                                                staticClass:
-                                                  "card bg-light mb-3",
-                                              },
+                                              { staticClass: "inner" },
                                               [
                                                 _c(
                                                   "div",
-                                                  { staticClass: "card-body" },
+                                                  { staticClass: "row" },
                                                   [
-                                                    _c("center", [
-                                                      _c(
-                                                        "h3",
-                                                        {
-                                                          staticStyle: {
-                                                            color:
-                                                              "rgb(0, 166, 90)",
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "col-lg-4 col-md-12",
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "h3",
+                                                          {
+                                                            staticClass:
+                                                              "text-capitalize",
                                                           },
-                                                        },
-                                                        [
-                                                          _c("strong", [
+                                                          [
                                                             _vm._v(
                                                               _vm._s(
-                                                                movimientosMes.porcentaje_cobrado
-                                                              ) + "%"
+                                                                movimientosMes.mes
+                                                              )
+                                                            ),
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c("p", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              movimientosMes.anio
+                                                            )
+                                                          ),
+                                                        ]),
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "col-lg-2 col-md-4",
+                                                      },
+                                                      [
+                                                        _c("strong", [
+                                                          _c("h4", [
+                                                            _vm._v(
+                                                              "L." +
+                                                                _vm._s(
+                                                                  movimientosMes.total_pagado
+                                                                )
                                                             ),
                                                           ]),
-                                                        ]
-                                                      ),
-                                                    ]),
-                                                  ],
-                                                  1
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("p", [
+                                                          _vm._v(
+                                                            "Total Cobrado"
+                                                          ),
+                                                        ]),
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "col-lg-2 col-md-4",
+                                                      },
+                                                      [
+                                                        _c("strong", [
+                                                          _c("h4", [
+                                                            _vm._v(
+                                                              "L." +
+                                                                _vm._s(
+                                                                  movimientosMes.restante
+                                                                )
+                                                            ),
+                                                          ]),
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("p", [
+                                                          _vm._v(
+                                                            "Total Restante"
+                                                          ),
+                                                        ]),
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "col-lg-2 col-md-4",
+                                                      },
+                                                      [
+                                                        _c("strong", [
+                                                          _c("h4", [
+                                                            _vm._v(
+                                                              "L." +
+                                                                _vm._s(
+                                                                  movimientosMes.total_cobrar
+                                                                )
+                                                            ),
+                                                          ]),
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("p", [
+                                                          _vm._v(
+                                                            "Total a Cobrar"
+                                                          ),
+                                                        ]),
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "col-lg-2 col-md-12",
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "card bg-light mb-3",
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "card-body",
+                                                              },
+                                                              [
+                                                                _c("center", [
+                                                                  _c(
+                                                                    "h3",
+                                                                    {
+                                                                      staticStyle:
+                                                                        {
+                                                                          color:
+                                                                            "rgb(0, 166, 90)",
+                                                                        },
+                                                                    },
+                                                                    [
+                                                                      _c(
+                                                                        "strong",
+                                                                        [
+                                                                          _vm._v(
+                                                                            _vm._s(
+                                                                              movimientosMes.porcentaje_cobrado
+                                                                            ) +
+                                                                              "%"
+                                                                          ),
+                                                                        ]
+                                                                      ),
+                                                                    ]
+                                                                  ),
+                                                                ]),
+                                                                _vm._v(" "),
+                                                                _c("div", {
+                                                                  staticClass:
+                                                                    "progress",
+                                                                  staticStyle: {
+                                                                    height:
+                                                                      "10px",
+                                                                  },
+                                                                  attrs: {
+                                                                    id: i + 1,
+                                                                  },
+                                                                }),
+                                                              ],
+                                                              1
+                                                            ),
+                                                          ]
+                                                        ),
+                                                      ]
+                                                    ),
+                                                  ]
                                                 ),
                                               ]
                                             ),
                                           ]
                                         ),
-                                      ]),
-                                    ]),
-                                  ]
-                                ),
-                              ]),
-                            ]),
-                          ])
-                        }
-                      ),
-                      0
+                                      ]
+                                    ),
+                                  ]),
+                                ])
+                              }
+                            )
+                          : [_c("hr"), _vm._v(" "), _vm._m(3)],
+                      ],
+                      2
                     ),
                   ]),
                 ]),
@@ -62167,17 +62330,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(1),
+                    _vm._m(4),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.enero == "Atrasado"
-                          ? [_vm._m(2)]
+                          ? [_vm._m(5)]
                           : _vm.meses.enero == "Dia de cobro"
-                          ? [_vm._m(3)]
-                          : [_vm._m(4)],
+                          ? [_vm._m(6)]
+                          : [_vm._m(7)],
                       ],
                       2
                     ),
@@ -62230,17 +62393,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(5),
+                    _vm._m(8),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.febrero == "Atrasado"
-                          ? [_vm._m(6)]
+                          ? [_vm._m(9)]
                           : _vm.meses.febrero == "Dia de cobro"
-                          ? [_vm._m(7)]
-                          : [_vm._m(8)],
+                          ? [_vm._m(10)]
+                          : [_vm._m(11)],
                       ],
                       2
                     ),
@@ -62293,17 +62456,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(9),
+                    _vm._m(12),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.marzo == "Atrasado"
-                          ? [_vm._m(10)]
+                          ? [_vm._m(13)]
                           : _vm.meses.marzo == "Dia de cobro"
-                          ? [_vm._m(11)]
-                          : [_vm._m(12)],
+                          ? [_vm._m(14)]
+                          : [_vm._m(15)],
                       ],
                       2
                     ),
@@ -62356,17 +62519,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(13),
+                    _vm._m(16),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.abril == "Atrasado"
-                          ? [_vm._m(14)]
+                          ? [_vm._m(17)]
                           : _vm.meses.abril == "Dia de cobro"
-                          ? [_vm._m(15)]
-                          : [_vm._m(16)],
+                          ? [_vm._m(18)]
+                          : [_vm._m(19)],
                       ],
                       2
                     ),
@@ -62421,17 +62584,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(17),
+                    _vm._m(20),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.mayo == "Atrasado"
-                          ? [_vm._m(18)]
+                          ? [_vm._m(21)]
                           : _vm.meses.mayo == "Dia de cobro"
-                          ? [_vm._m(19)]
-                          : [_vm._m(20)],
+                          ? [_vm._m(22)]
+                          : [_vm._m(23)],
                       ],
                       2
                     ),
@@ -62484,17 +62647,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(21),
+                    _vm._m(24),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.junio == "Atrasado"
-                          ? [_vm._m(22)]
+                          ? [_vm._m(25)]
                           : _vm.meses.junio == "Dia de cobro"
-                          ? [_vm._m(23)]
-                          : [_vm._m(24)],
+                          ? [_vm._m(26)]
+                          : [_vm._m(27)],
                       ],
                       2
                     ),
@@ -62547,17 +62710,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(25),
+                    _vm._m(28),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.julio == "Atrasado"
-                          ? [_vm._m(26)]
+                          ? [_vm._m(29)]
                           : _vm.meses.julio == "Dia de cobro"
-                          ? [_vm._m(27)]
-                          : [_vm._m(28)],
+                          ? [_vm._m(30)]
+                          : [_vm._m(31)],
                       ],
                       2
                     ),
@@ -62610,17 +62773,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(29),
+                    _vm._m(32),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.agosto == "Atrasado"
-                          ? [_vm._m(30)]
+                          ? [_vm._m(33)]
                           : _vm.meses.agosto == "Dia de cobro"
-                          ? [_vm._m(31)]
-                          : [_vm._m(32)],
+                          ? [_vm._m(34)]
+                          : [_vm._m(35)],
                       ],
                       2
                     ),
@@ -62675,17 +62838,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(33),
+                    _vm._m(36),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.septiembre == "Atrasado"
-                          ? [_vm._m(34)]
+                          ? [_vm._m(37)]
                           : _vm.meses.septiembre == "Dia de cobro"
-                          ? [_vm._m(35)]
-                          : [_vm._m(36)],
+                          ? [_vm._m(38)]
+                          : [_vm._m(39)],
                       ],
                       2
                     ),
@@ -62738,17 +62901,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(37),
+                    _vm._m(40),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.octubre == "Atrasado"
-                          ? [_vm._m(38)]
+                          ? [_vm._m(41)]
                           : _vm.meses.octubre == "Dia de cobro"
-                          ? [_vm._m(39)]
-                          : [_vm._m(40)],
+                          ? [_vm._m(42)]
+                          : [_vm._m(43)],
                       ],
                       2
                     ),
@@ -62801,17 +62964,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(41),
+                    _vm._m(44),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.noviembre == "Atrasado"
-                          ? [_vm._m(42)]
+                          ? [_vm._m(45)]
                           : _vm.meses.noviembre == "Dia de cobro"
-                          ? [_vm._m(43)]
-                          : [_vm._m(44)],
+                          ? [_vm._m(46)]
+                          : [_vm._m(47)],
                       ],
                       2
                     ),
@@ -62864,17 +63027,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(45),
+                    _vm._m(48),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.diciembre == "Atrasado"
-                          ? [_vm._m(46)]
+                          ? [_vm._m(49)]
                           : _vm.meses.diciembre == "Dia de cobro"
-                          ? [_vm._m(47)]
-                          : [_vm._m(48)],
+                          ? [_vm._m(50)]
+                          : [_vm._m(51)],
                       ],
                       2
                     ),
@@ -62945,10 +63108,44 @@ var staticRenderFns = [
       [
         _c("i", { staticClass: "fa fa-balance-scale" }),
         _vm._v(
-          "\n                     Balances Mensuales \n                     "
+          "\n                     Balances Mensuales por Año\n                     "
         ),
       ]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "far fa-calendar-alt" }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6 col-md-12 text-right" }, [
+      _c("label", [_vm._v("Año seleccionado:")]),
+      _vm._v(" "),
+      _c("h1", { attrs: { id: "anio" } }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "alert alert-danger alert-dismissible" }, [
+      _c("h5", [
+        _c("i", { staticClass: "icon fas fa-ban" }),
+        _vm._v(" ¡Alerta!"),
+      ]),
+      _vm._v(
+        "\n                                        No existen datos para el año seleccionado, por favor intente nuevamente ingresando otro año.\n                                    "
+      ),
+    ])
   },
   function () {
     var _vm = this
