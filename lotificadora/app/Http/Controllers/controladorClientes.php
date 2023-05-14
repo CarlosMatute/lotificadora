@@ -15,10 +15,16 @@ class controladorClientes extends Controller
      */
     public function index()
     {
-        $clientes = DB::table("clientes")
-                        ->where("id_user", auth()->id())
-                        ->orderBy('primer_nombre','ASC')
-                        ->get();
+        // $clientes = DB::table("clientes")
+        //                 ->where("id_user", auth()->id())
+        //                 ->orderBy('primer_nombre','ASC')
+        //                 ->get();
+
+        $clientes = DB::select("
+            select * from clientes where id_user = :id_usuario
+            order by primer_nombre, segundo_nombre, primer_apellido, segundo_apellido
+        ", ["id_usuario" => auth()->id()]);
+
         return $clientes;
     }
 
@@ -59,13 +65,28 @@ class controladorClientes extends Controller
      */
     public function show($id)
     {
-        $cliente = Cliente::find($id);
+        // $cliente = Cliente::find($id);
+        $cliente = collect(\DB::select("
+            select id, TRIM(
+                concat(
+                COALESCE(concat(TRIM(primer_nombre),' '),''),
+                COALESCE(concat(TRIM(segundo_nombre),' '),''),
+                COALESCE(concat(TRIM(primer_apellido),' '),''),
+                COALESCE(concat(TRIM(segundo_apellido),' '),'')
+                )
+            ) nombre_completo, 
+            concat(SUBSTRING(identidad, 1, 4),'-',SUBSTRING(identidad, 5, 4),'-',SUBSTRING(identidad, 9, 5)) identidad,
+            coalesce(cel,'Sin datos') cel, coalesce(cel2,'Sin datos') cel2, coalesce(correo,'Sin datos') correo,
+            direccion, r_nombre_completo, r_cel, r_direccion
+            from clientes where id = :id_cliente
+        ", ["id_cliente" => $id]))->first();
+
         $beneficiaros = DB::table("beneficiarios")
                         ->where("id_cliente", $id)
                         ->get();
         $data[]=[
             "id" => $cliente->id,
-            "nombreCompleto" => $cliente->primer_nombre." ".$cliente->segundo_nombre." ".$cliente->primer_apellido." ".$cliente->segundo_apellido,
+            "nombreCompleto" => $cliente->nombre_completo,
             "identidad" => $cliente->identidad,
             "correo" => $cliente->correo,
             "cel" => $cliente->cel,

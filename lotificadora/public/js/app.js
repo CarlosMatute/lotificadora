@@ -3030,15 +3030,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3660,6 +3651,121 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -64316,7 +64422,7 @@ var render = function () {
             _c(
               "table",
               {
-                staticClass: "table table-striped table-bordered",
+                staticClass: "table table-sm responsive",
                 staticStyle: { width: "100%" },
                 attrs: { id: "clientes" },
               },
@@ -64357,25 +64463,19 @@ var render = function () {
                           {
                             staticClass: "btn btn-sm btn-light",
                             attrs: { type: "button" },
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fa fa-address-book",
-                              on: {
-                                click: function ($event) {
-                                  return _vm.verExpediente(cliente.id)
-                                },
+                            on: {
+                              click: function ($event) {
+                                return _vm.verExpediente(cliente.id)
                               },
-                            }),
-                          ]
+                            },
+                          },
+                          [_c("i", { staticClass: "fa fa-address-book" })]
                         ),
                       ]),
                     ])
                   }),
                   0
                 ),
-                _vm._v(" "),
-                _vm._m(2),
               ]
             ),
           ]),
@@ -64458,25 +64558,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Nombre")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Identidad")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Telefono")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Expediente")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tfoot", { staticClass: "bg-dark" }, [
-      _c("tr", [
-        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Nombre")]),
+        _c("td", { staticClass: "text-left" }, [_vm._v("Nombre")]),
         _vm._v(" "),
         _c("td", { staticClass: "text-center" }, [_vm._v("Identidad")]),
         _vm._v(" "),
@@ -65854,152 +65936,175 @@ var render = function () {
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("div", { staticClass: "card elevation-2" }, [
-                _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "invoice p-3 mb-3" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("h4", [
+                        _c("i", { staticClass: "fas fa-user" }),
+                        _vm._v(
+                          " Cliente\n                                        "
+                        ),
+                        _c("small", { staticClass: "float-right" }, [
+                          _c("div", { staticClass: "btn-group" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light btn-sm",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.modoEditar(_vm.verInfoCliente.id)
+                                  },
+                                },
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-edit",
+                                  attrs: { "aria-hidden": "true" },
+                                }),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light btn-sm",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.eliminar(_vm.verInfoCliente.id)
+                                  },
+                                },
+                              },
+                              [_c("i", { staticClass: "fas fa-trash" })]
+                            ),
+                          ]),
+                        ]),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row invoice-info" }, [
+                    _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                      _c("address", [
+                        _c("strong", [_vm._v("Nombre Completo:")]),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(_vm.verInfoCliente.nombreCompleto)
+                        ),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("strong", [_vm._v("Tel / Cel:")]),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(_vm.verInfoCliente.cel) +
+                            " / " +
+                            _vm._s(_vm.verInfoCliente.cel2)
+                        ),
+                        _c("br"),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                      _c("address", [
+                        _c("strong", [_vm._v("Identidad:")]),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(_vm.verInfoCliente.identidad)
+                        ),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("strong", [_vm._v("Dirección:")]),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(_vm.verInfoCliente.direccion)
+                        ),
+                        _c("br"),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                      _c("address", [
+                        _c("strong", [_vm._v("Correo Electrónico:")]),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(_vm.verInfoCliente.correo)
+                        ),
+                        _c("br"),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
                   _vm._m(1),
                   _vm._v(" "),
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _vm._m(2),
-                        _vm._v(" "),
-                        _c("h4", [
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm.verInfoCliente.nombreCompleto) +
-                                "\n                                            "
-                            ),
-                          ]),
-                        ]),
+                  _c("div", { staticClass: "row invoice-info" }, [
+                    _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                      _c("address", [
+                        _c("strong", [_vm._v("Nombre Completo:")]),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(_vm.verInfoCliente.r_nombre_completo)
+                        ),
+                        _c("br"),
                       ]),
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _vm._m(3),
-                        _vm._v(" "),
-                        _c("h4", [
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(
-                              " " + _vm._s(_vm.verInfoCliente.identidad) + " "
-                            ),
-                          ]),
-                        ]),
+                    _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                      _c("address", [
+                        _c("strong", [_vm._v("Tel / Cel:")]),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(_vm.verInfoCliente.r_cel)
+                        ),
+                        _c("br"),
                       ]),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _vm._m(4),
-                          _vm._v(" "),
-                          _vm.verInfoCliente.correo == null
-                            ? [_vm._m(5)]
-                            : [
-                                _c("h4", [
-                                  _c("p", { staticClass: "card-text" }, [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(_vm.verInfoCliente.correo) +
-                                        " "
-                                    ),
-                                  ]),
-                                ]),
-                              ],
-                        ],
-                        2
-                      ),
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _vm._m(6),
-                          _vm._v(" "),
-                          _vm.verInfoCliente.cel2 == null
-                            ? [
-                                _c("h4", [
-                                  _c("p", { staticClass: "card-text" }, [
-                                    _vm._v(
-                                      " " + _vm._s(_vm.verInfoCliente.cel)
-                                    ),
-                                  ]),
-                                ]),
-                              ]
-                            : [
-                                _c("h4", [
-                                  _c("p", { staticClass: "card-text" }, [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(_vm.verInfoCliente.cel) +
-                                        " / " +
-                                        _vm._s(_vm.verInfoCliente.cel2) +
-                                        " "
-                                    ),
-                                  ]),
-                                ]),
-                              ],
-                        ],
-                        2
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _vm._m(7),
-                        _vm._v(" "),
-                        _c("h4", [
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(" " + _vm._s(_vm.verInfoCliente.direccion)),
-                          ]),
-                        ]),
+                    _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                      _c("address", [
+                        _c("strong", [_vm._v("Dirección:")]),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(_vm.verInfoCliente.r_direccion)
+                        ),
+                        _c("br"),
                       ]),
                     ]),
                   ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c("div", { staticClass: "card elevation-2" }, [
-                _c("div", { staticClass: "card-body" }, [
-                  _vm._m(8),
                   _vm._v(" "),
                   _c("hr"),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _vm._m(9),
-                        _vm._v(" "),
-                        _c("h4", [
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(
-                              " " + _vm._s(_vm.verInfoCliente.r_nombre_completo)
-                            ),
-                          ]),
-                        ]),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _vm._m(10),
-                        _vm._v(" "),
-                        _c("h4", [
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(" " + _vm._s(_vm.verInfoCliente.r_cel)),
-                          ]),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("h4", [
+                        _c("i", { staticClass: "fas fa-users" }),
+                        _vm._v(
+                          " Beneficiarios\n                                        "
+                        ),
+                        _c("small", { staticClass: "float-right" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-light btn-sm",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.beneficiarios(
+                                    _vm.verInfoCliente.id
+                                  )
+                                },
+                              },
+                            },
+                            [_c("i", { staticClass: "fas fa-user-plus" })]
+                          ),
                         ]),
                       ]),
                     ]),
@@ -66007,273 +66112,126 @@ var render = function () {
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-md-12" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _vm._m(11),
-                        _vm._v(" "),
-                        _c("h4", [
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(
-                              " " + _vm._s(_vm.verInfoCliente.r_direccion)
-                            ),
-                          ]),
-                        ]),
-                      ]),
+                      _c(
+                        "div",
+                        { staticClass: "table-responsive table-striped" },
+                        [
+                          _c(
+                            "table",
+                            {
+                              staticClass: "table table-sm responsive",
+                              attrs: { id: "beneficiarios" },
+                            },
+                            [
+                              _vm._m(2),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(
+                                  _vm.verInfoCliente.beneficiarios,
+                                  function (beneficiarios, k) {
+                                    return _c("tr", { key: k }, [
+                                      _c("td", { staticClass: "text-left" }, [
+                                        _vm._v(_vm._s(k + 1) + ". "),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(
+                                          _vm._s(beneficiarios.nombre_completo)
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(
+                                          " " + _vm._s(beneficiarios.identidad)
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(
+                                          " " + _vm._s(beneficiarios.parentezco)
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(beneficiarios.cel) +
+                                            " / " +
+                                            _vm._s(beneficiarios.cel2)
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(
+                                          " " + _vm._s(beneficiarios.correo)
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(beneficiarios.direccion) +
+                                            " "
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-center" }, [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass: "btn btn-light btn-sm",
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-edit",
+                                              attrs: { "aria-hidden": "true" },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.modoEditarBeneficiario(
+                                                    beneficiarios.id
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass: "btn btn-light btn-sm",
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fas fa-trash",
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.eliminarBeneficiario(
+                                                    beneficiarios.id
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]),
+                                    ])
+                                  }
+                                ),
+                                0
+                              ),
+                            ]
+                          ),
+                        ]
+                      ),
                     ]),
                   ]),
                 ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card elevation-2" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _vm._m(12),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _vm._l(
-                      _vm.verInfoCliente.beneficiarios,
-                      function (beneficiarios, k) {
-                        return _c("div", { key: k }, [
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-md-12" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _c("h3", [
-                                  _c("label", [
-                                    _vm._v(
-                                      "Beneficiario # " + _vm._s(k + 1) + ":"
-                                    ),
-                                  ]),
-                                ]),
-                              ]),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-md-4" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _vm._m(13, true),
-                                _vm._v(" "),
-                                _c("h4", [
-                                  _c("p", { staticClass: "card-text" }, [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(beneficiarios.nombre_completo)
-                                    ),
-                                  ]),
-                                ]),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-4" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _vm._m(14, true),
-                                _vm._v(" "),
-                                _c("h4", [
-                                  _c("p", { staticClass: "card-text" }, [
-                                    _vm._v(
-                                      " " + _vm._s(beneficiarios.identidad)
-                                    ),
-                                  ]),
-                                ]),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-4" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _vm._m(15, true),
-                                _vm._v(" "),
-                                _c("h4", [
-                                  _c("p", { staticClass: "card-text" }, [
-                                    _vm._v(
-                                      " " + _vm._s(beneficiarios.parentezco)
-                                    ),
-                                  ]),
-                                ]),
-                              ]),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-md-6" }, [
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [
-                                  _vm._m(16, true),
-                                  _vm._v(" "),
-                                  beneficiarios.cel2 == null
-                                    ? [
-                                        _c("h4", [
-                                          _c(
-                                            "p",
-                                            { staticClass: "card-text" },
-                                            [
-                                              _vm._v(
-                                                " " + _vm._s(beneficiarios.cel)
-                                              ),
-                                            ]
-                                          ),
-                                        ]),
-                                      ]
-                                    : [
-                                        _c("h4", [
-                                          _c(
-                                            "p",
-                                            { staticClass: "card-text" },
-                                            [
-                                              _vm._v(
-                                                " " +
-                                                  _vm._s(beneficiarios.cel) +
-                                                  " / " +
-                                                  _vm._s(beneficiarios.cel2)
-                                              ),
-                                            ]
-                                          ),
-                                        ]),
-                                      ],
-                                ],
-                                2
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-6" }, [
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [
-                                  _vm._m(17, true),
-                                  _vm._v(" "),
-                                  beneficiarios.correo == null
-                                    ? [_vm._m(18, true)]
-                                    : [
-                                        _c("h4", [
-                                          _c(
-                                            "p",
-                                            { staticClass: "card-text" },
-                                            [
-                                              _vm._v(
-                                                " " +
-                                                  _vm._s(beneficiarios.correo)
-                                              ),
-                                            ]
-                                          ),
-                                        ]),
-                                      ],
-                                ],
-                                2
-                              ),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-md-12" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _vm._m(19, true),
-                                _vm._v(" "),
-                                _c("h4", [
-                                  _c("p", { staticClass: "card-text" }, [
-                                    _vm._v(
-                                      " " + _vm._s(beneficiarios.direccion)
-                                    ),
-                                  ]),
-                                ]),
-                              ]),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-md-12" }, [
-                              _c("div", { staticClass: "btn-group" }, [
-                                _c(
-                                  "button",
-                                  { staticClass: "btn btn-light btn-sm" },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fa fa-edit",
-                                      attrs: { "aria-hidden": "true" },
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.modoEditarBeneficiario(
-                                            beneficiarios.id
-                                          )
-                                        },
-                                      },
-                                    }),
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  { staticClass: "btn btn-light btn-sm" },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fas fa-trash",
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.eliminarBeneficiario(
-                                            beneficiarios.id
-                                          )
-                                        },
-                                      },
-                                    }),
-                                  ]
-                                ),
-                              ]),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("hr"),
-                        ])
-                      }
-                    ),
-                  ],
-                  2
-                ),
               ]),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer bg-warning" }, [
-              _c("div", { staticClass: "btn-group" }, [
-                _c("button", { staticClass: "btn btn-light btn-sm" }, [
-                  _c("i", {
-                    staticClass: "fa fa-edit",
-                    attrs: { "aria-hidden": "true" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.modoEditar(_vm.verInfoCliente.id)
-                      },
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c("button", { staticClass: "btn btn-light btn-sm" }, [
-                  _c("i", {
-                    staticClass: "fas fa-trash",
-                    on: {
-                      click: function ($event) {
-                        return _vm.eliminar(_vm.verInfoCliente.id)
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary btn-sm",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.beneficiarios(_vm.verInfoCliente.id)
-                    },
-                  },
-                },
-                [_vm._v("Agregar Beneficiarios")]
-              ),
-              _vm._v(" "),
               _c(
                 "button",
                 {
@@ -66322,83 +66280,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("h2", [_c("label", [_vm._v("Datos personales del cliente")])]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Nombre Completo:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Numero de Identidad:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Correo Electronico:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [_c("p", { staticClass: "card-text" }, [_vm._v(" - ")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Tel/Cel:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Direccion:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("h2", [_c("label", [_vm._v("Datos personales de la referencia")])]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Nombre Completo:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Tel/Cel:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Direccion:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("h2", [
-          _c("label", [_vm._v("Datos personales de los beneficiarios")]),
+      _c("div", { staticClass: "col-12" }, [
+        _c("h4", [
+          _c("i", { staticClass: "fas fa-male" }),
+          _vm._v(" Referencia\n                                        "),
         ]),
       ]),
     ])
@@ -66407,43 +66292,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Nombre Completo:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Identidad:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Parentezco:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Cel/Tel:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Correo:")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [_c("p", { staticClass: "card-text" }, [_vm._v(" -")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Direccion:")])])
+    return _c("thead", { staticClass: "bg-dark" }, [
+      _c("tr", [
+        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Identidad")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Parentesco")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Celular")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Correo")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Dirección")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Accioón")]),
+      ]),
+    ])
   },
 ]
 render._withStripped = true

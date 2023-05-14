@@ -26,11 +26,11 @@
         <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive table-striped">
-                                        <table class="table table-striped table-bordered" style="width:100%" id="clientes">
+                                        <table class="table table-sm responsive" style="width:100%" id="clientes">
                                             <thead class="bg-dark">
                                                 <tr>
                                                     <td class="text-left">#</td>
-                                                    <td class="text-center">Nombre</td>
+                                                    <td class="text-left">Nombre</td>
                                                     <td class="text-center">Identidad</td>
                                                     <td class="text-center">Telefono</td>
                                                     <td class="text-center">Expediente</td>
@@ -42,18 +42,9 @@
                                                     <td class="text-left">{{cliente.primer_nombre}} {{cliente.segundo_nombre}} {{cliente.primer_apellido}} {{cliente.segundo_apellido}}</td>
                                                     <td class="text-center">{{cliente.identidad}} </td>
                                                     <td class="text-center">{{cliente.cel}} </td>
-                                                    <td class="text-center"> <button type="button" class="btn btn-sm btn-light"><i class="fa fa-address-book" v-on:click="verExpediente(cliente.id)"></i></button> </td>
+                                                    <td class="text-center"> <button type="button" class="btn btn-sm btn-light" v-on:click="verExpediente(cliente.id)"><i class="fa fa-address-book"></i></button> </td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot class="bg-dark">
-                                                <tr>
-                                                    <td class="text-left">#</td>
-                                                    <td class="text-center">Nombre</td>
-                                                    <td class="text-center">Identidad</td>
-                                                    <td class="text-center">Telefono</td>
-                                                    <td class="text-center">Expediente</td>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                </div>

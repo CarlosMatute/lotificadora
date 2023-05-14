@@ -10,7 +10,122 @@
                     </div>
                     <div class="modal-body">
                             <div class="card elevation-2">
-                                <div class="card-body">
+                                <div class="invoice p-3 mb-3">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h4>
+                                                <i class="fas fa-user"></i> Cliente
+                                                <small class="float-right">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-light btn-sm" v-on:click="modoEditar(verInfoCliente.id)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                                                        <button class="btn btn-light btn-sm" v-on:click="eliminar(verInfoCliente.id)"><i class="fas fa-trash"></i></button>
+                                                    </div>
+                                                </small>
+                                            </h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="row invoice-info">
+                                        <div class="col-sm-4 invoice-col">
+                                            <address>
+                                                <strong>Nombre Completo:</strong><br />
+                                                &nbsp; {{verInfoCliente.nombreCompleto}}<br />
+                                                <strong>Tel / Cel:</strong><br />
+                                                &nbsp; {{verInfoCliente.cel}} / {{verInfoCliente.cel2}}<br />
+                                            </address>
+                                        </div>
+                                        <div class="col-sm-4 invoice-col">
+                                            <address>
+                                                <strong>Identidad:</strong><br />
+                                                &nbsp; {{verInfoCliente.identidad}}<br />
+                                                <strong>Dirección:</strong><br />
+                                                &nbsp; {{verInfoCliente.direccion}}<br />
+                                            </address>
+                                        </div>
+                                        <div class="col-sm-4 invoice-col">
+                                            <address>
+                                                <strong>Correo Electrónico:</strong><br />
+                                                &nbsp; {{verInfoCliente.correo}}<br />
+                                            </address>
+                                        </div>
+                                    </div>
+                                <hr>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h4>
+                                                <i class="fas fa-male"></i> Referencia
+                                                <!-- <small class="float-right">Registrado: 2/10/2014</small> -->
+                                            </h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="row invoice-info">
+                                        <div class="col-sm-4 invoice-col">
+                                            <address>
+                                                <strong>Nombre Completo:</strong><br />
+                                                &nbsp; {{verInfoCliente.r_nombre_completo}}<br />
+                                            </address>
+                                        </div>
+                                        <div class="col-sm-4 invoice-col">
+                                            <address>
+                                                <strong>Tel / Cel:</strong><br />
+                                                &nbsp; {{verInfoCliente.r_cel}}<br />
+                                            </address>
+                                        </div>
+                                        <div class="col-sm-4 invoice-col">
+                                            <address>
+                                                <strong>Dirección:</strong><br />
+                                                &nbsp; {{verInfoCliente.r_direccion}}<br />
+                                            </address>
+                                        </div>
+                                    </div>
+                                <hr>
+                                <div class="row">
+                                        <div class="col-12">
+                                            <h4>
+                                                <i class="fas fa-users"></i> Beneficiarios
+                                                <small class="float-right"><button type="button" class="btn btn-light btn-sm" v-on:click="beneficiarios(verInfoCliente.id)"><i class="fas fa-user-plus"></i></button></small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive table-striped">
+                                            <table class="table table-sm responsive" id="beneficiarios">
+                                                <thead class="bg-dark">
+                                                    <tr>
+                                                        <td class="text-left">#</td>
+                                                        <td class="text-center">Nombre</td>
+                                                        <td class="text-center">Identidad</td>
+                                                        <td class="text-center">Parentesco</td>
+                                                        <td class="text-center">Celular</td>
+                                                        <td class="text-center">Correo</td>
+                                                        <td class="text-center">Dirección</td>
+                                                        <td class="text-center">Accioón</td>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(beneficiarios,k) in verInfoCliente.beneficiarios" :key="k">
+                                                        <td class="text-left">{{k+1}}. </td>
+                                                        <td class="text-center">{{beneficiarios.nombre_completo}}</td>
+                                                        <td class="text-center"> {{beneficiarios.identidad}}</td>
+                                                        <td class="text-center"> {{beneficiarios.parentezco}}</td>
+                                                        <td class="text-center"> {{beneficiarios.cel}} / {{beneficiarios.cel2}}</td>
+                                                        <td class="text-center"> {{beneficiarios.correo}}</td>              
+                                                        <td class="text-center"> {{beneficiarios.direccion}} </td>   
+                                                        <td class="text-center"> 
+                                                            <button class="btn btn-light btn-sm"><i class="fa fa-edit" aria-hidden="true" v-on:click="modoEditarBeneficiario(beneficiarios.id)"></i></button>
+                                                            <button class="btn btn-light btn-sm"><i class="fas fa-trash" v-on:click="eliminarBeneficiario(beneficiarios.id)"></i></button>    
+                                                        </td>    
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <!-- <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h2><label>Datos personales del cliente</label></h2>
@@ -64,7 +179,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> 
                             </div>
                         <hr>
                         
@@ -179,7 +294,7 @@
                                         </div>
                                         <hr>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         <!--<div class="row">
                                 <div class="col-md-12">
@@ -196,11 +311,11 @@
                     </div>
                     
                     <div class="modal-footer bg-warning">
-                        <div class="btn-group">
+                        <!-- <div class="btn-group">
                              <button class="btn btn-light btn-sm"><i class="fa fa-edit" aria-hidden="true" v-on:click="modoEditar(verInfoCliente.id)"></i></button>
                              <button class="btn btn-light btn-sm"><i class="fas fa-trash" v-on:click="eliminar(verInfoCliente.id)"></i></button>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-sm" v-on:click="beneficiarios(verInfoCliente.id)">Agregar Beneficiarios</button>
+                        </div> -->
+                        <!-- <button type="button" class="btn btn-primary btn-sm" v-on:click="beneficiarios(verInfoCliente.id)">Agregar Beneficiarios</button> -->
                         <button type="button" class="btn btn-danger btn-sm" v-on:click="cerrarModal">Cerrar</button>
                     </div>
                 </div>
