@@ -66308,7 +66308,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("td", { staticClass: "text-center" }, [_vm._v("Dirección")]),
         _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Accioón")]),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Acción")]),
       ]),
     ])
   },

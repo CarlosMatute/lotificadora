@@ -101,7 +101,7 @@
                                                         <td class="text-center">Celular</td>
                                                         <td class="text-center">Correo</td>
                                                         <td class="text-center">Dirección</td>
-                                                        <td class="text-center">Accioón</td>
+                                                        <td class="text-center">Acción</td>
                                                         
                                                     </tr>
                                                 </thead>
