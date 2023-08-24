@@ -7972,6 +7972,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //props:["lotesFinanciados"],
   data: function data() {
@@ -7987,7 +7993,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       clientes: [],
       informacionLote: [],
       tiempo: "",
-      prima: 0
+      prima: 0,
+      fecha_venta: ""
     }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cuota_mensual", ""), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _ref;
   },
   mounted: function mounted() {
@@ -7996,6 +8003,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     axios.get('/clientes').then(function (respuesta) {
       _this.clientes = respuesta.data; //console.log(respuesta.data)
     });
+    this.fecha_venta = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
   },
   methods: {
     cambioCreditoContado: function cambioCreditoContado() {
@@ -8096,6 +8104,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.creditoContado == 0) {
         this.accionCreditoContado = 0;
         var data = {
+          "fecha_venta": this.fecha_venta,
           "cliente": this.cliente,
           "total_contado": this.informacionLote.contado,
           "anios_financiamiento": this.informacionLote.tiempo,
@@ -8111,6 +8120,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         this.accionCreditoContado = 1;
         var data = {
+          "fecha_venta": this.fecha_venta,
           "cliente": this.cliente,
           "total_contado": this.informacionLote.precioContado,
           "anios_financiamiento": this.informacionLote.tiempo,
@@ -8126,10 +8136,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       axios.post('/venta', data).then(function (respuesta) {
-        _this8.informacionLote = 0, _this8.cliente = "", _this8.prima = 0, _this8.interes = 4, _this8.dias = 30;
-
-        _this8.$emit("actualizarVentas");
-
+        _this8.informacionLote = 0, _this8.cliente = "", _this8.prima = 0, _this8.interes = 4, _this8.dias = 30, _this8.fecha_venta = new Date().toJSON().slice(0, 10).replace(/-/g, '-'), _this8.$emit("actualizarVentas");
         $("#modalLotesVeder").trigger('click');
       });
     }
@@ -8495,10 +8502,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["resumenDeVenta", "estadoCreditoDatos"],
   data: function data() {
-    return {};
+    return {
+      fecha_venta: "",
+      id_venta: null,
+      informacionLote: []
+    };
   },
   mounted: function mounted() {},
   methods: {
@@ -8513,6 +8562,26 @@ __webpack_require__.r(__webpack_exports__);
       ventimp.document.close();
       ventimp.print();
       ventimp.close();
+    },
+    editarFecha: function editarFecha(id) {
+      this.id_venta = id;
+      $("#modalEditarVenta").modal("show");
+    },
+    cerrarModalEditarFechaVenta: function cerrarModalEditarFechaVenta() {
+      $("#modalEditarVenta").modal("hide");
+    },
+    editarVenta: function editarVenta() {
+      var _this = this;
+
+      var data = {
+        "id_venta": this.id_venta,
+        "fecha_venta": this.fecha_venta
+      };
+      axios.post("lotes/apoyo/III", data).then(function (respuesta) {
+        _this.informacionLote = respuesta.data;
+        console.log(_this.informacionLote);
+        window.location.reload();
+      });
     }
   }
 });
@@ -74239,7 +74308,35 @@ var render = function () {
                       _vm._m(1),
                       _vm._v(" "),
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-3" }, [
+                        _c("div", { staticClass: "col-md-4 col-lg-2" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", [_vm._v("Fecha de venta:")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fecha_venta,
+                                  expression: "fecha_venta",
+                                },
+                              ],
+                              staticClass: "form-control border-dark",
+                              attrs: { type: "date" },
+                              domProps: { value: _vm.fecha_venta },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.fecha_venta = $event.target.value
+                                },
+                              },
+                            }),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-4 col-lg-2" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", [_vm._v("Prima:")]),
                             _vm._v(" "),
@@ -74268,7 +74365,7 @@ var render = function () {
                           ]),
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "col-md-4 col-lg-2" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", [_vm._v("Tasa de interes anual:")]),
                             _vm._v(" "),
@@ -74297,7 +74394,7 @@ var render = function () {
                           ]),
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
+                        _c("div", { staticClass: "col-md-4 col-lg-2" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", [_vm._v("Dias cobro al mes:")]),
                             _vm._v(" "),
@@ -74339,7 +74436,7 @@ var render = function () {
                           ]),
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "col-md-4 col-lg-2" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", [_vm._v("Años de financiamiento:")]),
                             _vm._v(" "),
@@ -74420,7 +74517,7 @@ var render = function () {
                           ]),
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "col-md-4 col-lg-2" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", [_vm._v("Cuota mensual:")]),
                             _vm._v(" "),
@@ -74775,7 +74872,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h2", [_c("label", [_vm._v("Credito")])])
+    return _c("h2", [_c("label", [_vm._v("Crédito")])])
   },
   function () {
     var _vm = this
@@ -75163,9 +75260,50 @@ var render = function () {
                       _vm._m(2),
                       _vm._v(" "),
                       _c("h4", [
-                        _vm._v(" " + _vm._s(_vm.resumenDeVenta.fecha) + " "),
+                        _vm._v(
+                          " " +
+                            _vm._s(_vm.resumenDeVenta.fecha) +
+                            " \n                                    "
+                        ),
+                        _c("small", { staticClass: "float-right" }, [
+                          _c("div", { staticClass: "btn-group" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light btn-sm",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.editarFecha(
+                                      _vm.resumenDeVenta.id_venta
+                                    )
+                                  },
+                                },
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-edit",
+                                  attrs: { "aria-hidden": "true" },
+                                }),
+                              ]
+                            ),
+                          ]),
+                        ]),
                       ]),
                     ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("sm", [
+                          _c("label", [_vm._v("Venta registrada el :")]),
+                          _vm._v(
+                            " " + _vm._s(_vm.resumenDeVenta.fecha_registro)
+                          ),
+                        ]),
+                      ],
+                      1
+                    ),
                   ]),
                 ]),
                 _vm._v(" "),
@@ -75562,6 +75700,119 @@ var render = function () {
           ]),
         ]
       ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "modalEditarVenta",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "exampleModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm",
+              attrs: { role: "document" },
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header bg-warning" }, [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "aria-label": "Close" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.cerrarModalEditarFechaVenta()
+                        },
+                      },
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×"),
+                      ]),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("input", { attrs: { type: "hidden" } }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12 col-lg-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Fecha de venta:")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.fecha_venta,
+                              expression: "fecha_venta",
+                            },
+                          ],
+                          staticClass: "form-control border-dark",
+                          attrs: { type: "date" },
+                          domProps: { value: _vm.fecha_venta },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.fecha_venta = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer bg-dark" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-sm",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.cerrarModalEditarFechaVenta()
+                        },
+                      },
+                    },
+                    [_vm._v("Cancelar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-sm",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.editarVenta()
+                        },
+                      },
+                    },
+                    [_vm._v("Editar")]
+                  ),
+                ]),
+              ]),
+            ]
+          ),
+        ]
+      ),
     ]
   )
 }
@@ -75586,7 +75837,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h3", [_c("label", [_vm._v("Fecha y hora de venta:")])])
+    return _c("h3", [_c("label", [_vm._v("Fecha de venta:")])])
   },
   function () {
     var _vm = this
@@ -75647,6 +75898,20 @@ var staticRenderFns = [
         _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
       ]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h5",
+      { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+      [
+        _c("i", { staticClass: "fa fa-edit" }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Editar")]),
+      ]
+    )
   },
 ]
 render._withStripped = true

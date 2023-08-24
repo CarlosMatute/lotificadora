@@ -144,7 +144,16 @@ class controladorLotesApoyoII extends Controller
      */
     public function edit($id)//informacion para el resumen de venta
     {
-        $venta = Venta::find($id);
+        //$venta = Venta::find($id);
+        DB::select("SET lc_time_names = 'es_MX';");
+
+        $venta = collect(\DB::select("
+        select id_cliente, pago, estado, total_contado, anios_financiamiento, 
+                tasa_interes, prima, cuotas, total_intereses, total_pagar,
+                cuota_mensual, dias_cobro_mes, 
+                coalesce(DATE_FORMAT(fecha_venta,'%d de %M de %Y'), 'Sin asignar') fecha_venta, DATE_FORMAT(created_at,'%d de %M de %Y') created_at
+        from ventas where id = :id_venta
+        ", ["id_venta" => $id]))->first();
 
         $cliente = Cliente::find($venta->id_cliente);
 
@@ -166,11 +175,14 @@ class controladorLotesApoyoII extends Controller
             "total_intereses"=>$venta->total_intereses,
             "total_pagar"=>$venta->total_pagar,
             "cuota_mensual"=>$venta->cuota_mensual,
-            "fecha"=> date("F j, Y - g:i A", strtotime($venta->created_at)),
+            //"fecha"=> date("F j, Y - g:i A", strtotime($venta->created_at)),
+            "fecha"=> $venta->fecha_venta,
+            "fecha_registro"=> $venta->created_at,
             "cliente"=>$cliente->primer_nombre." ".$cliente->segundo_nombre." ".$cliente->primer_apellido." ".$cliente->segundo_apellido,
             "identidad"=>$cliente->identidad,
             "cel"=>$cliente->cel,
-            "lotes"=>$lotes
+            "lotes"=>$lotes,
+            "id_venta"=>$id
         ];
 
         return $data;

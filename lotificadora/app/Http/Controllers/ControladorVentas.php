@@ -120,6 +120,7 @@ class ControladorVentas extends Controller
         $venta->total_pagar = $request->total_pagar;
         $venta->cuota_mensual = number_format($request->cuota_mensual);
         $venta->dias_cobro_mes = $request->dias_cobro_mensual;
+        $venta->fecha_venta = $request->fecha_venta;
         $venta->save();
         
         $id_venta = Venta::all()->last();
@@ -128,7 +129,10 @@ class ControladorVentas extends Controller
 
             $meses = $request->anios_financiamiento*12;
             //Proceso de dias de cobro
-            $hoy = DATE("Y-m");
+            //$hoy = DATE("Y-m");
+            $fechaVenta = $request->fecha_venta;
+            $hoy = date_format(date_create($fechaVenta), 'Y-m');
+            //dd($hoy);
             $hoyCompuesto = $hoy."-".$request->dias_cobro_mensual;
 
             //Insercion de fechas de cobro
@@ -167,6 +171,16 @@ class ControladorVentas extends Controller
                 
                 }
             }
+
+            //Manejo de estados de fechas de cobros
+            DB::select("
+                UPDATE fechas_cobros SET estado = CASE
+                    WHEN DATE_FORMAT(fecha_cobro,'%Y-%m-%d') < DATE_FORMAT(now(),'%Y-%m-%d') THEN 'Atrasado'
+                    WHEN DATE_FORMAT(fecha_cobro,'%Y-%m-%d') = DATE_FORMAT(now(),'%Y-%m-%d') THEN 'Dia de cobro'
+                    ELSE estado
+                    END
+                WHERE estado != 'Pagado' and id_venta = :id_venta
+            ",["id_venta" => $id_venta->id]);
             
         }
 

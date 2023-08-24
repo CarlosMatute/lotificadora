@@ -113,21 +113,27 @@
                             
                         </template>
                         <template v-else-if="informacionLote != 0 && creditoContado != 0">
-                            <h2><label>Credito</label></h2>
+                            <h2><label>Crédito</label></h2>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4 col-lg-2">
+                                     <div class="form-group">
+                                        <label>Fecha de venta:</label>
+                                        <input type="date" v-model="fecha_venta" class="form-control border-dark">
+                                    </div>
+                               </div>
+                                <div class="col-md-4 col-lg-2">
                                      <div class="form-group">
                                         <label>Prima:</label>
                                         <input type="number" v-model="prima" v-on:change="cambioPrimaTiempo" class="form-control border-dark">
                                     </div>
                                </div>
-                               <div class="col-md-2">
+                               <div class="col-md-4 col-lg-2">
                                      <div class="form-group">
                                         <label>Tasa de interes anual:</label>
                                         <input type="number" v-model="interes" v-on:change="cambioPrimaTiempo" class="form-control border-dark">
                                     </div>
                                </div>
-                               <div class="col-md-3">
+                               <div class="col-md-4 col-lg-2">
                                     <div class="form-group">
                                         <label>Dias cobro al mes:</label>
                                         <div class="input-group">
@@ -138,7 +144,7 @@
                                         </div>
                                     </div>
                                </div>
-                               <div class="col-md-2">
+                               <div class="col-md-4 col-lg-2">
                                     <div class="form-group">
                                         <label>Años de financiamiento:</label>
                                         <div>
@@ -154,7 +160,7 @@
                                         </div>
                                     </div>
                                </div>   
-                               <div class="col-md-2">
+                               <div class="col-md-4 col-lg-2">
                                      <div class="form-group">
                                         <label>Cuota mensual:</label>
                                         <input type="number" v-model="informacionLote.valorCuotaMensual" v-on:change="formatearCuotaMensual" class="form-control border-dark">
@@ -298,6 +304,7 @@ export default {
             informacionLote:[],
             tiempo:"",
             prima:0,
+            fecha_venta:"",
             dias:30,
             interes:4,
             cuota_mensual:"",
@@ -313,6 +320,7 @@ export default {
                 this.clientes = respuesta.data
                 //console.log(respuesta.data)
             })
+            this.fecha_venta = new Date().toJSON().slice(0,10).replace(/-/g,'-');
 
     },
     methods:{
@@ -406,6 +414,7 @@ export default {
             if(this.creditoContado == 0){
                 this.accionCreditoContado = 0
                 var data={
+                    "fecha_venta":this.fecha_venta,
                     "cliente":this.cliente,
                     "total_contado":this.informacionLote.contado,
                     "anios_financiamiento":this.informacionLote.tiempo,
@@ -422,6 +431,7 @@ export default {
              }else{
                 this.accionCreditoContado = 1
                 var data={
+                    "fecha_venta":this.fecha_venta,
                     "cliente":this.cliente,
                     "total_contado":this.informacionLote.precioContado,
                     "anios_financiamiento":this.informacionLote.tiempo,
@@ -441,7 +451,8 @@ export default {
                 this.cliente = "",
                 this.prima = 0,
                 this.interes = 4,
-                this.dias = 30
+                this.dias = 30,
+                this.fecha_venta = new Date().toJSON().slice(0,10).replace(/-/g,'-'),
                 this.$emit("actualizarVentas")
                 $("#modalLotesVeder").trigger('click')
             })

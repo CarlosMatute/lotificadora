@@ -18,6 +18,7 @@ Route::resource('/residenciales/apoyo', App\Http\Controllers\controladorResidenc
 Route::resource('/lotes', App\Http\Controllers\controladorLotes::class);
 Route::resource('/lotes/apoyo', App\Http\Controllers\controladorLotesApoyo::class);
 Route::resource('/lotes/apoyo/II', App\Http\Controllers\controladorLotesApoyoII::class);
+Route::resource('/lotes/apoyo/III', App\Http\Controllers\controladorLotesApoyoIII::class);
 Route::resource('/bloque', App\Http\Controllers\controladorBloque::class);
 //Clientes
 Route::get('/registrarClientes', [App\Http\Controllers\HomeController::class, 'registrar_clientes']);

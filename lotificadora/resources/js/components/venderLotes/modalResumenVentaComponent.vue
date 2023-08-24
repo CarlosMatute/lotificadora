@@ -21,8 +21,17 @@
                                </div>
                                <div class="col-md-4">
                                      <div class="form-group">
-                                        <h3><label>Fecha y hora de venta:</label></h3>
-                                        <h4> {{resumenDeVenta.fecha}} </h4>
+                                        <h3><label>Fecha de venta:</label></h3>
+                                        <h4> {{resumenDeVenta.fecha}} 
+                                            <small class="float-right">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-light btn-sm" v-on:click="editarFecha(resumenDeVenta.id_venta)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                                                </div>
+                                            </small>
+                                        </h4>
+                                    </div>
+                                    <div class="form-group">
+                                        <sm><label>Venta registrada el :</label> {{resumenDeVenta.fecha_registro}}</sm>
                                     </div>
                                </div>
                         </div>
@@ -174,6 +183,35 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="modalEditarVenta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-edit"></i> <b> Editar</b></h5>
+                        <button type="button" class="close" v-on:click="cerrarModalEditarFechaVenta()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" >
+                        <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                     <div class="form-group">
+                                        <label>Fecha de venta:</label>
+                                        <input type="date" v-model="fecha_venta" class="form-control border-dark">
+                                    </div>
+                               </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="modal-footer bg-dark">
+                        <button type="button" class="btn btn-danger btn-sm" v-on:click="cerrarModalEditarFechaVenta()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary btn-sm" v-on:click="editarVenta()">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     
 </template>
@@ -183,7 +221,9 @@ export default {
     props:["resumenDeVenta", "estadoCreditoDatos"],
     data(){
         return{
-
+            fecha_venta:"",
+            id_venta:null,
+            informacionLote:[]
 
         }
     },
@@ -206,9 +246,28 @@ export default {
                     ventimp.document.close();
                     ventimp.print( );
                     ventimp.close();
-                
-            
         },
+
+        editarFecha:function(id){
+            this.id_venta = id;
+            $("#modalEditarVenta").modal("show")
+
+        },
+        cerrarModalEditarFechaVenta:function(){
+            $("#modalEditarVenta").modal("hide")
+        },
+        editarVenta:function(){
+            var data = {
+                "id_venta":this.id_venta,
+                "fecha_venta":this.fecha_venta
+            }
+            axios.post("lotes/apoyo/III", data).then(respuesta =>{
+                this.informacionLote = respuesta.data
+                console.log(this.informacionLote);
+                window.location.reload();
+            })
+            
+        }
     }
     
 }
