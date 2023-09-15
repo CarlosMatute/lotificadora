@@ -70320,9 +70320,30 @@ var render = function () {
                                       [
                                         lotes.estado == "Vendido"
                                           ? [
-                                              _vm._m(2, true),
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-warning btn-sm",
+                                                  on: {
+                                                    click: function ($event) {
+                                                      return _vm.modoEditar(
+                                                        lotes.id
+                                                      )
+                                                    },
+                                                  },
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass: "fa fa-edit",
+                                                    attrs: {
+                                                      "aria-hidden": "true",
+                                                    },
+                                                  }),
+                                                ]
+                                              ),
                                               _vm._v(" "),
-                                              _vm._m(3, true),
+                                              _vm._m(2, true),
                                             ]
                                           : [
                                               _c(
@@ -70377,7 +70398,7 @@ var render = function () {
                               0
                             ),
                             _vm._v(" "),
-                            _vm._m(4),
+                            _vm._m(3),
                           ]
                         ),
                       ]
@@ -70534,16 +70555,6 @@ var staticRenderFns = [
         },
       },
       [_c("i", { staticClass: "fa fa-handshake" })]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-warning btn-sm", attrs: { disabled: "" } },
-      [_c("i", { staticClass: "fa fa-edit", attrs: { "aria-hidden": "true" } })]
     )
   },
   function () {

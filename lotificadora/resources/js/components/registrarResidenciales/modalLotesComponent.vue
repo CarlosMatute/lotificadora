@@ -48,7 +48,7 @@
                                                     <td class="text-center" >
                                                         <div class="btn-group">
                                                             <template v-if="lotes.estado == 'Vendido'">
-                                                                <button class="btn btn-warning btn-sm" disabled><i class="fa fa-edit" aria-hidden="true" ></i></button>
+                                                                <button class="btn btn-warning btn-sm" v-on:click="modoEditar(lotes.id)"><i class="fa fa-edit" aria-hidden="true" ></i></button>
                                                                 <button class="btn btn-danger btn-sm" disabled><i class="fas fa-trash"></i></button>
                                                             </template>
                                                             <template v-else>
