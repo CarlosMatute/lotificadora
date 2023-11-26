@@ -2513,6 +2513,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2734,21 +2735,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2767,7 +2753,7 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       informacionLote: [],
       tiempo: "",
       prima: 0
-    }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _defineProperty(_ref, "abono", ""), _defineProperty(_ref, "alerta", 0), _defineProperty(_ref, "resumenDeVenta", []), _defineProperty(_ref, "estadoCreditoDatos", []), _ref;
+    }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _defineProperty(_ref, "abono", ""), _defineProperty(_ref, "alerta", 0), _defineProperty(_ref, "resumenDeVenta", []), _defineProperty(_ref, "estadoCreditoDatos", []), _defineProperty(_ref, "mensaje_texto", ""), _ref;
   },
   mounted: function mounted() {
     var _this = this;
@@ -2949,6 +2935,10 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
           $('#letras').DataTable();
         });
       });
+    },
+    mensaje: function mensaje(celular) {
+      this.mensaje_texto = "Estimado cliente, le saluda Inversiones Rivera Carvajal, el motivo de este mensaje " + "es para hacerle saber que tiene moras Pendientes. Por favor ponerse al día. Gracias.";
+      window.open('https://api.whatsapp.com/send?phone=504' + celular + '&text=' + this.mensaje_texto + '', '_blank');
     }
   },
   computed: {
@@ -62493,11 +62483,7 @@ var render = function () {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "card elevation-4 text-left bg-light" }, [
-        _c("div", { staticClass: "card-header text-muted text-center" }, [
-          _c("h5", { staticClass: "display-5" }, [
-            _vm._v("Cuotas del año " + _vm._s(_vm.meses.añoActual) + " "),
-          ]),
-        ]),
+        _vm._m(4),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [
@@ -62505,17 +62491,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(4),
+                    _vm._m(5),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.enero == "Atrasado"
-                          ? [_vm._m(5)]
-                          : _vm.meses.enero == "Dia de cobro"
                           ? [_vm._m(6)]
-                          : [_vm._m(7)],
+                          : _vm.meses.enero == "Dia de cobro"
+                          ? [_vm._m(7)]
+                          : [_vm._m(8)],
                       ],
                       2
                     ),
@@ -62540,7 +62526,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -62568,17 +62554,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(8),
+                    _vm._m(9),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.febrero == "Atrasado"
-                          ? [_vm._m(9)]
-                          : _vm.meses.febrero == "Dia de cobro"
                           ? [_vm._m(10)]
-                          : [_vm._m(11)],
+                          : _vm.meses.febrero == "Dia de cobro"
+                          ? [_vm._m(11)]
+                          : [_vm._m(12)],
                       ],
                       2
                     ),
@@ -62603,7 +62589,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -62631,17 +62617,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(12),
+                    _vm._m(13),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.marzo == "Atrasado"
-                          ? [_vm._m(13)]
-                          : _vm.meses.marzo == "Dia de cobro"
                           ? [_vm._m(14)]
-                          : [_vm._m(15)],
+                          : _vm.meses.marzo == "Dia de cobro"
+                          ? [_vm._m(15)]
+                          : [_vm._m(16)],
                       ],
                       2
                     ),
@@ -62666,7 +62652,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -62694,17 +62680,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(16),
+                    _vm._m(17),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.abril == "Atrasado"
-                          ? [_vm._m(17)]
-                          : _vm.meses.abril == "Dia de cobro"
                           ? [_vm._m(18)]
-                          : [_vm._m(19)],
+                          : _vm.meses.abril == "Dia de cobro"
+                          ? [_vm._m(19)]
+                          : [_vm._m(20)],
                       ],
                       2
                     ),
@@ -62729,7 +62715,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -62759,17 +62745,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(20),
+                    _vm._m(21),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.mayo == "Atrasado"
-                          ? [_vm._m(21)]
-                          : _vm.meses.mayo == "Dia de cobro"
                           ? [_vm._m(22)]
-                          : [_vm._m(23)],
+                          : _vm.meses.mayo == "Dia de cobro"
+                          ? [_vm._m(23)]
+                          : [_vm._m(24)],
                       ],
                       2
                     ),
@@ -62794,7 +62780,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -62822,17 +62808,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(24),
+                    _vm._m(25),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.junio == "Atrasado"
-                          ? [_vm._m(25)]
-                          : _vm.meses.junio == "Dia de cobro"
                           ? [_vm._m(26)]
-                          : [_vm._m(27)],
+                          : _vm.meses.junio == "Dia de cobro"
+                          ? [_vm._m(27)]
+                          : [_vm._m(28)],
                       ],
                       2
                     ),
@@ -62857,7 +62843,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -62885,17 +62871,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(28),
+                    _vm._m(29),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.julio == "Atrasado"
-                          ? [_vm._m(29)]
-                          : _vm.meses.julio == "Dia de cobro"
                           ? [_vm._m(30)]
-                          : [_vm._m(31)],
+                          : _vm.meses.julio == "Dia de cobro"
+                          ? [_vm._m(31)]
+                          : [_vm._m(32)],
                       ],
                       2
                     ),
@@ -62920,7 +62906,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -62948,17 +62934,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(32),
+                    _vm._m(33),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.agosto == "Atrasado"
-                          ? [_vm._m(33)]
-                          : _vm.meses.agosto == "Dia de cobro"
                           ? [_vm._m(34)]
-                          : [_vm._m(35)],
+                          : _vm.meses.agosto == "Dia de cobro"
+                          ? [_vm._m(35)]
+                          : [_vm._m(36)],
                       ],
                       2
                     ),
@@ -62983,7 +62969,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -63013,17 +62999,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(36),
+                    _vm._m(37),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.septiembre == "Atrasado"
-                          ? [_vm._m(37)]
-                          : _vm.meses.septiembre == "Dia de cobro"
                           ? [_vm._m(38)]
-                          : [_vm._m(39)],
+                          : _vm.meses.septiembre == "Dia de cobro"
+                          ? [_vm._m(39)]
+                          : [_vm._m(40)],
                       ],
                       2
                     ),
@@ -63048,7 +63034,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -63076,17 +63062,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(40),
+                    _vm._m(41),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.octubre == "Atrasado"
-                          ? [_vm._m(41)]
-                          : _vm.meses.octubre == "Dia de cobro"
                           ? [_vm._m(42)]
-                          : [_vm._m(43)],
+                          : _vm.meses.octubre == "Dia de cobro"
+                          ? [_vm._m(43)]
+                          : [_vm._m(44)],
                       ],
                       2
                     ),
@@ -63111,7 +63097,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -63139,17 +63125,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(44),
+                    _vm._m(45),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.noviembre == "Atrasado"
-                          ? [_vm._m(45)]
-                          : _vm.meses.noviembre == "Dia de cobro"
                           ? [_vm._m(46)]
-                          : [_vm._m(47)],
+                          : _vm.meses.noviembre == "Dia de cobro"
+                          ? [_vm._m(47)]
+                          : [_vm._m(48)],
                       ],
                       2
                     ),
@@ -63174,7 +63160,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -63202,17 +63188,17 @@ var render = function () {
               _c("div", { staticClass: "card elevation-1 bg-dark" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(48),
+                    _vm._m(49),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _vm.meses.diciembre == "Atrasado"
-                          ? [_vm._m(49)]
-                          : _vm.meses.diciembre == "Dia de cobro"
                           ? [_vm._m(50)]
-                          : [_vm._m(51)],
+                          : _vm.meses.diciembre == "Dia de cobro"
+                          ? [_vm._m(51)]
+                          : [_vm._m(52)],
                       ],
                       2
                     ),
@@ -63237,7 +63223,7 @@ var render = function () {
                         ]
                       : [
                           _c("h4", { staticClass: "display-4" }, [
-                            _vm._v("Al dia"),
+                            _vm._v("Al día"),
                           ]),
                         ],
                   ],
@@ -63320,6 +63306,14 @@ var staticRenderFns = [
       _vm._v(
         "\n                                        No existen datos para el año seleccionado, por favor intente nuevamente ingresando otro año.\n                                    "
       ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header text-muted text-center" }, [
+      _c("h5", { staticClass: "display-5" }, [_vm._v("Cuotas Mensuales ")]),
     ])
   },
   function () {
@@ -64133,11 +64127,6 @@ var render = function () {
                   _vm.cuotasMes.id == 11 ? [_vm._v("Noviembre")] : _vm._e(),
                   _vm._v(" "),
                   _vm.cuotasMes.id == 12 ? [_vm._v("Diciembre")] : _vm._e(),
-                  _vm._v(
-                    "\n                  de " +
-                      _vm._s(_vm.cuotasMes.añoActual) +
-                      "\n                  \n                 "
-                  ),
                 ],
                 2
               ),
@@ -64239,32 +64228,6 @@ var render = function () {
                                   "td",
                                   { staticClass: "text-center" },
                                   [
-                                    cuotas.fecha_pago == null
-                                      ? [_vm._v("Sin datos")]
-                                      : [_vm._v(_vm._s(cuotas.fecha_pago))],
-                                  ],
-                                  2
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  { staticClass: "text-center" },
-                                  [
-                                    cuotas.cantidad_pago == null
-                                      ? [_vm._v("Sin datos")]
-                                      : [
-                                          _vm._v(
-                                            "L. " + _vm._s(cuotas.cantidad_pago)
-                                          ),
-                                        ],
-                                  ],
-                                  2
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  { staticClass: "text-center" },
-                                  [
                                     cuotas.estadoFC == "Pendiente"
                                       ? [
                                           _c(
@@ -64347,7 +64310,7 @@ var render = function () {
                                   _c(
                                     "button",
                                     {
-                                      staticClass: "btn btn-sm btn-secondary",
+                                      staticClass: "btn btn-xs btn-secondary",
                                       attrs: { type: "button" },
                                       on: {
                                         click: function ($event) {
@@ -64355,7 +64318,29 @@ var render = function () {
                                         },
                                       },
                                     },
-                                    [_c("i", { staticClass: "fa fa-share" })]
+                                    [
+                                      _c("i", { staticClass: "fa fa-share" }),
+                                      _vm._v(" Cobrar"),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-xs btn-success",
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.mensaje(cuotas.cel)
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-envelope",
+                                      }),
+                                      _vm._v(" WhatsApp"),
+                                    ]
                                   ),
                                 ]),
                               ])
@@ -64363,8 +64348,6 @@ var render = function () {
                           ),
                           0
                         ),
-                        _vm._v(" "),
-                        _vm._m(1),
                       ]
                     ),
                   ]),
@@ -64418,41 +64401,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("td", { staticClass: "text-center" }, [_vm._v("Cobro Sugerido")]),
         _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha Pago")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Monto Pago")]),
-        _vm._v(" "),
         _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
         _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Cobrar")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tfoot", { staticClass: "bg-dark" }, [
-      _c("tr", [
-        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Venta")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Cliente")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Telefono")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha Cobro")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Cobro Sugerido")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha Pago")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Monto Pago")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Cobrar")]),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Acciones")]),
       ]),
     ])
   },

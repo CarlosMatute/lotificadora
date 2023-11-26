@@ -18,7 +18,7 @@
                          <template v-if="cuotasMes.id == 10">Octubre</template>
                          <template v-if="cuotasMes.id == 11">Noviembre</template>
                          <template v-if="cuotasMes.id == 12">Diciembre</template>
-                          de {{cuotasMes.añoActual}}
+                          <!-- de {{cuotasMes.añoActual}} -->
                           
                          </h5>
                         <button type="button" class="close" v-on:click="cerrarModal()" aria-label="Close">
@@ -39,10 +39,10 @@
                                                     <td class="text-center">Telefono</td>
                                                     <td class="text-center">Fecha Cobro</td>
                                                     <td class="text-center">Cobro Sugerido</td>
-                                                    <td class="text-center">Fecha Pago</td>
-                                                    <td class="text-center">Monto Pago</td>
+                                                    <!-- <td class="text-center">Fecha Pago</td>
+                                                    <td class="text-center">Monto Pago</td> -->
                                                     <td class="text-center">Estado</td>
-                                                    <td class="text-center">Cobrar</td>
+                                                    <td class="text-center">Acciones</td>
                                                     
                                                     
                                                 </tr>
@@ -55,14 +55,14 @@
                                                     <td class="text-center"> {{cuotas.cel}} </td>
                                                     <td class="text-center"> {{cuotas.fecha_cobro}} </td>
                                                     <td class="text-center"> L. {{cuotas.cuota_mensual}}  </td>
-                                                    <td class="text-center"> 
+                                                    <!-- <td class="text-center"> 
                                                         <template v-if="cuotas.fecha_pago == null">Sin datos</template>
                                                         <template v-else>{{cuotas.fecha_pago}}</template> 
                                                     </td>
                                                     <td class="text-center"> 
                                                         <template v-if="cuotas.cantidad_pago == null">Sin datos</template>
                                                         <template v-else>L. {{cuotas.cantidad_pago}}</template>
-                                                    </td>
+                                                    </td> -->
                                                     <td class="text-center"> 
                                                         <template v-if="cuotas.estadoFC == 'Pendiente'">
                                                             <span class="badge badge-info">{{cuotas.estadoFC}}</span>
@@ -90,7 +90,8 @@
                                                         </template>
                                                         <template v-else>
                                                             <template v-if="cuotas.letraActiva == cuotas.idFC">-->
-                                                                <button type="button" class="btn btn-sm btn-secondary" v-on:click="estadoCredito(cuotas.idV)"><i class="fa fa-share"></i></button>
+                                                                <button type="button" class="btn btn-xs btn-secondary" v-on:click="estadoCredito(cuotas.idV)"><i class="fa fa-share"></i> Cobrar</button>
+                                                                <button type="button" class="btn btn-xs btn-success" v-on:click="mensaje(cuotas.cel)"><i class="fa fa-envelope"></i> WhatsApp</button>
                                                             <!--</template>
                                                             <template v-else-if="cuotas.ultimopago == cuotas.idFC">
                                                                 <button type="button" class="btn btn-sm btn-primary" v-on:click="cancelarPago(cuotas.idFC)"><i class="fa fa-reply"></i></button>
@@ -106,22 +107,6 @@
                                                                       
                                                 </tr>
                                             </tbody>
-                                            <tfoot class="bg-dark">
-                                                <tr>
-                                                    <td class="text-left">#</td>
-                                                    <td class="text-center">Venta</td>
-                                                    <td class="text-center">Cliente</td>
-                                                    <td class="text-center">Telefono</td>
-                                                    <td class="text-center">Fecha Cobro</td>
-                                                    <td class="text-center">Cobro Sugerido</td>
-                                                    <td class="text-center">Fecha Pago</td>
-                                                    <td class="text-center">Monto Pago</td>
-                                                    <td class="text-center">Estado</td>
-                                                    <td class="text-center">Cobrar</td>
-                                                    
-                                                    
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -171,7 +156,8 @@ export default {
             abono:"",
             alerta:0,
             resumenDeVenta:[],
-            estadoCreditoDatos:[]
+            estadoCreditoDatos:[],
+            mensaje_texto:""
 
         }
     },
@@ -353,6 +339,13 @@ export default {
                 $('#letras').DataTable();
                 });
             })
+         
+           },
+
+           mensaje:function(celular){
+            this.mensaje_texto = "Estimado cliente, le saluda Inversiones Rivera Carvajal, el motivo de este mensaje "+
+                                "es para hacerle saber que tiene moras Pendientes. Por favor ponerse al día. Gracias."
+            window.open('https://api.whatsapp.com/send?phone=504'+celular+'&text='+this.mensaje_texto+'','_blank');
          
            },
     },

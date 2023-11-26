@@ -161,7 +161,7 @@
 
         <div class="card elevation-4 text-left bg-light">
            <div class="card-header text-muted text-center">
-                <h5 class="display-5">Cuotas del año {{meses.añoActual}} </h5>
+                <h5 class="display-5">Cuotas Mensuales </h5>
             </div>
             <div class="card-body">
                 <!--Inicia de enero a abril-->
@@ -188,6 +188,7 @@
                             </div>
                         </div>
                         <div class="card-body text-center bg-secondary">
+                            <!-- <small>Atrasado</small> -->
                                     <template v-if="meses.enero == 'Atrasado'">
                                         <h4 class="display-4">Atrasado</h4>
                                     </template>
@@ -195,7 +196,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -232,7 +233,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -269,7 +270,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -306,7 +307,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -348,7 +349,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -385,7 +386,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -422,7 +423,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -459,7 +460,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -501,7 +502,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -538,7 +539,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -575,7 +576,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">
@@ -612,7 +613,7 @@
                                         <h4 class="display-4">Cobro</h4>
                                     </template>
                                     <template v-else>
-                                        <h4 class="display-4">Al dia</h4>
+                                        <h4 class="display-4">Al día</h4>
                                     </template>
                         </div>
                         <div class="card-footer text-muted">

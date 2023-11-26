@@ -278,21 +278,34 @@ class controladorDashboard extends Controller
      */
     public function show($id)
     {
-        $añoActual = date("Y");
-        $letras = DB::table("fechas_cobros")
-                        ->join("ventas","fechas_cobros.id_venta","=","ventas.id")
-                        ->join("clientes","ventas.id_cliente","=","clientes.id")
-                        ->select("fechas_cobros.*","ventas.*","clientes.*","fechas_cobros.id as idFC","fechas_cobros.estado as estadoFC",
-                                    "ventas.id as idV","ventas.estado as estadoV","clientes.id as idC","fechas_cobros.created_at as fechaFC",
-                                    "ventas.created_at as fechaV","clientes.created_at as fechaC")
-                        ->whereMonth('fecha_cobro', $id)->whereYear('fecha_cobro', $añoActual)->where("ventas.estado","Pendiente")
-                        //->orderBy("fechas_cobros.created_at","ASC")
-                        ->get();
+        //$añoActual = date("Y");
+        // $letras = DB::table("fechas_cobros")
+        //                 ->join("ventas","fechas_cobros.id_venta","=","ventas.id")
+        //                 ->join("clientes","ventas.id_cliente","=","clientes.id")
+        //                 ->select("fechas_cobros.*","ventas.*","clientes.*","fechas_cobros.id as idFC","fechas_cobros.estado as estadoFC",
+        //                             "ventas.id as idV","ventas.estado as estadoV","clientes.id as idC","fechas_cobros.created_at as fechaFC",
+        //                             "ventas.created_at as fechaV","clientes.created_at as fechaC")
+        //                 ->whereMonth('fecha_cobro', $id)->whereYear('fecha_cobro', $añoActual)->where("ventas.estado","Pendiente")
+        //                 //->orderBy("fechas_cobros.created_at","ASC")
+        //                 ->get();
         
+        $letras = DB::select("SELECT fc.id idFC, fc.estado estadoFC, fc.created_at fechaFC,
+                    v.id idV, v.estado estadoV, c.id idC, v.created_at fechaV,
+                    c.created_at fechaC, c.primer_nombre, c.primer_apellido,
+                    c.cel, fc.fecha_cobro, v.cuota_mensual, fc.fecha_pago,
+                    fc.cantidad_pago
+            from fechas_cobros fc
+            join ventas v ON fc.id_venta = v.id
+            join clientes c ON v.id_cliente = c.id
+            where v.estado = 'Pendiente' and fc.estado != 'Pagado'
+                    and DATE_FORMAT(fc.fecha_cobro,'%m') = ".$id."
+                    and fc.estado != 'Pendiente'
+            order by fc.fecha_cobro");
+
         $data[]=[
             "infoCuotas"=>$letras,
             "id"=>$id,
-            "añoActual"=>$añoActual
+            //"añoActual"=>$añoActual
         ];
         return $data;
     }
