@@ -185,7 +185,8 @@ class controladorReportes extends Controller
 
         $final_documento = "Y para constancia firmo el presente recibo en la ciudad de Catacamas, Olancho, a los ".$numnero_letras->format($fechaActual->dia)." ($fechaActual->dia) días del mes de ($fechaActual->mes) del ".$numnero_letras->format($fechaActual->anio)." ($fechaActual->anio).";
         
-        $file = public_path('/documentos/recibo_letra.docx');
+        //$file = ('C:/xampp/htdocs/lotificadora/lotificadora/public/documentos/recibo_letra.docx'); //Desarrollo
+        $file = "/home/xafysozx/public_html/documentos/recibo_letra.docx"; //Producción
 		
         try {
             
