@@ -12,6 +12,7 @@ use App\Models\Cliente;
 use App\Models\lotes_vendidos;
 use App\Models\fechas_cobros;
 use App\Models\Venta;
+use Exception;
 
 class ControladorVentas extends Controller
 {
@@ -22,22 +23,57 @@ class ControladorVentas extends Controller
      */
     public function index()
     {
-        $ventaPendiente = DB::table("ventas")
-                        ->join("clientes","ventas.id_cliente","=","clientes.id")
-                        ->where("ventas.estado","Pendiente")
-                        ->select("ventas.*","clientes.*","ventas.id as idV","clientes.id as idC","ventas.created_at as fechaV","clientes.created_at as fechaC")
-                        ->get();
-        $ventaContado = DB::table("ventas")
-                        ->join("clientes","ventas.id_cliente","=","clientes.id")
-                        ->where("ventas.pago","Contado")
-                        ->select("ventas.*","clientes.*","ventas.id as idV","clientes.id as idC","ventas.created_at as fechaV","clientes.created_at as fechaC")
-                        ->get();
-        $ventaCredito = DB::table("ventas")
-                        ->join("clientes","ventas.id_cliente","=","clientes.id")
-                        ->where("ventas.pago","Credito")
-                        ->where("ventas.estado","Pagado")
-                        ->select("ventas.*","clientes.*","ventas.id as idV","clientes.id as idC","ventas.created_at as fechaV","clientes.created_at as fechaC")
-                        ->get();
+        DB::select("SET lc_time_names = 'es_MX';");
+        $ventaPendiente = DB::select("SELECT  v.id idV,
+                                    DATE_FORMAT(v.created_at,'%d de %M de %Y - %h:%m %p') fechaV,
+                                    TRIM(
+                                            concat(
+                                                    COALESCE(concat(TRIM(c.primer_nombre),' '),''),
+                                                    COALESCE(concat(TRIM(c.segundo_nombre),' '),''),
+                                                    COALESCE(concat(TRIM(c.primer_apellido),' '),''),
+                                                    COALESCE(concat(TRIM(c.segundo_apellido),' '),'')
+                                                )
+
+                                        ) cliente,
+                                        v.pago,
+                                        v.estado
+                            from ventas v
+                            join clientes c on v.id_cliente = c.id and v.estado = 'Pendiente'
+                            order by v.created_at desc");
+
+        $ventaContado = DB::select("SELECT  v.id idV,
+                                    DATE_FORMAT(v.created_at,'%d de %M de %Y - %h:%m %p') fechaV,
+                                    TRIM(
+                                            concat(
+                                                    COALESCE(concat(TRIM(c.primer_nombre),' '),''),
+                                                    COALESCE(concat(TRIM(c.segundo_nombre),' '),''),
+                                                    COALESCE(concat(TRIM(c.primer_apellido),' '),''),
+                                                    COALESCE(concat(TRIM(c.segundo_apellido),' '),'')
+                                                )
+
+                                        ) cliente,
+                                        v.pago,
+                                        v.estado
+                            from ventas v
+                            join clientes c on v.id_cliente = c.id and v.pago = 'Contado'
+                            order by v.created_at desc");
+
+        $ventaCredito = DB::select("SELECT  v.id idV,
+                                    DATE_FORMAT(v.created_at,'%d de %M de %Y - %h:%m %p') fechaV,
+                                    TRIM(
+                                            concat(
+                                                    COALESCE(concat(TRIM(c.primer_nombre),' '),''),
+                                                    COALESCE(concat(TRIM(c.segundo_nombre),' '),''),
+                                                    COALESCE(concat(TRIM(c.primer_apellido),' '),''),
+                                                    COALESCE(concat(TRIM(c.segundo_apellido),' '),'')
+                                                )
+
+                                        ) cliente,
+                                        v.pago,
+                                        v.estado
+                            from ventas v
+                            join clientes c on v.id_cliente = c.id and v.estado = 'Pagado'
+                            order by v.created_at desc");
 
         $data[]=[
             "pendiente"=>$ventaPendiente,
@@ -90,134 +126,178 @@ class ControladorVentas extends Controller
      */
     public function store(Request $request)
     {
-        $cliente = DB::table("clientes")
-                    ->where("identidad", $request->cliente)
-                    ->get();
-        foreach($cliente as $row){
-            $id_cliente = $row->id;
-        }
+        $msgError = null;
+        $msgSuccess = null;
+        // $cliente = DB::table("clientes")
+        //             ->where("identidad", $request->cliente)
+        //             ->get();
+        // foreach($cliente as $row){
+        //     $id_cliente = $row->id;
+        // }
 
-        $primaFormato = number_format($request->prima, 2, '.', ',');
+        DB::beginTransaction();
+        try {
+            //throw new Exception($request->aplicar_prima, true);
+            $cliente = collect(\DB::select("select id from clientes where identidad = :identidad", ["identidad" => $request->cliente]))->first();
 
-        if($request->accionCreditoContado == 1){
-            $pago = "Credito";
-            $estado = "Pendiente";
-        }else{
-            $pago = "Contado";
-            $estado = "Pagado";
-        }
+            $primaFormato = number_format($request->prima, 2, '.', ',');
 
-        $venta = new Venta();
-        $venta->id_cliente = $id_cliente;
-        $venta->pago = $pago;
-        $venta->estado = $estado;
-        $venta->total_contado = $request->total_contado;
-        $venta->anios_financiamiento = $request->anios_financiamiento;
-        $venta->tasa_interes = $request->tasa_interes;
-        $venta->prima = $primaFormato;
-        $venta->cuotas = $request->cuotas;
-        $venta->total_intereses = $request->total_intereses;
-        $venta->total_pagar = $request->total_pagar;
-        $venta->cuota_mensual = number_format($request->cuota_mensual);
-        $venta->dias_cobro_mes = $request->dias_cobro_mensual;
-        $venta->fecha_venta = $request->fecha_venta;
-        $venta->save();
-        
-        $id_venta = Venta::all()->last();
-
-        if($request->accionCreditoContado == 1){
-
-            $meses = $request->anios_financiamiento*12;
-            //Proceso de dias de cobro
-            //$hoy = DATE("Y-m");
-            $fechaVenta = $request->fecha_venta;
-            $hoy = date_format(date_create($fechaVenta), 'Y-m');
-            //dd($hoy);
-            $hoyCompuesto = $hoy."-".$request->dias_cobro_mensual;
-
-            //Insercion de fechas de cobro
-            if($hoyCompuesto[6] == 2 && $request->dias_cobro_mensual >= 29){
-                for($i=0; $i<$meses; $i++){
-                    $date_now = $hoyCompuesto;
-                    $date_future = strtotime('+ '.$i.' month', strtotime($date_now));
-                    $date_future = date('Y-m-d', $date_future);  
-                    $fecha = new fechas_cobros();
-                    $fecha->id_venta = $id_venta->id; 
-                    
-                    if($date_future[5] == 0 && $date_future[6] == 2 && $request->dias_cobro_mensual >= 29){
-                        $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5]."2-28";
-                    }else{
-                        $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5].$date_future[6]."-".$request->dias_cobro_mensual;
-                    }
-                    $fecha->estado = "Pendiente";
-                    $fecha->save();
-                }
+            if($request->accionCreditoContado == 1){
+                $pago = "Credito";
+                $estado = "Pendiente";
             }else{
-                for($i=1; $i<=$meses; $i++){
-                    $date_now = $hoy;
-                    $date_future = strtotime('+ '.$i.' month', strtotime($date_now));
-                    $date_future = date('Y-m', $date_future); 
-                    $fecha = new fechas_cobros();
-                    $fecha->id_venta = $id_venta->id;  
-
-                    if($date_future[5] != 0 || $date_future[6] != 2 || $request->dias_cobro_mensual <= 28){
-                        $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5].$date_future[6]."-".$request->dias_cobro_mensual;
-
-                    }else{
-                        $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5]."2-28";
-                    }
-                    $fecha->estado = "Pendiente";
-                    $fecha->save();
-                
-                }
+                $pago = "Contado";
+                $estado = "Pagado";
             }
 
-            //Manejo de estados de fechas de cobros
-            DB::select("
-                UPDATE fechas_cobros SET estado = CASE
-                    WHEN DATE_FORMAT(fecha_cobro,'%Y-%m-%d') < DATE_FORMAT(now(),'%Y-%m-%d') THEN 'Atrasado'
-                    WHEN DATE_FORMAT(fecha_cobro,'%Y-%m-%d') = DATE_FORMAT(now(),'%Y-%m-%d') THEN 'Dia de cobro'
-                    ELSE estado
-                    END
-                WHERE estado != 'Pagado' and id_venta = :id_venta
-            ",["id_venta" => $id_venta->id]);
+            // $venta = new Venta();
+            // $venta->id_cliente = $id_cliente;
+            // $venta->pago = $pago;
+            // $venta->estado = $estado;
+            // $venta->total_contado = $request->total_contado;
+            // $venta->anios_financiamiento = $request->anios_financiamiento;
+            // $venta->tasa_interes = $request->tasa_interes;
+            // $venta->prima = $primaFormato;
+            // $venta->cuotas = $request->cuotas;
+            // $venta->total_intereses = $request->total_intereses;
+            // $venta->total_pagar = $request->total_pagar;
+            // $venta->cuota_mensual = number_format($request->cuota_mensual);
+            // $venta->dias_cobro_mes = $request->dias_cobro_mensual;
+            // $venta->fecha_venta = $request->fecha_venta;
+            // $venta->save();
             
+            // $id_venta = Venta::all()->last();
+
+            DB::select("INSERT INTO ventas (id_cliente, pago, estado, total_contado, anios_financiamiento, tasa_interes, prima, 
+                        cuotas, total_intereses, total_pagar, cuota_mensual, dias_cobro_mes, created_at, fecha_venta) 
+                        VALUES (:id_cliente, :pago, :estado, :total_contado, :anios_financiamiento, :tasa_interes, :prima, :cuotas, 
+                        :total_intereses, :total_pagar, :cuota_mensual, :dias_cobro_mes, now(), :fecha_venta);", 
+            ["id_cliente" => $cliente->id, "pago" => $pago, "estado" => $estado, "total_contado" => $request->total_contado, "anios_financiamiento" => $request->anios_financiamiento,
+            "tasa_interes" => $request->tasa_interes, "prima" => $primaFormato, "cuotas" => $request->cuotas, "total_intereses" => $request->total_intereses,
+            "total_pagar" => $request->total_pagar, "cuota_mensual" => number_format($request->cuota_mensual), "dias_cobro_mes" => $request->dias_cobro_mensual,
+            "fecha_venta" => $request->fecha_venta]);
+
+            $id_venta = collect(\DB::select("select last_insert_id() id"))->first();
+
+            //throw new Exception($id_venta->id, true);
+
+            if($request->accionCreditoContado == 1){
+                $aplicar_prima = ($request->aplicar_prima) ? 1 : 'null';
+                $anio_mes = date_format(date_create($request->fecha_venta), 'Y-m');
+                $fecha_cobro = $anio_mes."-".$request->dias_cobro_mensual;
+                //throw new Exception($aplicar_prima, true);
+                DB::select("INSERT into fechas_cobros (id_venta, fecha_cobro, estado, created_at) 
+                    SELECT ".$id_venta->id." id_venta, fechas, 'Pendiente' estado, now()
+                    FROM (
+                        WITH RECURSIVE nrows(date) AS (
+                                    SELECT date_add('".$fecha_cobro."', interval coalesce(".$aplicar_prima.", 0) month) UNION ALL 
+                                    SELECT DATE_ADD(date,INTERVAL 1 month) FROM nrows WHERE date <= DATE(date_add('".$fecha_cobro."', interval (select cuotas from ventas where id = ".$id_venta->id.")-coalesce(".$aplicar_prima.", 2) month))
+                            )
+                            SELECT ROW_NUMBER() OVER (ORDER BY date) fila,
+                                    case when DATE_FORMAT(date,'%m-%d') between '02-28' and '02-30' then concat(DATE_FORMAT(date,'%Y-%m-'),'28') else concat(DATE_FORMAT(date,'%Y-%m-'),DATE_FORMAT('".$fecha_cobro."','%d')) end fechas 
+                            FROM nrows
+                    ) AS subconsulta;");
+
+                // $meses = $request->anios_financiamiento*12;
+                // //Proceso de dias de cobro
+                // //$hoy = DATE("Y-m");
+                // $fechaVenta = $request->fecha_venta;
+                // $hoy = date_format(date_create($fechaVenta), 'Y-m');
+                // //dd($hoy);
+                // $hoyCompuesto = $hoy."-".$request->dias_cobro_mensual;
+
+                // //Insercion de fechas de cobro
+                // if($hoyCompuesto[6] == 2 && $request->dias_cobro_mensual >= 29){
+                //     for($i=0; $i<$meses; $i++){
+                //         $date_now = $hoyCompuesto;
+                //         $date_future = strtotime('+ '.$i.' month', strtotime($date_now));
+                //         $date_future = date('Y-m-d', $date_future);  
+                //         $fecha = new fechas_cobros();
+                //         $fecha->id_venta = $id_venta->id; 
+                        
+                //         if($date_future[5] == 0 && $date_future[6] == 2 && $request->dias_cobro_mensual >= 29){
+                //             $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5]."2-28";
+                //         }else{
+                //             $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5].$date_future[6]."-".$request->dias_cobro_mensual;
+                //         }
+                //         $fecha->estado = "Pendiente";
+                //         $fecha->save();
+                //     }
+                // }else{
+                //     for($i=1; $i<=$meses; $i++){
+                //         $date_now = $hoy;
+                //         $date_future = strtotime('+ '.$i.' month', strtotime($date_now));
+                //         $date_future = date('Y-m', $date_future); 
+                //         $fecha = new fechas_cobros();
+                //         $fecha->id_venta = $id_venta->id;  
+
+                //         if($date_future[5] != 0 || $date_future[6] != 2 || $request->dias_cobro_mensual <= 28){
+                //             $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5].$date_future[6]."-".$request->dias_cobro_mensual;
+
+                //         }else{
+                //             $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5]."2-28";
+                //         }
+                //         $fecha->estado = "Pendiente";
+                //         $fecha->save();
+                    
+                //     }
+                // }
+
+                //Manejo de estados de fechas de cobros
+                DB::select("
+                    UPDATE fechas_cobros SET estado = CASE
+                        WHEN DATE_FORMAT(fecha_cobro,'%Y-%m-%d') < DATE_FORMAT(now(),'%Y-%m-%d') THEN 'Atrasado'
+                        WHEN DATE_FORMAT(fecha_cobro,'%Y-%m-%d') = DATE_FORMAT(now(),'%Y-%m-%d') THEN 'Dia de cobro'
+                        ELSE estado
+                        END
+                    WHERE estado != 'Pagado' and id_venta = :id_venta
+                ",["id_venta" => $id_venta->id]);
+                
+            }
+
+
+            $id_lotes = lotes_apartados::select('id_lote')->get();
+            //$id_lotes = array([1,2]);
+
+            $datos_a_insertar = array();
+
+            /* añadimos los datos al array */
+            foreach ($id_lotes as $key => $lotes) 
+            {
+                $datos_a_insertar[$key]['id_lote'] = $lotes->id_lote;
+                $datos_a_insertar[$key]['id_venta'] = $id_venta->id;
+            }
+    
+            /* Luego simplemente lo insertamos con Eloquent o con Query Builder */
+            /* con Eloquent */
+            lotes_vendidos::insert($datos_a_insertar); 
+
+            $lotes_apartados = DB::table("lotes_apartados")->get();
+
+            $datos_array = array();
+    
+            /* añadimos los datos al array */
+            foreach ($lotes_apartados as $key => $apartados) 
+            {
+                $datos_array[$key] = $apartados->id_lote;
+            }
+
+            DB::table('lotes')
+                ->whereIn('id', $datos_array)
+                ->update(["estado" => "Vendido"]);
+
+            $borrar_lotes_apartados = DB::table("lotes_apartados")
+                ->where("temp", "Si")
+                ->delete();
+            
+            $msgSuccess = "Venta registrada exitosamente.";
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            $msgError = $e->getMessage();
         }
 
-
-         $id_lotes = lotes_apartados::select('id_lote')->get();
-         //$id_lotes = array([1,2]);
-
-         $datos_a_insertar = array();
-
-         /* añadimos los datos al array */
-         foreach ($id_lotes as $key => $lotes) 
-         {
-             $datos_a_insertar[$key]['id_lote'] = $lotes->id_lote;
-             $datos_a_insertar[$key]['id_venta'] = $id_venta->id;
-         }
- 
-         /* Luego simplemente lo insertamos con Eloquent o con Query Builder */
-         /* con Eloquent */
-         lotes_vendidos::insert($datos_a_insertar); 
-
-         $lotes_apartados = DB::table("lotes_apartados")->get();
-
-         $datos_array = array();
- 
-          /* añadimos los datos al array */
-          foreach ($lotes_apartados as $key => $apartados) 
-          {
-              $datos_array[$key] = $apartados->id_lote;
-          }
-
-        DB::table('lotes')
-            ->whereIn('id', $datos_array)
-            ->update(["estado" => "Vendido"]);
-
-        $borrar_lotes_apartados = DB::table("lotes_apartados")
-            ->where("temp", "Si")
-            ->delete();
+        return response()->json(["msgSuccess"=>$msgSuccess,"msgError"=>$msgError]);
     }
 
     /**

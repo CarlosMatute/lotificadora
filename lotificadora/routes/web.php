@@ -40,5 +40,7 @@ Route::get('correo', function () {
     Mail::to('carlosmatute1995@gmail.com')->send($correo);
     return "Correo enviado";
 });
-//Resportes
+//Reportes
 Route::get('/reportes/imprimir', [App\Http\Controllers\controladorReportes::class, 'imprimir']);
+Route::get('/word/', [App\Http\Controllers\controladorReportes::class, 'ver_reporte_word']);
+Route::get('/recibo_letra/{id_letra}', [App\Http\Controllers\controladorReportes::class, 'recibo_letra']);

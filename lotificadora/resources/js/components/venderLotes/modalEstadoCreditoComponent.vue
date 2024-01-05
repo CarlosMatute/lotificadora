@@ -404,22 +404,23 @@ export default {
         },
 
         datosPagoCuota:function(id){
-            $.when( 
-                axios.get('/venta/apoyo/II/'+id).then(respuesta => {
-                    this.datosPagoCuotaDB = respuesta.data[0]
-                    this.cantidad_pago = this.datosPagoCuotaDB.datosPagoCuota
-                    //this.cantidad_pago = this.cantidad_pago[0]
-                    console.log(this.datosPagoCuotaDB)
-                    var indexUploadCoincidence=0;
-                })
-                ).done(function (){
-                    var ficha = document.getElementById('recibo_cuota');
-                    var ventimp = window.open(' ', 'popimpr');
-                    ventimp.document.write( ficha.innerHTML );
-                    ventimp.document.close();
-                    ventimp.print( );
-                    ventimp.close();
-                } );
+            window.location.href = ("/recibo_letra/"+id);
+            // $.when( 
+            //     axios.get('/venta/apoyo/II/'+id).then(respuesta => {
+            //         this.datosPagoCuotaDB = respuesta.data[0]
+            //         this.cantidad_pago = this.datosPagoCuotaDB.datosPagoCuota
+            //         //this.cantidad_pago = this.cantidad_pago[0]
+            //         console.log(this.datosPagoCuotaDB)
+            //         var indexUploadCoincidence=0;
+            //     })
+            //     ).done(function (){
+            //         var ficha = document.getElementById('recibo_cuota');
+            //         var ventimp = window.open(' ', 'popimpr');
+            //         ventimp.document.write( ficha.innerHTML );
+            //         ventimp.document.close();
+            //         ventimp.print( );
+            //         ventimp.close();
+            //     } );
             
         },
 

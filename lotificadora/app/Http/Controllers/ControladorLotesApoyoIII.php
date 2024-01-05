@@ -46,14 +46,14 @@ class ControladorLotesApoyoIII extends Controller
                         SELECT DATE_ADD(date,INTERVAL 1 month) FROM nrows WHERE date <= DATE(date_add('".$fecha_venta."', interval (select cuotas from ventas where id = ".$id_venta.")-1 month))
                 )
                 SELECT ROW_NUMBER() OVER (ORDER BY date) fila,
-                        case when DATE_FORMAT(date,'%m-%d') between '02-28' and '02-30' then concat(DATE_FORMAT(date,'%Y-%m-'),'28') else date end fechas 
+                        case when DATE_FORMAT(date,'%m-%d') between '02-28' and '02-30' then concat(DATE_FORMAT(date,'%Y-%m-'),'28') else concat(DATE_FORMAT(date,'%Y-%m-'),DATE_FORMAT('".$fecha_venta."','%d')) end fechas 
                 FROM nrows
             ), fechas_modificar as (
-                select ROW_NUMBER() OVER (ORDER BY fecha_cobro) fila,
-                        id, fecha_cobro
-                from fechas_cobros where id_venta = ".$id_venta." order by fecha_cobro
+                    select ROW_NUMBER() OVER (ORDER BY fecha_cobro) fila,
+                            id, fecha_cobro
+                    from fechas_cobros where id_venta = ".$id_venta." order by fecha_cobro
             )
-            select fm.id, fc.fechas from fecha_correcta fc 
+            select * from fecha_correcta fc 
             join fechas_modificar fm on fc.fila = fm.fila
         ");
 

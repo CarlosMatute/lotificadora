@@ -123,8 +123,21 @@
                                </div>
                                 <div class="col-md-4 col-lg-2">
                                      <div class="form-group">
+                                        <!-- <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
+                                            <label for="customCheckbox1" class="custom-control-label">Prima:</label>
+                                        </div>
+                                        <input type="number" v-model="prima" v-on:change="cambioPrimaTiempo" class="form-control border-dark"> -->
                                         <label>Prima:</label>
-                                        <input type="number" v-model="prima" v-on:change="cambioPrimaTiempo" class="form-control border-dark">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text border-dark">
+                                                    <input type="checkbox" id="check_prima" checked v-on:click="check_prima()"/>
+                                                </span>
+                                            </div>
+                                            <input id="input_prima" type="number" v-model="prima" v-on:change="cambioPrimaTiempo" class="form-control border-dark"/>
+                                        </div>
+
                                     </div>
                                </div>
                                <div class="col-md-4 col-lg-2">
@@ -284,6 +297,30 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="modal fade" id="modalAlerta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div id="modal_header">
+                            <h5 class="modal-title" id="modal_tittle"></h5>
+                            <!-- <button type="button" class="close" v-on:click="cerrarModal()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button> -->
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" >
+                            <div class="row" id="modal_parrafo">
+                                    
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- <div class="modal-footer bg-dark">
+                            <button type="submit" class="btn btn-primary btn-sm btn-block" v-on:click="cerrarModal()">Aceptar</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
             <modal-elegir-lote-component @infoLotes="infoLotes" :lotesFinanciados="lotesFinanciados"></modal-elegir-lote-component>
         </div>
     
@@ -303,7 +340,7 @@ export default {
             clientes:[],
             informacionLote:[],
             tiempo:"",
-            prima:0,
+            prima:1,
             fecha_venta:"",
             dias:30,
             interes:4,
@@ -311,7 +348,11 @@ export default {
             cliente:"",
             lotesFinanciados:[],
             creditoContado:0,
-            accionCreditoContado:""
+            accionCreditoContado:"",
+            modalHeader: null,
+            modalTittle: null,
+            modalParrafo: null,
+            cerrarModalVentas: false
 
         }
     },
@@ -410,7 +451,13 @@ export default {
         formatearCuotaMensual:function(){
             this.cuota_mensual = new Intl.NumberFormat('es-HN', { style: 'currency', currency: 'HNL' }).format(this.informacionLote.valorCuotaMensual)
         },
+        check_prima:function(){
+            $("#check_prima").is(':checked') ? this.prima = 1 : this.prima = 0;
+            $("#check_prima").is(':checked') ? $("#input_prima").prop("disabled", false) : $("#input_prima").prop("disabled", true);
+            this.cambioPrimaTiempo();
+        },
         ejecutarVenta:function(){
+            $('#modal_header').removeClass(this.modalHeader);
             if(this.creditoContado == 0){
                 this.accionCreditoContado = 0
                 var data={
@@ -420,6 +467,7 @@ export default {
                     "anios_financiamiento":this.informacionLote.tiempo,
                     "tasa_interes":this.interes,
                     "prima":this.prima,
+                    "aplicar_prima": $("#check_prima").is(':checked') ? true : false,
                     "cuotas":this.informacionLote.cuotas,
                     "total_intereses":this.informacionLote.interes,
                     "cuota_mensual":this.informacionLote.valorCuotaMensual,
@@ -437,6 +485,7 @@ export default {
                     "anios_financiamiento":this.informacionLote.tiempo,
                     "tasa_interes":this.interes,
                     "prima":this.prima,
+                    "aplicar_prima": $("#check_prima").is(':checked') ? true : false,
                     "cuotas":this.informacionLote.cuotas,
                     "total_intereses":this.informacionLote.interes,
                     "cuota_mensual":this.informacionLote.valorCuotaMensual,
@@ -447,16 +496,42 @@ export default {
             }
 
             axios.post('/venta',data).then(respuesta => {
-                this.informacionLote = 0,
-                this.cliente = "",
-                this.prima = 0,
-                this.interes = 4,
-                this.dias = 30,
-                this.fecha_venta = new Date().toJSON().slice(0,10).replace(/-/g,'-'),
-                this.$emit("actualizarVentas")
-                $("#modalLotesVeder").trigger('click')
+                var data = respuesta.data;
+                if (data.msgError != null) {
+                    this.cerrarModalVentas = false;
+                    this.modalHeader = 'modal-header bg-danger';
+                    this.modalTittle = '<i class="fa fa-times-circle"></i> <b> Error al Guardar</b>';
+                    this.modalParrafo = data.msgError;
+                    this.alerta(this.cerrarModalVentas);
+                } else {
+                    this.cerrarModalVentas = true;
+                    this.modalHeader = 'modal-header bg-success';
+                    this.modalTittle = '<i class="fa fa-check"></i> <b> Datos Guardados Exitosamente</b>';
+                    this.modalParrafo = '<h4><b>'+data.msgSuccess+'</b></h4>';
+                    this.alerta(this.cerrarModalVentas);
+                    this.informacionLote = 0,
+                    this.cliente = "",
+                    this.prima = 1,
+                    this.interes = 4,
+                    this.dias = 30,
+                    this.fecha_venta = new Date().toJSON().slice(0,10).replace(/-/g,'-'),
+                    this.$emit("actualizarVentas")
+                }
             })
             
+        },
+
+        alerta:function(cerrarModalVentas){
+            $('#modal_header').addClass(this.modalHeader);
+            $('#modal_tittle').html(this.modalTittle);
+            $('#modal_parrafo').html(this.modalParrafo);
+            $("#modalAlerta").modal("show");
+            setTimeout(function() {
+                $("#modalAlerta").modal("hide");
+                if(cerrarModalVentas){
+                    $("#modalLotesVeder").modal("hide")
+                }
+            }, 5000);
         }
     },
     computed:{

@@ -40,12 +40,12 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive table-striped">
-                                    <table class="table table-striped table-bordered" style="width: 100%;" id="ventasPendientes">
+                                    <table class="table table-sm table-bordered" style="width: 100%;" id="ventasPendientes">
                                         <thead class="bg-warning">
                                             <tr>
                                                 <td class="text-left">#</td>
                                                 <td class="text-center">Fecha</td>
-                                                <td class="text-left">Cliente</td>
+                                                <td class="text-center">Cliente</td>
                                                 <td class="text-center">Pago</td>
                                                 <td class="text-center">Estado</td>
                                                 <td class="text-center">Acciones</td>
@@ -54,8 +54,8 @@
                                         <tbody>
                                             <tr v-for="(venta,i) in ventas.pendiente" :key="i">
                                                 <td class="text-left">{{i+1}}.</td>
-                                                <td class="text-center">{{venta.fechaV}}</td>
-                                                <td class="text-left">{{venta.primer_nombre}} {{venta.segundo_nombre}} {{venta.primer_apellido}} {{venta.segundo_apellido}}</td>
+                                                <td class="text-left">{{venta.fechaV}}</td>
+                                                <td class="text-left">{{venta.cliente}}</td>
                                                 <td class="text-center">{{venta.pago}}</td>
                                                 <td class="text-center">{{venta.estado}}</td>
                                                 <td class="text-center">
@@ -74,7 +74,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive table-striped">
-                                    <table class="table table-striped table-bordered" style="width: 100%;" id="ventasCredito">
+                                    <table class="table table-sm table-bordered" style="width: 100%;" id="ventasCredito">
                                         <thead class="bg-primary">
                                             <tr>
                                                 <td class="text-left">#</td>
@@ -89,7 +89,7 @@
                                             <tr v-for="(venta,i) in ventas.credito" :key="i">
                                                 <td class="text-left">{{i+1}}.</td>
                                                 <td class="text-left">{{venta.fechaV}}</td>
-                                                <td class="text-left">{{venta.primer_nombre}} {{venta.segundo_nombre}} {{venta.primer_apellido}} {{venta.segundo_apellido}}</td>
+                                                <td class="text-left">{{venta.cliente}}</td>
                                                 <td class="text-center">{{venta.pago}}</td>
                                                 <td class="text-center">{{venta.estado}}</td>
                                                 <td class="text-center">
@@ -107,7 +107,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive table-striped">
-                                    <table class="table table-striped table-bordered" style="width: 100%;" id="ventasContado">
+                                    <table class="table table-sm table-bordered" style="width: 100%;" id="ventasContado">
                                         <thead class="bg-success">
                                             <tr>
                                                 <td class="text-left">#</td>
@@ -122,7 +122,7 @@
                                             <tr v-for="(venta,i) in ventas.contado" :key="i">
                                                 <td class="text-left">{{i+1}}.</td>
                                                 <td class="text-left">{{venta.fechaV}}</td>
-                                                <td class="text-left">{{venta.primer_nombre}} {{venta.segundo_nombre}} {{venta.primer_apellido}} {{venta.segundo_apellido}}</td>
+                                                <td class="text-left">{{venta.cliente}}</td>
                                                 <td class="text-center">{{venta.pago}}</td>
                                                 <td class="text-center">{{venta.estado}}</td>
                                                 <td class="text-center">

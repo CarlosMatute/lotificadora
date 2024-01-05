@@ -7570,28 +7570,28 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       });
     },
     datosPagoCuota: function datosPagoCuota(id) {
-      var _this9 = this;
-
-      $.when(axios.get('/venta/apoyo/II/' + id).then(function (respuesta) {
-        _this9.datosPagoCuotaDB = respuesta.data[0];
-        _this9.cantidad_pago = _this9.datosPagoCuotaDB.datosPagoCuota; //this.cantidad_pago = this.cantidad_pago[0]
-
-        console.log(_this9.datosPagoCuotaDB);
-        var indexUploadCoincidence = 0;
-      })).done(function () {
-        var ficha = document.getElementById('recibo_cuota');
-        var ventimp = window.open(' ', 'popimpr');
-        ventimp.document.write(ficha.innerHTML);
-        ventimp.document.close();
-        ventimp.print();
-        ventimp.close();
-      });
+      window.location.href = "/recibo_letra/" + id; // $.when( 
+      //     axios.get('/venta/apoyo/II/'+id).then(respuesta => {
+      //         this.datosPagoCuotaDB = respuesta.data[0]
+      //         this.cantidad_pago = this.datosPagoCuotaDB.datosPagoCuota
+      //         //this.cantidad_pago = this.cantidad_pago[0]
+      //         console.log(this.datosPagoCuotaDB)
+      //         var indexUploadCoincidence=0;
+      //     })
+      //     ).done(function (){
+      //         var ficha = document.getElementById('recibo_cuota');
+      //         var ventimp = window.open(' ', 'popimpr');
+      //         ventimp.document.write( ficha.innerHTML );
+      //         ventimp.document.close();
+      //         ventimp.print( );
+      //         ventimp.close();
+      //     } );
     },
     quitarAlerta: function quitarAlerta() {
       this.alerta = 0;
     },
     ejecutarAbono: function ejecutarAbono() {
-      var _this10 = this;
+      var _this9 = this;
 
       if (this.abono <= this.estadoCreditoDatos.deuda && this.abono[0] != "-" && this.abono != "") {
         this.alerta = 0;
@@ -7599,9 +7599,9 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         formData.append('abono', this.abono);
         formData.append('id_venta', this.estadoCreditoDatos.idVenta);
         axios.post('venta/apoyo', formData).then(function (respuesta) {
-          _this10.abono = ""; //this.$emit("agregarResidencial")
+          _this9.abono = ""; //this.$emit("agregarResidencial")
 
-          _this10.estadoCreditoDatos = respuesta.data[0];
+          _this9.estadoCreditoDatos = respuesta.data[0];
           console.log(respuesta.data);
         });
       } else {
@@ -7609,9 +7609,20 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       }
     },
     cancelarPago: function cancelarPago(id) {
-      var _this11 = this;
+      var _this10 = this;
 
       axios["delete"]('/venta/' + id).then(function (respuesta) {
+        _this10.myTableClear();
+
+        _this10.estadoCreditoDatos = respuesta.data[0];
+
+        _this10.myTable();
+      });
+    },
+    cancelarCola: function cancelarCola(id) {
+      var _this11 = this;
+
+      axios.get('/venta/apoyo/' + id).then(function (respuesta) {
         _this11.myTableClear();
 
         _this11.estadoCreditoDatos = respuesta.data[0];
@@ -7619,10 +7630,10 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         _this11.myTable();
       });
     },
-    cancelarCola: function cancelarCola(id) {
+    ejecutarCola: function ejecutarCola(id) {
       var _this12 = this;
 
-      axios.get('/venta/apoyo/' + id).then(function (respuesta) {
+      axios.get('/venta/apoyo/' + id + '/edit').then(function (respuesta) {
         _this12.myTableClear();
 
         _this12.estadoCreditoDatos = respuesta.data[0];
@@ -7630,27 +7641,16 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
         _this12.myTable();
       });
     },
-    ejecutarCola: function ejecutarCola(id) {
-      var _this13 = this;
-
-      axios.get('/venta/apoyo/' + id + '/edit').then(function (respuesta) {
-        _this13.myTableClear();
-
-        _this13.estadoCreditoDatos = respuesta.data[0];
-
-        _this13.myTable();
-      });
-    },
     cerrarModal: function cerrarModal() {
       this.$emit("actualizarVentas");
       $("#modalEsatdoCredito").modal("hide"); //$("#modalEsatdoCredito").trigger('click')
     },
     resumenVenta: function resumenVenta(id) {
-      var _this14 = this;
+      var _this13 = this;
 
       axios.get('/lotes/apoyo/II/' + id + '/edit').then(function (respuesta) {
         console.log(respuesta.data[0]);
-        _this14.resumenDeVenta = respuesta.data[0];
+        _this13.resumenDeVenta = respuesta.data[0];
         $("#resumenVenta").modal("show"); //$("#modalEsatdoCredito").trigger('click')
       });
     }
@@ -7968,6 +7968,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //props:["lotesFinanciados"],
   data: function data() {
@@ -7983,9 +8020,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       clientes: [],
       informacionLote: [],
       tiempo: "",
-      prima: 0,
+      prima: 1,
       fecha_venta: ""
-    }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cuota_mensual", ""), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _ref;
+    }, _defineProperty(_ref, "dias", 30), _defineProperty(_ref, "interes", 4), _defineProperty(_ref, "cuota_mensual", ""), _defineProperty(_ref, "cliente", ""), _defineProperty(_ref, "lotesFinanciados", []), _defineProperty(_ref, "creditoContado", 0), _defineProperty(_ref, "accionCreditoContado", ""), _defineProperty(_ref, "modalHeader", null), _defineProperty(_ref, "modalTittle", null), _defineProperty(_ref, "modalParrafo", null), _defineProperty(_ref, "cerrarModalVentas", false), _ref;
   },
   mounted: function mounted() {
     var _this = this;
@@ -8088,8 +8125,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         currency: 'HNL'
       }).format(this.informacionLote.valorCuotaMensual);
     },
+    check_prima: function check_prima() {
+      $("#check_prima").is(':checked') ? this.prima = 1 : this.prima = 0;
+      $("#check_prima").is(':checked') ? $("#input_prima").prop("disabled", false) : $("#input_prima").prop("disabled", true);
+      this.cambioPrimaTiempo();
+    },
     ejecutarVenta: function ejecutarVenta() {
       var _this8 = this;
+
+      $('#modal_header').removeClass(this.modalHeader);
 
       if (this.creditoContado == 0) {
         this.accionCreditoContado = 0;
@@ -8100,6 +8144,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "anios_financiamiento": this.informacionLote.tiempo,
           "tasa_interes": this.interes,
           "prima": this.prima,
+          "aplicar_prima": $("#check_prima").is(':checked') ? true : false,
           "cuotas": this.informacionLote.cuotas,
           "total_intereses": this.informacionLote.interes,
           "cuota_mensual": this.informacionLote.valorCuotaMensual,
@@ -8116,6 +8161,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "anios_financiamiento": this.informacionLote.tiempo,
           "tasa_interes": this.interes,
           "prima": this.prima,
+          "aplicar_prima": $("#check_prima").is(':checked') ? true : false,
           "cuotas": this.informacionLote.cuotas,
           "total_intereses": this.informacionLote.interes,
           "cuota_mensual": this.informacionLote.valorCuotaMensual,
@@ -8126,9 +8172,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       axios.post('/venta', data).then(function (respuesta) {
-        _this8.informacionLote = 0, _this8.cliente = "", _this8.prima = 0, _this8.interes = 4, _this8.dias = 30, _this8.fecha_venta = new Date().toJSON().slice(0, 10).replace(/-/g, '-'), _this8.$emit("actualizarVentas");
-        $("#modalLotesVeder").trigger('click');
+        var data = respuesta.data;
+
+        if (data.msgError != null) {
+          _this8.cerrarModalVentas = false;
+          _this8.modalHeader = 'modal-header bg-danger';
+          _this8.modalTittle = '<i class="fa fa-times-circle"></i> <b> Error al Guardar</b>';
+          _this8.modalParrafo = data.msgError;
+
+          _this8.alerta(_this8.cerrarModalVentas);
+        } else {
+          _this8.cerrarModalVentas = true;
+          _this8.modalHeader = 'modal-header bg-success';
+          _this8.modalTittle = '<i class="fa fa-check"></i> <b> Datos Guardados Exitosamente</b>';
+          _this8.modalParrafo = '<h4><b>' + data.msgSuccess + '</b></h4>';
+
+          _this8.alerta(_this8.cerrarModalVentas);
+
+          _this8.informacionLote = 0, _this8.cliente = "", _this8.prima = 1, _this8.interes = 4, _this8.dias = 30, _this8.fecha_venta = new Date().toJSON().slice(0, 10).replace(/-/g, '-'), _this8.$emit("actualizarVentas");
+        }
       });
+    },
+    alerta: function alerta(cerrarModalVentas) {
+      $('#modal_header').addClass(this.modalHeader);
+      $('#modal_tittle').html(this.modalTittle);
+      $('#modal_parrafo').html(this.modalParrafo);
+      $("#modalAlerta").modal("show");
+      setTimeout(function () {
+        $("#modalAlerta").modal("hide");
+
+        if (cerrarModalVentas) {
+          $("#modalLotesVeder").modal("hide");
+        }
+      }, 5000);
     }
   },
   computed: {
@@ -72439,20 +72515,7 @@ var render = function () {
                                       { attrs: { disabled: "", selected: "" } },
                                       [_vm._v("--Elige un bloque--")]
                                     ),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.bloques, function (bloque) {
-                                      return _c(
-                                        "option",
-                                        { domProps: { value: bloque.id } },
-                                        [
-                                          _vm._v(
-                                            " " + _vm._s(bloque.nombre) + " "
-                                          ),
-                                        ]
-                                      )
-                                    }),
-                                  ],
-                                  2
+                                  ]
                                 ),
                               ]
                             : [
@@ -72577,20 +72640,7 @@ var render = function () {
                                       { attrs: { disabled: "", selected: "" } },
                                       [_vm._v("--Elige un lote--")]
                                     ),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.lotes, function (lote) {
-                                      return _c(
-                                        "option",
-                                        { domProps: { value: lote.id } },
-                                        [
-                                          _vm._v(
-                                            " L-" + _vm._s(lote.nombre) + " "
-                                          ),
-                                        ]
-                                      )
-                                    }),
-                                  ],
-                                  2
+                                  ]
                                 ),
                               ]
                             : [
@@ -74302,28 +74352,58 @@ var render = function () {
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", [_vm._v("Prima:")]),
                             _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.prima,
-                                  expression: "prima",
+                            _c("div", { staticClass: "input-group" }, [
+                              _c(
+                                "div",
+                                { staticClass: "input-group-prepend" },
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "input-group-text border-dark",
+                                    },
+                                    [
+                                      _c("input", {
+                                        attrs: {
+                                          type: "checkbox",
+                                          id: "check_prima",
+                                          checked: "",
+                                        },
+                                        on: {
+                                          click: function ($event) {
+                                            return _vm.check_prima()
+                                          },
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.prima,
+                                    expression: "prima",
+                                  },
+                                ],
+                                staticClass: "form-control border-dark",
+                                attrs: { id: "input_prima", type: "number" },
+                                domProps: { value: _vm.prima },
+                                on: {
+                                  change: _vm.cambioPrimaTiempo,
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.prima = $event.target.value
+                                  },
                                 },
-                              ],
-                              staticClass: "form-control border-dark",
-                              attrs: { type: "number" },
-                              domProps: { value: _vm.prima },
-                              on: {
-                                change: _vm.cambioPrimaTiempo,
-                                input: function ($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.prima = $event.target.value
-                                },
-                              },
-                            }),
+                              }),
+                            ]),
                           ]),
                         ]),
                         _vm._v(" "),
@@ -74793,6 +74873,8 @@ var render = function () {
         ]
       ),
       _vm._v(" "),
+      _vm._m(4),
+      _vm._v(" "),
       _c("modal-elegir-lote-component", {
         attrs: { lotesFinanciados: _vm.lotesFinanciados },
         on: { infoLotes: _vm.infoLotes },
@@ -74863,6 +74945,52 @@ var staticRenderFns = [
         ]),
       ]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalAlerta",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true",
+        },
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-scrollable",
+            attrs: { role: "document" },
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { attrs: { id: "modal_header" } }, [
+                _c("h5", {
+                  staticClass: "modal-title",
+                  attrs: { id: "modal_tittle" },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("input", { attrs: { type: "hidden" } }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "row",
+                  attrs: { id: "modal_parrafo" },
+                }),
+              ]),
+            ]),
+          ]
+        ),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -76232,7 +76360,7 @@ var render = function () {
                           _c(
                             "table",
                             {
-                              staticClass: "table table-striped table-bordered",
+                              staticClass: "table table-sm table-bordered",
                               staticStyle: { width: "100%" },
                               attrs: { id: "ventasPendientes" },
                             },
@@ -76249,20 +76377,12 @@ var render = function () {
                                         _vm._v(_vm._s(i + 1) + "."),
                                       ]),
                                       _vm._v(" "),
-                                      _c("td", { staticClass: "text-center" }, [
+                                      _c("td", { staticClass: "text-left" }, [
                                         _vm._v(_vm._s(venta.fechaV)),
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-left" }, [
-                                        _vm._v(
-                                          _vm._s(venta.primer_nombre) +
-                                            " " +
-                                            _vm._s(venta.segundo_nombre) +
-                                            " " +
-                                            _vm._s(venta.primer_apellido) +
-                                            " " +
-                                            _vm._s(venta.segundo_apellido)
-                                        ),
+                                        _vm._v(_vm._s(venta.cliente)),
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-center" }, [
@@ -76373,7 +76493,7 @@ var render = function () {
                           _c(
                             "table",
                             {
-                              staticClass: "table table-striped table-bordered",
+                              staticClass: "table table-sm table-bordered",
                               staticStyle: { width: "100%" },
                               attrs: { id: "ventasCredito" },
                             },
@@ -76393,15 +76513,7 @@ var render = function () {
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-left" }, [
-                                      _vm._v(
-                                        _vm._s(venta.primer_nombre) +
-                                          " " +
-                                          _vm._s(venta.segundo_nombre) +
-                                          " " +
-                                          _vm._s(venta.primer_apellido) +
-                                          " " +
-                                          _vm._s(venta.segundo_apellido)
-                                      ),
+                                      _vm._v(_vm._s(venta.cliente)),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-center" }, [
@@ -76486,7 +76598,7 @@ var render = function () {
                           _c(
                             "table",
                             {
-                              staticClass: "table table-striped table-bordered",
+                              staticClass: "table table-sm table-bordered",
                               staticStyle: { width: "100%" },
                               attrs: { id: "ventasContado" },
                             },
@@ -76506,15 +76618,7 @@ var render = function () {
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-left" }, [
-                                      _vm._v(
-                                        _vm._s(venta.primer_nombre) +
-                                          " " +
-                                          _vm._s(venta.segundo_nombre) +
-                                          " " +
-                                          _vm._s(venta.primer_apellido) +
-                                          " " +
-                                          _vm._s(venta.segundo_apellido)
-                                      ),
+                                      _vm._v(_vm._s(venta.cliente)),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", { staticClass: "text-center" }, [
@@ -76793,7 +76897,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("td", { staticClass: "text-center" }, [_vm._v("Fecha")]),
         _vm._v(" "),
-        _c("td", { staticClass: "text-left" }, [_vm._v("Cliente")]),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Cliente")]),
         _vm._v(" "),
         _c("td", { staticClass: "text-center" }, [_vm._v("Pago")]),
         _vm._v(" "),

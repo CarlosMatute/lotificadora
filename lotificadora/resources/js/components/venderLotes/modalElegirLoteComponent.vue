@@ -29,7 +29,7 @@
                                             <template v-if="bloques.length == 0">
                                                 <select class="form-control border-dark" v-model="bloque" v-on:change="cargarLotes" disabled>
                                                     <option disabled selected>--Elige un bloque--</option>
-                                                    <option v-for="bloque in bloques" v-bind:value="bloque.id"> {{bloque.nombre}} </option>
+                                                    <!-- <option v-for="bloque in bloques" v-bind:value="bloque.id"> {{bloque.nombre}} </option> -->
                                                 </select>
                                             </template>
                                             <template v-else>
@@ -48,7 +48,7 @@
                                             <template v-if="lotes.length == 0">
                                                 <select class="form-control border-dark" v-model="lote" disabled>
                                                     <option disabled selected>--Elige un lote--</option>
-                                                    <option v-for="lote in lotes" v-bind:value="lote.id"> L-{{lote.nombre}} </option>
+                                                    <!-- <option v-for="lote in lotes" v-bind:value="lote.id"> L-{{lote.nombre}} </option> -->
                                                 </select>
                                             </template>
                                             <template v-else>
