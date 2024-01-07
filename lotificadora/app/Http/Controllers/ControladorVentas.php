@@ -150,24 +150,6 @@ class ControladorVentas extends Controller
                 $estado = "Pagado";
             }
 
-            // $venta = new Venta();
-            // $venta->id_cliente = $id_cliente;
-            // $venta->pago = $pago;
-            // $venta->estado = $estado;
-            // $venta->total_contado = $request->total_contado;
-            // $venta->anios_financiamiento = $request->anios_financiamiento;
-            // $venta->tasa_interes = $request->tasa_interes;
-            // $venta->prima = $primaFormato;
-            // $venta->cuotas = $request->cuotas;
-            // $venta->total_intereses = $request->total_intereses;
-            // $venta->total_pagar = $request->total_pagar;
-            // $venta->cuota_mensual = number_format($request->cuota_mensual);
-            // $venta->dias_cobro_mes = $request->dias_cobro_mensual;
-            // $venta->fecha_venta = $request->fecha_venta;
-            // $venta->save();
-            
-            // $id_venta = Venta::all()->last();
-
             DB::select("INSERT INTO ventas (id_cliente, pago, estado, total_contado, anios_financiamiento, tasa_interes, prima, 
                         cuotas, total_intereses, total_pagar, cuota_mensual, dias_cobro_mes, created_at, fecha_venta) 
                         VALUES (:id_cliente, :pago, :estado, :total_contado, :anios_financiamiento, :tasa_interes, :prima, :cuotas, 
@@ -185,63 +167,35 @@ class ControladorVentas extends Controller
                 $aplicar_prima = ($request->aplicar_prima) ? 1 : 'null';
                 $anio_mes = date_format(date_create($request->fecha_venta), 'Y-m');
                 $fecha_cobro = $anio_mes."-".$request->dias_cobro_mensual;
-                //throw new Exception($aplicar_prima, true);
-                DB::select("INSERT into fechas_cobros (id_venta, fecha_cobro, estado, created_at) 
-                    SELECT ".$id_venta->id." id_venta, fechas, 'Pendiente' estado, now()
-                    FROM (
-                        WITH RECURSIVE nrows(date) AS (
-                                    SELECT date_add('".$fecha_cobro."', interval coalesce(".$aplicar_prima.", 0) month) UNION ALL 
-                                    SELECT DATE_ADD(date,INTERVAL 1 month) FROM nrows WHERE date <= DATE(date_add('".$fecha_cobro."', interval (select cuotas from ventas where id = ".$id_venta->id.")-coalesce(".$aplicar_prima.", 2) month))
-                            )
-                            SELECT ROW_NUMBER() OVER (ORDER BY date) fila,
-                                    case when DATE_FORMAT(date,'%m-%d') between '02-28' and '02-30' then concat(DATE_FORMAT(date,'%Y-%m-'),'28') else concat(DATE_FORMAT(date,'%Y-%m-'),DATE_FORMAT('".$fecha_cobro."','%d')) end fechas 
-                            FROM nrows
-                    ) AS subconsulta;");
+                $anio = substr($request->fecha_venta, 0, 4);
+                $dia_interval = ($aplicar_prima == 1) ? $request->dias_cobro_mensual-28 : 0;
+                $dia_interval2 = ($aplicar_prima == 1) ? $request->dias_cobro_mensual-28 : $request->dias_cobro_mensual;
+                //throw new Exception($dia_interval, true);
 
-                // $meses = $request->anios_financiamiento*12;
-                // //Proceso de dias de cobro
-                // //$hoy = DATE("Y-m");
-                // $fechaVenta = $request->fecha_venta;
-                // $hoy = date_format(date_create($fechaVenta), 'Y-m');
-                // //dd($hoy);
-                // $hoyCompuesto = $hoy."-".$request->dias_cobro_mensual;
+                    $fechas_cuotas = DB::select("SELECT fechas FROM ( 
+                        WITH RECURSIVE nrows(date) AS ( 
+                                SELECT 
+                                        case when DATE_FORMAT('".$fecha_cobro."','%m-%d') is null 
+                                        then DATE_ADD(date_add(concat('".$anio."', '-02-28'), interval coalesce(".$aplicar_prima.", 0) month), INTERVAL ".$dia_interval." DAY) 
+                                        else date_add('".$fecha_cobro."', interval coalesce(".$aplicar_prima.", 0) month) end 
+                                        UNION ALL 
+                                        SELECT DATE_ADD(date,INTERVAL 1 month) FROM nrows WHERE date <= DATE(date_add( 
+                                                case when DATE_FORMAT('".$fecha_cobro."','%m-%d') is null 
+                                                then DATE_ADD(date_add(concat('".$anio."', '-02-28'), interval coalesce(".$aplicar_prima.", 0) month), INTERVAL ".$dia_interval2." DAY) 
+                                                else '".$fecha_cobro."' end , interval (select cuotas from ventas where id = ".$id_venta->id.")-coalesce(".$aplicar_prima." + 1, 3) month)) ) 
+                                SELECT ROW_NUMBER() OVER (ORDER BY date) fila, 
+                                        case when DATE_FORMAT(date,'%m-%d') between '02-28' and '02-30' 
+                                        then concat(DATE_FORMAT(date,'%Y-%m-'),'28') 
+                                        else concat(DATE_FORMAT(date,'%Y-%m-'),DATE_FORMAT( 
+                                                case when DATE_FORMAT('".$fecha_cobro."','%m-%d') is null 
+                                                then DATE_ADD(date_add(concat('".$anio."', '-02-28'), interval coalesce(".$aplicar_prima.", 0) month), INTERVAL ".$dia_interval2." DAY) 
+                                                else '".$fecha_cobro."' end,'%d')) end fechas FROM nrows ) AS subconsulta;");
 
-                // //Insercion de fechas de cobro
-                // if($hoyCompuesto[6] == 2 && $request->dias_cobro_mensual >= 29){
-                //     for($i=0; $i<$meses; $i++){
-                //         $date_now = $hoyCompuesto;
-                //         $date_future = strtotime('+ '.$i.' month', strtotime($date_now));
-                //         $date_future = date('Y-m-d', $date_future);  
-                //         $fecha = new fechas_cobros();
-                //         $fecha->id_venta = $id_venta->id; 
-                        
-                //         if($date_future[5] == 0 && $date_future[6] == 2 && $request->dias_cobro_mensual >= 29){
-                //             $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5]."2-28";
-                //         }else{
-                //             $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5].$date_future[6]."-".$request->dias_cobro_mensual;
-                //         }
-                //         $fecha->estado = "Pendiente";
-                //         $fecha->save();
-                //     }
-                // }else{
-                //     for($i=1; $i<=$meses; $i++){
-                //         $date_now = $hoy;
-                //         $date_future = strtotime('+ '.$i.' month', strtotime($date_now));
-                //         $date_future = date('Y-m', $date_future); 
-                //         $fecha = new fechas_cobros();
-                //         $fecha->id_venta = $id_venta->id;  
-
-                //         if($date_future[5] != 0 || $date_future[6] != 2 || $request->dias_cobro_mensual <= 28){
-                //             $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5].$date_future[6]."-".$request->dias_cobro_mensual;
-
-                //         }else{
-                //             $fecha->fecha_cobro = $date_future[0].$date_future[1].$date_future[2].$date_future[3].$date_future[4].$date_future[5]."2-28";
-                //         }
-                //         $fecha->estado = "Pendiente";
-                //         $fecha->save();
-                    
-                //     }
-                // }
+                    foreach($fechas_cuotas as $row){
+                        DB::select("INSERT into fechas_cobros 
+                            (id_venta, fecha_cobro, estado, created_at) values (:id_venta, :fecha_cobro, 'Pendiente', now())", 
+                            ["id_venta" => $id_venta->id, "fecha_cobro" => $row->fechas]);
+                    }
 
                 //Manejo de estados de fechas de cobros
                 DB::select("
