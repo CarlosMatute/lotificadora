@@ -207,8 +207,9 @@ class controladorDashboard extends Controller
         
         // $enero = fechas_cobros::whereMonth('fecha_cobro', '01')->get();
 
-        //setear base a español
-        DB::select("SET lc_time_names = 'es_ES';");
+        //setear base a español y a la hora actual
+        DB::select("SET time_zone = '-06:00';");//Hora actual
+        DB::select("SET lc_time_names = 'es_ES';");//Idioma a español
         //Movimientos del mes actual
         $movimientos = collect(\DB::select("
         with total as (
@@ -224,6 +225,10 @@ class controladorDashboard extends Controller
         join pagado on true
         "))->first();
 
+        //Inicia fecha actual produccion
+        $anioActual = collect(\DB::select("select date_format(now(), '%Y') AS anio"))->first();
+        //Finaliza fecha actual produccion
+
 
         $data[]=[
             "enero"=>$enenroEstado,
@@ -238,7 +243,7 @@ class controladorDashboard extends Controller
             "octubre"=>$octubreEstado,
             "noviembre"=>$noviembreEstado,
             "diciembre"=>$diciembreEstado,
-            "añoActual"=>date("Y"),
+            "anioActual"=>$anioActual->anio,
             "mesActual"=>$movimientos->mes_actual,
             "totalCobrar"=>$movimientos->total_cobrar,
             "totalPagado"=>$movimientos->total_pagado,
@@ -318,10 +323,18 @@ class controladorDashboard extends Controller
      */
     public function edit($id)
     {
-        $anio = $id == 0 ? 2023 : $id;
+
+        //setear base a español y a la hora actual
+        DB::select("SET time_zone = '-06:00';");//Hora actual
+        DB::select("SET lc_time_names = 'es_ES';");//Idioma a español
+
+        //Inicia fecha actual produccion
+        $anioActual = collect(\DB::select("select date_format(now(), '%Y') AS anio"))->first();
+        //Finaliza fecha actual produccion
+     
+        $anio = $id == 0 ? $anioActual->anio : $id;
         
-        //setear base a español
-        DB::select("SET lc_time_names = 'es_ES';");
+ 
         $meses_anio_actual = DB::select("
         with total as (
             select DATE_FORMAT(fc.fecha_cobro,'%M') mes, coalesce(sum(CAST(replace(v.cuota_mensual, ',', '') AS UNSIGNED)), 0) total_cobrar from ventas v

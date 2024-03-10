@@ -170,6 +170,7 @@ class ControladorVentas extends Controller
                 $anio = substr($request->fecha_venta, 0, 4);
                 $dia_interval = ($aplicar_prima == 1) ? $request->dias_cobro_mensual-28 : 0;
                 $dia_interval2 = ($aplicar_prima == 1) ? $request->dias_cobro_mensual-28 : $request->dias_cobro_mensual;
+                $aplicar_prima2 = ($aplicar_prima == 1) ? 0 : 1;
                 //throw new Exception($dia_interval, true);
 
                     $fechas_cuotas = DB::select("SELECT fechas FROM ( 
@@ -182,7 +183,7 @@ class ControladorVentas extends Controller
                                         SELECT DATE_ADD(date,INTERVAL 1 month) FROM nrows WHERE date <= DATE(date_add( 
                                                 case when DATE_FORMAT('".$fecha_cobro."','%m-%d') is null 
                                                 then DATE_ADD(date_add(concat('".$anio."', '-02-28'), interval coalesce(".$aplicar_prima.", 0) month), INTERVAL ".$dia_interval2." DAY) 
-                                                else '".$fecha_cobro."' end , interval (select cuotas from ventas where id = ".$id_venta->id.")-coalesce(".$aplicar_prima." + 1, 3) month)) ) 
+                                                else '".$fecha_cobro."' end , interval (select cuotas from ventas where id = ".$id_venta->id.")-coalesce(".$aplicar_prima2." + 1, 3) month)) ) 
                                 SELECT ROW_NUMBER() OVER (ORDER BY date) fila, 
                                         case when DATE_FORMAT(date,'%m-%d') between '02-28' and '02-30' 
                                         then concat(DATE_FORMAT(date,'%Y-%m-'),'28') 

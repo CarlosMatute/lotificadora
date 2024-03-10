@@ -641,6 +641,7 @@ export default {
             meses:[],
             cuotasMes:[],
             mesActual:"",
+            anioActual:"",
             movimientosMeses:[],
             nuevoAnio:""
         }
@@ -650,7 +651,8 @@ export default {
                 //console.log(respuesta.data[0])
                 this.meses = respuesta.data[0]
                 var porcentaje = respuesta.data[0]
-                //console.log(porcentaje)
+                this.anioActual = this.meses.anioActual;
+                //console.log(this.anioActual )
                 
                 $("#prueba").html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: '+porcentaje.porcentajeCobrado+'%"></div>');
             })
@@ -680,9 +682,10 @@ export default {
         verMasMeses:function(anio){
             axios.get('/dashboard/'+anio+'/edit').then(respuesta=>{
                 this.movimientosMeses = respuesta.data
+                var anio_actual = this.anioActual;
                 var movimientos = respuesta.data
                     setTimeout( function() {
-                        anio = anio == 0 ? 2023 : anio
+                        anio = anio == 0 ? anio_actual : anio
                         $("#anio").html(anio);
                         for(var i = 1; i <= movimientos.length; i++){
                             $("#"+i).html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: '+movimientos[i-1].porcentaje_cobrado+'%"></div>');

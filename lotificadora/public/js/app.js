@@ -2524,6 +2524,7 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
       meses: [],
       cuotasMes: [],
       mesActual: "",
+      anioActual: "",
       movimientosMeses: [],
       nuevoAnio: ""
     };
@@ -2534,7 +2535,8 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
     axios.get('/dashboard').then(function (respuesta) {
       //console.log(respuesta.data[0])
       _this.meses = respuesta.data[0];
-      var porcentaje = respuesta.data[0]; //console.log(porcentaje)
+      var porcentaje = respuesta.data[0];
+      _this.anioActual = _this.meses.anioActual; //console.log(this.anioActual )
 
       $("#prueba").html('<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ' + porcentaje.porcentajeCobrado + '%"></div>');
     });
@@ -2566,9 +2568,10 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 
       axios.get('/dashboard/' + anio + '/edit').then(function (respuesta) {
         _this4.movimientosMeses = respuesta.data;
+        var anio_actual = _this4.anioActual;
         var movimientos = respuesta.data;
         setTimeout(function () {
-          anio = anio == 0 ? 2023 : anio;
+          anio = anio == 0 ? anio_actual : anio;
           $("#anio").html(anio);
 
           for (var i = 1; i <= movimientos.length; i++) {
