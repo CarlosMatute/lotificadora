@@ -13,7 +13,7 @@
                         <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive table-striped">
-                                        <table class="table table-striped table-bordered" style="width:100%" id="lotes">
+                                        <table class="table table-striped table table-sm responsive table-bordered" style="width:100%" id="lotes">
                                             <thead class="bg-dark">
                                                 <tr>
                                                     <td class="text-center">#</td>
@@ -36,13 +36,13 @@
                                                     <td class="text-center">{{lotes.tiempo}} años</td>
                                                     <td class="text-center">
                                                         <template v-if="lotes.estado == 'Disponible'">
-                                                            <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Disponible" v-on:click="reservarLote(lotes.id)"><i class="fa fa-check"></i></button>
+                                                            <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Disponible" v-on:click="reservarLote(lotes.id)"><i class="fa fa-check"></i> {{lotes.estado}}</button>
                                                         </template>
                                                         <template v-else-if="lotes.estado == 'Reservado'">
-                                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Reservado" v-on:click="reservacionLote(lotes.id)"><i class="fa fa-clock"></i></button>
+                                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Reservado" v-on:click="reservacionLote(lotes.id)"><i class="fa fa-clock"></i> {{lotes.estado}}</button>
                                                         </template>
                                                         <template v-else>
-                                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Vendido"><i class="fa fa-handshake"></i></button>
+                                                            <a type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Vendido" :href="'/detalle_lote_vendido/'+lotes.id" target="_blank"><i class="fa fa-handshake"></i> {{lotes.estado}}</a>
                                                         </template>
                                                     </td>
                                                     <td class="text-center" >
@@ -59,18 +59,6 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot class="bg-dark">
-                                                <tr>
-                                                    <td class="text-center">#</td>
-                                                    <td class="text-center">Lote</td>
-                                                    <td class="text-center">Area</td>
-                                                    <td class="text-center">Medidas</td>
-                                                    <td class="text-center">Precio</td>
-                                                    <td class="text-center">Financiamiento</td>
-                                                    <td class="text-center">Estado</td>
-                                                    <td class="text-center">Acciones</td>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                </div>

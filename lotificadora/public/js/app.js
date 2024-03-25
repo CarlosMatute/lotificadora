@@ -5965,18 +5965,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6446,6 +6434,195 @@ __webpack_require__.r(__webpack_exports__);
     },
     cerrarModal: function cerrarModal() {
       $("#modalReservarLote").trigger('click'); //$("#modalBloques").modal("hide")
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["resumenventa"],
+  data: function data() {
+    return {
+      fecha_venta: "",
+      id_venta: null,
+      informacionLote: []
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    editarVenta: function editarVenta() {
+      var _this = this;
+
+      var data = {
+        "id_venta": this.id_venta,
+        "fecha_venta": this.fecha_venta
+      };
+      axios.post("lotes/apoyo/III", data).then(function (respuesta) {
+        _this.informacionLote = respuesta.data;
+        console.log(_this.informacionLote);
+        window.location.reload();
+      });
     }
   }
 });
@@ -9152,7 +9329,8 @@ Vue.component('modal-editar-residencial-component', (__webpack_require__(/*! ./c
 Vue.component('modal-cambiar-imagen-residencial-component', (__webpack_require__(/*! ./components/registrarResidenciales/modalCambiarImagenResidencialComponent.vue */ "./resources/js/components/registrarResidenciales/modalCambiarImagenResidencialComponent.vue")["default"]));
 Vue.component('modal-alerta-eliminar-residencial-component', (__webpack_require__(/*! ./components/registrarResidenciales/modalAlertaEliminarResidencialComponent.vue */ "./resources/js/components/registrarResidenciales/modalAlertaEliminarResidencialComponent.vue")["default"]));
 Vue.component('modal-reservar-lote-component', (__webpack_require__(/*! ./components/registrarResidenciales/modalReservarLoteComponent.vue */ "./resources/js/components/registrarResidenciales/modalReservarLoteComponent.vue")["default"]));
-Vue.component('modal-reservacion-lote-component', (__webpack_require__(/*! ./components/registrarResidenciales/modalReservacionLoteComponent.vue */ "./resources/js/components/registrarResidenciales/modalReservacionLoteComponent.vue")["default"])); //Componentes de modulo Clientes
+Vue.component('modal-reservacion-lote-component', (__webpack_require__(/*! ./components/registrarResidenciales/modalReservacionLoteComponent.vue */ "./resources/js/components/registrarResidenciales/modalReservacionLoteComponent.vue")["default"]));
+Vue.component('resumen-venta-lote-vendido-component', (__webpack_require__(/*! ./components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue */ "./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue")["default"])); //Componentes de modulo Clientes
 
 Vue.component('clientes-component', (__webpack_require__(/*! ./components/registrarClientes/clientesComponent.vue */ "./resources/js/components/registrarClientes/clientesComponent.vue")["default"]));
 Vue.component('modal-registrar-cliente-component', (__webpack_require__(/*! ./components/registrarClientes/modalRegistrarClienteComponent.vue */ "./resources/js/components/registrarClientes/modalRegistrarClienteComponent.vue")["default"]));
@@ -60716,6 +60894,45 @@ component.options.__file = "resources/js/components/registrarResidenciales/modal
 
 /***/ }),
 
+/***/ "./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _resumenVentaLoteVendidoComponent_vue_vue_type_template_id_0287dc2a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resumenVentaLoteVendidoComponent.vue?vue&type=template&id=0287dc2a& */ "./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=template&id=0287dc2a&");
+/* harmony import */ var _resumenVentaLoteVendidoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./resumenVentaLoteVendidoComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _resumenVentaLoteVendidoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _resumenVentaLoteVendidoComponent_vue_vue_type_template_id_0287dc2a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _resumenVentaLoteVendidoComponent_vue_vue_type_template_id_0287dc2a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/venderLotes/modalEditarVentaComponent.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/venderLotes/modalEditarVentaComponent.vue ***!
@@ -61396,6 +61613,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_resumenVentaLoteVendidoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resumenVentaLoteVendidoComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_resumenVentaLoteVendidoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************!*\
   !*** ./resources/js/components/venderLotes/modalEditarVentaComponent.vue?vue&type=script&lang=js& ***!
@@ -61911,6 +62144,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modalReservarLoteComponent_vue_vue_type_template_id_4c806820___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modalReservarLoteComponent_vue_vue_type_template_id_4c806820___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./modalReservarLoteComponent.vue?vue&type=template&id=4c806820& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarResidenciales/modalReservarLoteComponent.vue?vue&type=template&id=4c806820&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=template&id=0287dc2a&":
+/*!****************************************************************************************************************************!*\
+  !*** ./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=template&id=0287dc2a& ***!
+  \****************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_resumenVentaLoteVendidoComponent_vue_vue_type_template_id_0287dc2a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_resumenVentaLoteVendidoComponent_vue_vue_type_template_id_0287dc2a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_resumenVentaLoteVendidoComponent_vue_vue_type_template_id_0287dc2a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resumenVentaLoteVendidoComponent.vue?vue&type=template&id=0287dc2a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=template&id=0287dc2a&");
 
 
 /***/ }),
@@ -70236,7 +70486,8 @@ var render = function () {
                         _c(
                           "table",
                           {
-                            staticClass: "table table-striped table-bordered",
+                            staticClass:
+                              "table table-striped table table-sm responsive table-bordered",
                             staticStyle: { width: "100%" },
                             attrs: { id: "lotes" },
                           },
@@ -70307,6 +70558,9 @@ var render = function () {
                                                 _c("i", {
                                                   staticClass: "fa fa-check",
                                                 }),
+                                                _vm._v(
+                                                  " " + _vm._s(lotes.estado)
+                                                ),
                                               ]
                                             ),
                                           ]
@@ -70335,10 +70589,40 @@ var render = function () {
                                                 _c("i", {
                                                   staticClass: "fa fa-clock",
                                                 }),
+                                                _vm._v(
+                                                  " " + _vm._s(lotes.estado)
+                                                ),
                                               ]
                                             ),
                                           ]
-                                        : [_vm._m(1, true)],
+                                        : [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "btn btn-primary btn-sm",
+                                                attrs: {
+                                                  type: "button",
+                                                  "data-toggle": "tooltip",
+                                                  "data-placement": "top",
+                                                  title: "Vendido",
+                                                  href:
+                                                    "/detalle_lote_vendido/" +
+                                                    lotes.id,
+                                                  target: "_blank",
+                                                },
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "fa fa-handshake",
+                                                }),
+                                                _vm._v(
+                                                  " " + _vm._s(lotes.estado)
+                                                ),
+                                              ]
+                                            ),
+                                          ],
                                     ],
                                     2
                                   ),
@@ -70373,7 +70657,7 @@ var render = function () {
                                                 ]
                                               ),
                                               _vm._v(" "),
-                                              _vm._m(2, true),
+                                              _vm._m(1, true),
                                             ]
                                           : [
                                               _c(
@@ -70427,8 +70711,6 @@ var render = function () {
                               }),
                               0
                             ),
-                            _vm._v(" "),
-                            _vm._m(3),
                           ]
                         ),
                       ]
@@ -70575,51 +70857,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "button",
-      {
-        staticClass: "btn btn-primary btn-sm",
-        attrs: {
-          type: "button",
-          "data-toggle": "tooltip",
-          "data-placement": "top",
-          title: "Vendido",
-        },
-      },
-      [_c("i", { staticClass: "fa fa-handshake" })]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
       { staticClass: "btn btn-danger btn-sm", attrs: { disabled: "" } },
       [_c("i", { staticClass: "fas fa-trash" })]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tfoot", { staticClass: "bg-dark" }, [
-      _c("tr", [
-        _c("td", { staticClass: "text-center" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Lote")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Area")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Medidas")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Precio")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Financiamiento")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [_vm._v("Acciones")]),
-      ]),
-    ])
   },
 ]
 render._withStripped = true
@@ -71470,6 +71710,479 @@ var render = function () {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=template&id=0287dc2a&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue?vue&type=template&id=0287dc2a& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "card" }, [
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "invoice p-3 mb-3" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12" }, [
+                _c("h4", [
+                  _c("i", { staticClass: "fas fa-tag" }),
+                  _vm._v(
+                    " información de Venta\r\n                            "
+                  ),
+                  _c("small", { staticClass: "float-right" }, [
+                    _vm._v(
+                      "Fecha de registro: " +
+                        _vm._s(_vm.resumenventa.fecha_registro)
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row invoice-info" }, [
+              _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                _c("strong", [_vm._v("Cliente")]),
+                _vm._v(" "),
+                _c("address", [
+                  _vm._v(
+                    "\r\n                            Nombre: " +
+                      _vm._s(_vm.resumenventa.cliente)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\r\n                            Identidad: " +
+                      _vm._s(_vm.resumenventa.identidad)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\r\n                            Teléfono: " +
+                      _vm._s(_vm.resumenventa.cel)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\r\n                            Teléfono2: " +
+                      _vm._s(_vm.resumenventa.cel2)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\r\n                            Correo: " +
+                      _vm._s(_vm.resumenventa.correo) +
+                      "\r\n                        "
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                _c("strong", [_vm._v("Venta")]),
+                _vm._v(" "),
+                _c("address", [
+                  _vm._v(
+                    "\r\n                            Estado de la venta: " +
+                      _vm._s(_vm.resumenventa.estado)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\r\n                            Financiamiento: " +
+                      _vm._s(_vm.resumenventa.anios_financiamiento)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\r\n                            Tasa de interes anual: " +
+                      _vm._s(_vm.resumenventa.tasa_interes)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\r\n                            Prima: " +
+                      _vm._s(_vm.resumenventa.prima)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\r\n                            Cuotas: " +
+                      _vm._s(_vm.resumenventa.cuotas)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\r\n                            Cuota mensual: " +
+                      _vm._s(_vm.resumenventa.cuota_mensual) +
+                      "\r\n                        "
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                _c("br"),
+                _vm._v(
+                  "\r\n                        Tipo de venta: " +
+                    _vm._s(_vm.resumenventa.pago)
+                ),
+                _c("br"),
+                _vm._v(
+                  "\r\n                        Total Contado: L." +
+                    _vm._s(_vm.resumenventa.total_contado)
+                ),
+                _c("br"),
+                _vm._v(
+                  "\r\n                        Total intereses: " +
+                    _vm._s(_vm.resumenventa.total_intereses)
+                ),
+                _c("br"),
+                _vm._v(
+                  "\r\n                        Total a pagar: " +
+                    _vm._s(_vm.resumenventa.total_pagar)
+                ),
+                _c("br"),
+                _vm._v(
+                  "\r\n                        Fecha de venta: " +
+                    _vm._s(_vm.resumenventa.fecha)
+                ),
+                _c("br"),
+                _vm._v(" "),
+                _c("b", [
+                  _vm._v("N° Venta #" + _vm._s(_vm.resumenventa.id_venta)),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "table-responsive table-striped" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-sm responsive",
+                    attrs: { id: "lotes" },
+                  },
+                  [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.resumenventa.lotes, function (lotes, i) {
+                        return _c("tr", { key: i }, [
+                          _c("td", { staticClass: "text-left" }, [
+                            _vm._v(_vm._s(i + 1) + "."),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-center" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-info btn-sm",
+                                attrs: { type: "button" },
+                              },
+                              [_vm._v("L-" + _vm._s(lotes.nombre))]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-center" }, [
+                            _vm._v(_vm._s(lotes.residencial)),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-center" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-dark btn-sm",
+                                attrs: { type: "button" },
+                              },
+                              [_vm._v(_vm._s(lotes.bloque))]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-center" }, [
+                            _vm._v("L. " + _vm._s(lotes.precio)),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-center" }, [
+                            _vm._v(_vm._s(lotes.tiempo) + " años"),
+                          ]),
+                        ])
+                      }),
+                      0
+                    ),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _vm.resumenventa.pago == "Credito"
+            ? [
+                _c("hr"),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _c("div", { staticClass: "table-responsive table-striped" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-sm responsive",
+                      staticStyle: { width: "100%" },
+                      attrs: { id: "historial_cuotas" },
+                    },
+                    [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(
+                          _vm.resumenventa.historialCuotas,
+                          function (cobroMensual, i) {
+                            return _c("tr", { key: i }, [
+                              _c("td", { staticClass: "text-left" }, [
+                                _vm._v(_vm._s(i + 1) + ". "),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center" }, [
+                                _vm._v(
+                                  " " + _vm._s(cobroMensual.fecha_cobro) + " "
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center" }, [
+                                _vm._v(
+                                  " L. " +
+                                    _vm._s(cobroMensual.cuota_mensual) +
+                                    "  "
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "text-center" },
+                                [
+                                  cobroMensual.fecha_pago == null
+                                    ? [_vm._v("Sin datos")]
+                                    : [_vm._v(_vm._s(cobroMensual.fecha_pago))],
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "text-center" },
+                                [
+                                  cobroMensual.cantidad_pago == null
+                                    ? [_vm._v("Sin datos")]
+                                    : [
+                                        _vm._v(
+                                          _vm._s(cobroMensual.cantidad_pago)
+                                        ),
+                                      ],
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "text-center" },
+                                [
+                                  cobroMensual.estadoFC == "Pendiente"
+                                    ? [
+                                        _c(
+                                          "span",
+                                          { staticClass: "badge badge-info" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    : cobroMensual.estadoFC == "Cola"
+                                    ? [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge badge-primary",
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    : cobroMensual.estadoFC == "Atrasado"
+                                    ? [
+                                        _c(
+                                          "span",
+                                          { staticClass: "badge badge-danger" },
+                                          [
+                                            _c("span", {
+                                              staticClass:
+                                                "spinner-grow spinner-grow-sm",
+                                              attrs: {
+                                                role: "status",
+                                                "aria-hidden": "true",
+                                              },
+                                            }),
+                                            _vm._v(
+                                              "  " +
+                                                _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    : cobroMensual.estadoFC == "Dia de cobro"
+                                    ? [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge badge-warning",
+                                          },
+                                          [
+                                            _c("span", {
+                                              staticClass:
+                                                "spinner-border spinner-border-sm",
+                                              attrs: {
+                                                role: "status",
+                                                "aria-hidden": "true",
+                                              },
+                                            }),
+                                            _vm._v(
+                                              "  " +
+                                                _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    : [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge badge-success",
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(cobroMensual.estadoFC)
+                                            ),
+                                          ]
+                                        ),
+                                      ],
+                                ],
+                                2
+                              ),
+                            ])
+                          }
+                        ),
+                        0
+                      ),
+                    ]
+                  ),
+                ]),
+              ]
+            : _vm._e(),
+        ],
+        2
+      ),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "jumbotron" }, [
+      _c("h1", { staticClass: "display-4 font-weight-bold" }, [
+        _c("i", { staticClass: "fa fa-file" }),
+        _vm._v(" RESUMEN DE VENTA"),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "callout callout-info" }, [
+          _c("h5", [
+            _c("strong", [
+              _c("i", { staticClass: "fa fa-info" }),
+              _vm._v(" Nota: "),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Pantalla de información general de la venta.")]),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("label", [_vm._v("Lotes")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-dark" }, [
+      _c("tr", [
+        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Lote")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Residencial")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Bloque")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [
+          _vm._v("Años de Financiamiento"),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("label", [_vm._v("Historial de Cuotas")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-dark" }, [
+      _c("tr", [
+        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha de Cobro")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Cobro Sugerido")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Fecha de Pago")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Monto Pagado")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 

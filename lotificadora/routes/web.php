@@ -20,6 +20,7 @@ Route::resource('/lotes/apoyo', App\Http\Controllers\controladorLotesApoyo::clas
 Route::resource('/lotes/apoyo/II', App\Http\Controllers\controladorLotesApoyoII::class);
 Route::resource('/lotes/apoyo/III', App\Http\Controllers\ControladorLotesApoyoIII::class);
 Route::resource('/bloque', App\Http\Controllers\controladorBloque::class);
+Route::get('/detalle_lote_vendido/{id_lote}', [App\Http\Controllers\HomeController::class, 'detalle_lote_vendido']);
 //Clientes
 Route::get('/registrarClientes', [App\Http\Controllers\HomeController::class, 'registrar_clientes']);
 Route::resource('/clientes', App\Http\Controllers\controladorClientes::class);
