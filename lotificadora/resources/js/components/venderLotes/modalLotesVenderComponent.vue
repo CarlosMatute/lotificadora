@@ -169,6 +169,20 @@
                                                 <option v-bind:value="4">4 años</option>
                                                 <option v-bind:value="5">5 años</option>
                                                 <option v-bind:value="6">6 años</option>
+                                                <option v-bind:value="7">7 años</option>
+                                                <option v-bind:value="8">8 años</option>
+                                                <option v-bind:value="9">9 años</option>
+                                                <option v-bind:value="10">10 años</option>
+                                                <option v-bind:value="11">11 años</option>
+                                                <option v-bind:value="12">12 años</option>
+                                                <option v-bind:value="13">13 años</option>
+                                                <option v-bind:value="14">14 años</option>
+                                                <option v-bind:value="15">15 años</option>
+                                                <option v-bind:value="16">16 años</option>
+                                                <option v-bind:value="17">17 años</option>
+                                                <option v-bind:value="18">18 años</option>
+                                                <option v-bind:value="19">19 años</option>
+                                                <option v-bind:value="20">20 años</option>
                                             </select>
                                         </div>
                                     </div>

@@ -8185,6 +8185,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //props:["lotesFinanciados"],
   data: function data() {
@@ -75268,6 +75282,62 @@ var render = function () {
                                   _vm._v(" "),
                                   _c("option", { domProps: { value: 6 } }, [
                                     _vm._v("6 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 7 } }, [
+                                    _vm._v("7 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 8 } }, [
+                                    _vm._v("8 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 9 } }, [
+                                    _vm._v("9 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 10 } }, [
+                                    _vm._v("10 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 11 } }, [
+                                    _vm._v("11 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 12 } }, [
+                                    _vm._v("12 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 13 } }, [
+                                    _vm._v("13 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 14 } }, [
+                                    _vm._v("14 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 15 } }, [
+                                    _vm._v("15 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 16 } }, [
+                                    _vm._v("16 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 17 } }, [
+                                    _vm._v("17 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 18 } }, [
+                                    _vm._v("18 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 19 } }, [
+                                    _vm._v("19 años"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { domProps: { value: 20 } }, [
+                                    _vm._v("20 años"),
                                   ]),
                                 ]
                               ),
