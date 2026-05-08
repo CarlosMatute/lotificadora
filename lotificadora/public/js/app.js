@@ -63065,8 +63065,10 @@ var render = function () {
                                                               "btn btn-sm btn-light",
                                                             attrs: {
                                                               href:
-                                                                "/detalle_lote_vendido/" +
-                                                                movimientosMes.id,
+                                                                "/detalle_morosos/anio/" +
+                                                                movimientosMes.anio +
+                                                                "/mes/" +
+                                                                movimientosMes.mes_num,
                                                               target: "_blank",
                                                             },
                                                           },

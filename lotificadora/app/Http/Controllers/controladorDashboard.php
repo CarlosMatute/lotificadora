@@ -360,6 +360,7 @@ class controladorDashboard extends Controller
 
             SELECT 
                 $anio AS anio,
+                t.mes_num,
                 t.mes,
                 FORMAT(total_cobrar,2) total_cobrar,
                 FORMAT(total_pagado,2) total_pagado,

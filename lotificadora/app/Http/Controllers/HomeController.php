@@ -117,14 +117,27 @@ class HomeController extends Controller
             with total as (
                 select coalesce(sum(CAST(replace(v.cuota_mensual, ',', '') AS UNSIGNED)), 0) total_cobrar from ventas v
                     join fechas_cobros fc on v.id = fc.id_venta
-                    where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y')
+                    where year(fecha_cobro) = $anio and month(fecha_cobro) = $mes
             ), pagado as (
-                    select coalesce(sum(cantidad_pago), 0) total_pagado from fechas_cobros where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y') and estado = 'Pagado'
+                    select coalesce(sum(cantidad_pago), 0) total_pagado from fechas_cobros where year(fecha_cobro) = $anio and month(fecha_cobro) = $mes and estado = 'Pagado'
             )
-            select month(now()) mes_actual_numero, year(now()) anio, DATE_FORMAT(now(), '%M') mes_actual, FORMAT(total_cobrar,2) total_cobrar, FORMAT(total_pagado,2) total_pagado, FORMAT((total_cobrar - total_pagado),2) restante,
-            ROUND((total_pagado*100/total_cobrar), 1) porcentaje_cobrado
-            from total 
-            join pagado on true
+            select $mes mes_actual_numero, $anio anio, ELT($mes,
+                'Enero',
+                'Febrero',
+                'Marzo',
+                'Abril',
+                'Mayo',
+                'Junio',
+                'Julio',
+                'Agosto',
+                'Septiembre',
+                'Octubre',
+                'Noviembre',
+                'Diciembre'
+            ) mes_actual, FORMAT(total_cobrar,2) total_cobrar, FORMAT(total_pagado,2) total_pagado, FORMAT((total_cobrar - total_pagado),2) restante,
+                        ROUND((total_pagado*100/total_cobrar), 1) porcentaje_cobrado
+                        from total 
+                        join pagado on true
         "))->first();
 
         $morosos = DB::select("SELECT 
@@ -184,7 +197,9 @@ class HomeController extends Controller
                     ]);
 
             $mora_total = collect(\DB::select("SELECT 
-                FORMAT(SUM(CAST(REPLACE(v.cuota_mensual, ',', '') AS UNSIGNED)), 2) AS mora_total
+                COALESCE(FORMAT(SUM(CAST(REPLACE(v.cuota_mensual, ',', '') AS UNSIGNED)),
+                            2),
+                        0) AS mora_total
             FROM
                 fechas_cobros fc
                     JOIN
@@ -200,7 +215,9 @@ class HomeController extends Controller
                     ]))->first();
 
             $sin_mora_total = collect(\DB::select("SELECT 
-                FORMAT(SUM(CAST(REPLACE(v.cuota_mensual, ',', '') AS UNSIGNED)), 2) AS mora_total
+                COALESCE(FORMAT(SUM(CAST(REPLACE(v.cuota_mensual, ',', '') AS UNSIGNED)),
+                            2),
+                        0) AS mora_total
             FROM
                 fechas_cobros fc
                     JOIN
@@ -208,7 +225,8 @@ class HomeController extends Controller
                     JOIN
                 clientes c ON v.id_cliente = c.id
             WHERE
-                fc.estado != 'Atrasado' and fc.estado != 'Pagado'
+                fc.estado != 'Atrasado'
+                    AND fc.estado != 'Pagado'
                     AND YEAR(fc.fecha_cobro) = :anio
                     AND MONTH(fc.fecha_cobro) = :mes", [
                         "anio" => $anio,

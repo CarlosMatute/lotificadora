@@ -114,7 +114,7 @@
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-4">
                                                                     <strong><h4>L.{{movimientosMes.restante}}</h4></strong>
-                                                                    <p>Total Restante</p> <a :href="'/detalle_lote_vendido/'+movimientosMes.id" target="_blank" class="btn btn-sm btn-light"> Ver restante <i class="fas fa-arrow-circle-right"></i></a>
+                                                                    <p>Total Restante</p> <a :href="'/detalle_morosos/anio/'+movimientosMes.anio+'/mes/'+movimientosMes.mes_num" target="_blank" class="btn btn-sm btn-light"> Ver restante <i class="fas fa-arrow-circle-right"></i></a>
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-4">
                                                                     <strong><h4>L.{{movimientosMes.total_cobrar}}</h4></strong>
