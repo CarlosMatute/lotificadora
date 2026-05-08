@@ -172,6 +172,7 @@ class controladorReportes extends Controller
                 join bloques b on l.id_bloque = b.id
                 join residenciales r on b.id_residencial = r.id
                 join cliente c ON fc.id = c.id_fecha_cobro
+                GROUP BY c.id_fecha_cobro
                 ", ["id_fecha_pago" => $id]))->first();
 
         //Inicia fecha actual produccion
@@ -185,8 +186,8 @@ class controladorReportes extends Controller
 
         $final_documento = "Y para constancia firmo el presente recibo en la ciudad de Catacamas, Olancho, a los ".$numnero_letras->format($fechaActual->dia)." ($fechaActual->dia) días del mes de ($fechaActual->mes) del ".$numnero_letras->format($fechaActual->anio)." ($fechaActual->anio).";
         
-        //$file = ('C:/xampp/htdocs/lotificadora/lotificadora/public/documentos/recibo_letra.docx'); //Desarrollo
-        $file = "/home/xafysozx/public_html/pruebaslotificadora/documentos/recibo_letra.docx"; //Producción
+        $file = ('C:/xampp/htdocs/lotificadora/lotificadora/public/documentos/recibo_letra.docx'); //Desarrollo
+        //$file = "/home/xafysozx/public_html/pruebaslotificadora/documentos/recibo_letra.docx"; //Producción
 		
         try {
             

@@ -108,4 +108,123 @@ class HomeController extends Controller
         //return $data;
         return view('registrarResidenciales.detalleLoteVendido')->with('data', $data);
     }
+
+    public function detalle_morosos($anio, $mes)
+    {
+        DB::select("SET lc_time_names = 'es_MX';");
+
+        $movimientos = collect(\DB::select("
+            with total as (
+                select coalesce(sum(CAST(replace(v.cuota_mensual, ',', '') AS UNSIGNED)), 0) total_cobrar from ventas v
+                    join fechas_cobros fc on v.id = fc.id_venta
+                    where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y')
+            ), pagado as (
+                    select coalesce(sum(cantidad_pago), 0) total_pagado from fechas_cobros where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y') and estado = 'Pagado'
+            )
+            select month(now()) mes_actual_numero, year(now()) anio, DATE_FORMAT(now(), '%M') mes_actual, FORMAT(total_cobrar,2) total_cobrar, FORMAT(total_pagado,2) total_pagado, FORMAT((total_cobrar - total_pagado),2) restante,
+            ROUND((total_pagado*100/total_cobrar), 1) porcentaje_cobrado
+            from total 
+            join pagado on true
+        "))->first();
+
+        $morosos = DB::select("SELECT 
+                v.id idV,
+                DATE_FORMAT(v.fecha_venta, '%d de %M de %Y %h:%i %p') AS fecha_formateada,
+                CONCAT(COALESCE(c.primer_nombre, ''),
+                        ' ',
+                        COALESCE(c.segundo_nombre, ''),
+                        ' ',
+                        COALESCE(c.primer_apellido, ''),
+                        ' ',
+                        COALESCE(c.segundo_apellido, '')) cliente,
+                c.cel,
+                fc.fecha_cobro,
+                v.cuota_mensual,
+                fc.estado
+            FROM
+                fechas_cobros fc
+                    JOIN
+                ventas v ON fc.id_venta = v.id
+                    JOIN
+                clientes c ON v.id_cliente = c.id
+            WHERE
+                fc.estado = 'Atrasado'
+                    AND YEAR(fc.fecha_cobro) = :anio
+                    AND MONTH(fc.fecha_cobro) = :mes", [
+                        "anio" => $anio,
+                        "mes" => $mes
+                    ]);
+
+        $sin_mora = DB::select("SELECT 
+                v.id idV,
+                DATE_FORMAT(v.fecha_venta, '%d de %M de %Y %h:%i %p') AS fecha_formateada,
+                CONCAT(COALESCE(c.primer_nombre, ''),
+                        ' ',
+                        COALESCE(c.segundo_nombre, ''),
+                        ' ',
+                        COALESCE(c.primer_apellido, ''),
+                        ' ',
+                        COALESCE(c.segundo_apellido, '')) cliente,
+                c.cel,
+                fc.fecha_cobro,
+                v.cuota_mensual,
+                fc.estado
+            FROM
+                fechas_cobros fc
+                    JOIN
+                ventas v ON fc.id_venta = v.id
+                    JOIN
+                clientes c ON v.id_cliente = c.id
+            WHERE
+                fc.estado != 'Atrasado' and fc.estado != 'Pagado'
+                    AND YEAR(fc.fecha_cobro) = :anio
+                    AND MONTH(fc.fecha_cobro) = :mes", [
+                        "anio" => $anio,
+                        "mes" => $mes
+                    ]);
+
+            $mora_total = collect(\DB::select("SELECT 
+                FORMAT(SUM(CAST(REPLACE(v.cuota_mensual, ',', '') AS UNSIGNED)), 2) AS mora_total
+            FROM
+                fechas_cobros fc
+                    JOIN
+                ventas v ON fc.id_venta = v.id
+                    JOIN
+                clientes c ON v.id_cliente = c.id
+            WHERE
+                fc.estado = 'Atrasado'
+                    AND YEAR(fc.fecha_cobro) = :anio
+                    AND MONTH(fc.fecha_cobro) = :mes", [
+                        "anio" => $anio,
+                        "mes" => $mes
+                    ]))->first();
+
+            $sin_mora_total = collect(\DB::select("SELECT 
+                FORMAT(SUM(CAST(REPLACE(v.cuota_mensual, ',', '') AS UNSIGNED)), 2) AS mora_total
+            FROM
+                fechas_cobros fc
+                    JOIN
+                ventas v ON fc.id_venta = v.id
+                    JOIN
+                clientes c ON v.id_cliente = c.id
+            WHERE
+                fc.estado != 'Atrasado' and fc.estado != 'Pagado'
+                    AND YEAR(fc.fecha_cobro) = :anio
+                    AND MONTH(fc.fecha_cobro) = :mes", [
+                        "anio" => $anio,
+                        "mes" => $mes
+                    ]))->first();
+        
+        $data[]=[
+            "movimientos"=>$movimientos,
+            "morosos"=>$morosos,
+            "sin_mora"=>$sin_mora,
+            "mora_total"=>$mora_total->mora_total,
+            "sin_mora_total"=>$sin_mora_total->mora_total
+        ];
+
+        //throw New Exception($data[0], true);
+        //return $data;
+        return view('morosos')->with('data', $data);
+    }
 }

@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-lg-2 col-md-4">
                                 <strong><h4>L.{{meses.totalRestante}}</h4></strong>
-                                <p>Total Restante</p>
+                                <p>Total Restante </p><a :href="'/detalle_morosos/anio/'+meses.anio+'/mes/'+meses.mes_actual_numero" target="_blank" class="btn btn-sm btn-light"> Ver restante <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                             <div class="col-lg-2 col-md-4">
                                 <strong><h4>L.{{meses.totalCobrar}}</h4></strong>
@@ -114,7 +114,7 @@
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-4">
                                                                     <strong><h4>L.{{movimientosMes.restante}}</h4></strong>
-                                                                    <p>Total Restante</p>
+                                                                    <p>Total Restante</p> <a :href="'/detalle_lote_vendido/'+movimientosMes.id" target="_blank" class="btn btn-sm btn-light"> Ver restante <i class="fas fa-arrow-circle-right"></i></a>
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-4">
                                                                     <strong><h4>L.{{movimientosMes.total_cobrar}}</h4></strong>

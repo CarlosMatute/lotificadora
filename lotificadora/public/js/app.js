@@ -2953,6 +2953,281 @@ $.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables */ "./node_modules/datatables/media/js/jquery.dataTables.js");
+/* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(datatables__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+$.fn.DataTable = (datatables__WEBPACK_IMPORTED_MODULE_0___default());
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["resumenmorosos"],
+  data: function data() {
+    return {
+      estadoCreditoDatos: []
+    };
+  },
+  mounted: function mounted() {
+    $('#morosos').DataTable();
+    $('#sin_mora').DataTable();
+  },
+  methods: {
+    estadoCredito: function estadoCredito(id) {
+      var _this = this;
+
+      axios.get("/venta/" + id).then(function (respuesta) {
+        _this.estadoCreditoDatos = respuesta.data[0];
+        $("#modalEsatdoCredito").modal("show");
+        console.log(respuesta.data[0]);
+        $(function () {
+          $('#letras').DataTable();
+        });
+      });
+    },
+    actualizarVentas: function actualizarVentas() {
+      window.location.reload();
+    },
+    mensaje: function mensaje(celular) {
+      this.mensaje_texto = "Estimado cliente, le saluda Inversiones Rivera Carvajal, el motivo de este mensaje " + "es para hacerle saber que tiene moras Pendientes. Por favor ponerse al día. Gracias.";
+      window.open('https://api.whatsapp.com/send?phone=504' + celular + '&text=' + this.mensaje_texto + '', '_blank');
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarClientes/clientesComponent.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/registrarClientes/clientesComponent.vue?vue&type=script&lang=js& ***!
@@ -9328,7 +9603,8 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 Vue.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"])); //Componentes del dashboard
 
 Vue.component('dashboard-component', (__webpack_require__(/*! ./components/dashboard/dashboardComponent.vue */ "./resources/js/components/dashboard/dashboardComponent.vue")["default"]));
-Vue.component('modal-cuotas-mes-component', (__webpack_require__(/*! ./components/dashboard/modalCuotasMesComponent.vue */ "./resources/js/components/dashboard/modalCuotasMesComponent.vue")["default"])); //Componentes de modulo Residenciales
+Vue.component('modal-cuotas-mes-component', (__webpack_require__(/*! ./components/dashboard/modalCuotasMesComponent.vue */ "./resources/js/components/dashboard/modalCuotasMesComponent.vue")["default"]));
+Vue.component('morosos-detalle-component', (__webpack_require__(/*! ./components/dashboard/morososDetalleComponent.vue */ "./resources/js/components/dashboard/morososDetalleComponent.vue")["default"])); //Componentes de modulo Residenciales
 
 Vue.component('residenciales-component', (__webpack_require__(/*! ./components/registrarResidenciales/ResidencialesComponent.vue */ "./resources/js/components/registrarResidenciales/ResidencialesComponent.vue")["default"]));
 Vue.component('modal-registrar-residencial-component', (__webpack_require__(/*! ./components/registrarResidenciales/modalRegistrarResidencialComponent.vue */ "./resources/js/components/registrarResidenciales/modalRegistrarResidencialComponent.vue")["default"]));
@@ -60128,6 +60404,45 @@ component.options.__file = "resources/js/components/dashboard/modalCuotasMesComp
 
 /***/ }),
 
+/***/ "./resources/js/components/dashboard/morososDetalleComponent.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/dashboard/morososDetalleComponent.vue ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _morososDetalleComponent_vue_vue_type_template_id_6218ee88___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./morososDetalleComponent.vue?vue&type=template&id=6218ee88& */ "./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=template&id=6218ee88&");
+/* harmony import */ var _morososDetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./morososDetalleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _morososDetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _morososDetalleComponent_vue_vue_type_template_id_6218ee88___WEBPACK_IMPORTED_MODULE_0__.render,
+  _morososDetalleComponent_vue_vue_type_template_id_6218ee88___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/dashboard/morososDetalleComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/registrarClientes/clientesComponent.vue":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/registrarClientes/clientesComponent.vue ***!
@@ -61307,6 +61622,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_morososDetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./morososDetalleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_morososDetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/registrarClientes/clientesComponent.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************!*\
   !*** ./resources/js/components/registrarClientes/clientesComponent.vue?vue&type=script&lang=js& ***!
@@ -61818,6 +62149,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modalCuotasMesComponent_vue_vue_type_template_id_1e0d3fbc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modalCuotasMesComponent_vue_vue_type_template_id_1e0d3fbc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./modalCuotasMesComponent.vue?vue&type=template&id=1e0d3fbc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/modalCuotasMesComponent.vue?vue&type=template&id=1e0d3fbc&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=template&id=6218ee88&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=template&id=6218ee88& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morososDetalleComponent_vue_vue_type_template_id_6218ee88___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morososDetalleComponent_vue_vue_type_template_id_6218ee88___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morososDetalleComponent_vue_vue_type_template_id_6218ee88___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./morososDetalleComponent.vue?vue&type=template&id=6218ee88& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=template&id=6218ee88&");
 
 
 /***/ }),
@@ -62409,7 +62757,25 @@ var render = function () {
                     _c("h4", [_vm._v("L." + _vm._s(_vm.meses.totalRestante))]),
                   ]),
                   _vm._v(" "),
-                  _c("p", [_vm._v("Total Restante")]),
+                  _c("p", [_vm._v("Total Restante ")]),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-light",
+                      attrs: {
+                        href:
+                          "/detalle_morosos/anio/" +
+                          _vm.meses.anio +
+                          "/mes/" +
+                          _vm.meses.mes_actual_numero,
+                        target: "_blank",
+                      },
+                    },
+                    [
+                      _vm._v(" Ver restante "),
+                      _c("i", { staticClass: "fas fa-arrow-circle-right" }),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-lg-2 col-md-4" }, [
@@ -62691,6 +63057,29 @@ var render = function () {
                                                             "Total Restante"
                                                           ),
                                                         ]),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "btn btn-sm btn-light",
+                                                            attrs: {
+                                                              href:
+                                                                "/detalle_lote_vendido/" +
+                                                                movimientosMes.id,
+                                                              target: "_blank",
+                                                            },
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              " Ver restante "
+                                                            ),
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "fas fa-arrow-circle-right",
+                                                            }),
+                                                          ]
+                                                        ),
                                                       ]
                                                     ),
                                                     _vm._v(" "),
@@ -64741,6 +65130,759 @@ var staticRenderFns = [
         _c("td", { staticClass: "text-center" }, [_vm._v("Telefono")]),
         _vm._v(" "),
         _c("td", { staticClass: "text-center" }, [_vm._v("Fecha Cobro")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Cobro Sugerido")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Acciones")]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=template&id=6218ee88&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/morososDetalleComponent.vue?vue&type=template&id=6218ee88& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 col-12" }, [
+              _c("div", { staticClass: "small-box elevation-4 bg-info" }, [
+                _c("div", { staticClass: "inner" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-4 col-md-12" }, [
+                      _c("h3", { staticClass: "text-capitalize" }, [
+                        _vm._v(
+                          _vm._s(_vm.resumenmorosos.movimientos["mes_actual"])
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(_vm._s(_vm.resumenmorosos.movimientos["anio"])),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 col-md-4" }, [
+                      _c("strong", [
+                        _c("h4", [
+                          _vm._v(
+                            "L." +
+                              _vm._s(
+                                _vm.resumenmorosos.movimientos["total_pagado"]
+                              )
+                          ),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Total Cobrado")]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 col-md-4" }, [
+                      _c("strong", [
+                        _c("h4", [
+                          _vm._v(
+                            "L." +
+                              _vm._s(_vm.resumenmorosos.movimientos["restante"])
+                          ),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Total Restante ")]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 col-md-4" }, [
+                      _c("strong", [
+                        _c("h4", [
+                          _vm._v(
+                            "L." +
+                              _vm._s(
+                                _vm.resumenmorosos.movimientos["total_cobrar"]
+                              )
+                          ),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Total a Cobrar")]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 col-md-12" }, [
+                      _c("div", { staticClass: "card bg-light mb-3" }, [
+                        _c(
+                          "div",
+                          { staticClass: "card-body" },
+                          [
+                            _c("center", [
+                              _c(
+                                "h5",
+                                { staticStyle: { color: "rgb(0, 166, 90)" } },
+                                [
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.resumenmorosos.movimientos[
+                                          "porcentaje_cobrado"
+                                        ]
+                                      ) + "%"
+                                    ),
+                                  ]),
+                                ]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "progress",
+                                staticStyle: { height: "10px" },
+                              },
+                              [
+                                _c("div", {
+                                  staticClass:
+                                    "progress-bar bg-success progress-bar-striped progress-bar-animated",
+                                  style:
+                                    "width: " +
+                                    _vm.resumenmorosos.movimientos[
+                                      "porcentaje_cobrado"
+                                    ] +
+                                    "%",
+                                  attrs: {
+                                    role: "progressbar",
+                                    "aria-valuenow": "75",
+                                    "aria-valuemin": "0",
+                                    "aria-valuemax": "100",
+                                  },
+                                }),
+                              ]
+                            ),
+                          ],
+                          1
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _vm._m(1),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "d-flex justify-content-between align-items-center",
+            },
+            [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "d-flex flex-column align-items-end" }, [
+                _c("span", { staticClass: "badge badge-danger h4" }, [
+                  _vm._v("Mora: L." + _vm._s(_vm.resumenmorosos.mora_total)),
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "badge badge-success h4" }, [
+                  _vm._v(
+                    "Sin Mora: L." + _vm._s(_vm.resumenmorosos.sin_mora_total)
+                  ),
+                ]),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(3),
+          _vm._v(" "),
+          _c("div", { staticClass: "tab-content mb-3" }, [
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane fade show active",
+                attrs: {
+                  id: "morosos-tab-content",
+                  role: "tabpanel",
+                  "aria-labelledby": "morosos-tab",
+                },
+              },
+              [
+                _c("div", { staticClass: "row mt-3" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "div",
+                      { staticClass: "table-responsive table-striped" },
+                      [
+                        _c(
+                          "table",
+                          {
+                            staticClass: "table table-striped table-bordered",
+                            staticStyle: { width: "100%" },
+                            attrs: { id: "morosos" },
+                          },
+                          [
+                            _vm._m(4),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(
+                                _vm.resumenmorosos.morosos,
+                                function (morosos, i) {
+                                  return _c("tr", { key: i }, [
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(i + 1) + "."),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(morosos.fecha_formateada)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(morosos.cliente)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(morosos.cel)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(morosos.fecha_cobro)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-right" }, [
+                                      _vm._v(
+                                        "L. " + _vm._s(morosos.cuota_mensual)
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticClass: "text-center" },
+                                      [
+                                        morosos.estado == "Pendiente"
+                                          ? [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-info",
+                                                },
+                                                [_vm._v(_vm._s(morosos.estado))]
+                                              ),
+                                            ]
+                                          : morosos.estado == "Cola"
+                                          ? [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-primary",
+                                                },
+                                                [_vm._v(_vm._s(morosos.estado))]
+                                              ),
+                                            ]
+                                          : morosos.estado == "Atrasado"
+                                          ? [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-danger",
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "spinner-grow spinner-grow-sm",
+                                                    attrs: {
+                                                      role: "status",
+                                                      "aria-hidden": "true",
+                                                    },
+                                                  }),
+                                                  _vm._v(
+                                                    " " + _vm._s(morosos.estado)
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          : morosos.estado == "Dia de cobro"
+                                          ? [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-warning",
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "spinner-border spinner-border-sm",
+                                                    attrs: {
+                                                      role: "status",
+                                                      "aria-hidden": "true",
+                                                    },
+                                                  }),
+                                                  _vm._v(
+                                                    " " + _vm._s(morosos.estado)
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          : [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-success",
+                                                },
+                                                [_vm._v(_vm._s(morosos.estado))]
+                                              ),
+                                            ],
+                                      ],
+                                      2
+                                    ),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-xs btn-secondary",
+                                          attrs: { type: "button" },
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.estadoCredito(
+                                                morosos.idV
+                                              )
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-share",
+                                          }),
+                                          _vm._v(
+                                            "\n                                            Cobrar"
+                                          ),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-xs btn-success",
+                                          attrs: { type: "button" },
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.mensaje(morosos.cel)
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-envelope",
+                                          }),
+                                          _vm._v(
+                                            "\n                                            WhatsApp"
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                  ])
+                                }
+                              ),
+                              0
+                            ),
+                          ]
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane fade",
+                attrs: {
+                  id: "estado-credito-tab-content",
+                  role: "tabpanel",
+                  "aria-labelledby": "estado-credito-tab",
+                },
+              },
+              [
+                _c("div", { staticClass: "row mt-3" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "div",
+                      { staticClass: "table-responsive table-striped" },
+                      [
+                        _c(
+                          "table",
+                          {
+                            staticClass: "table table-striped table-bordered",
+                            staticStyle: { width: "100%" },
+                            attrs: { id: "sin_mora" },
+                          },
+                          [
+                            _vm._m(5),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(
+                                _vm.resumenmorosos.sin_mora,
+                                function (sin_mora, i) {
+                                  return _c("tr", { key: i }, [
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(i + 1) + "."),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(sin_mora.fecha_formateada)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(sin_mora.cliente)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(sin_mora.cel)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(sin_mora.fecha_cobro)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-right" }, [
+                                      _vm._v(
+                                        "L. " + _vm._s(sin_mora.cuota_mensual)
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticClass: "text-center" },
+                                      [
+                                        sin_mora.estado == "Pendiente"
+                                          ? [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-info",
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(sin_mora.estado)
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          : sin_mora.estado == "Cola"
+                                          ? [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-primary",
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(sin_mora.estado)
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          : sin_mora.estado == "Atrasado"
+                                          ? [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-danger",
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "spinner-grow spinner-grow-sm",
+                                                    attrs: {
+                                                      role: "status",
+                                                      "aria-hidden": "true",
+                                                    },
+                                                  }),
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(sin_mora.estado)
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          : sin_mora.estado == "Dia de cobro"
+                                          ? [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-warning",
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "spinner-border spinner-border-sm",
+                                                    attrs: {
+                                                      role: "status",
+                                                      "aria-hidden": "true",
+                                                    },
+                                                  }),
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(sin_mora.estado)
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          : [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-success",
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(sin_mora.estado)
+                                                  ),
+                                                ]
+                                              ),
+                                            ],
+                                      ],
+                                      2
+                                    ),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-xs btn-secondary",
+                                          attrs: { type: "button" },
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.estadoCredito(
+                                                sin_mora.idV
+                                              )
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-share",
+                                          }),
+                                          _vm._v(
+                                            "\n                                                    Cobrar"
+                                          ),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-xs btn-success",
+                                          attrs: { type: "button" },
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.mensaje(sin_mora.cel)
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-envelope",
+                                          }),
+                                          _vm._v(
+                                            "\n                                                    WhatsApp"
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                  ])
+                                }
+                              ),
+                              0
+                            ),
+                          ]
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]
+            ),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("modal-estado-credito-component", {
+        attrs: { estadoCreditoDatos: _vm.estadoCreditoDatos },
+        on: { actualizarVentas: _vm.actualizarVentas },
+      }),
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "jumbotron" }, [
+      _c("h1", { staticClass: "display-4 font-weight-bold" }, [
+        _c("i", { staticClass: "fa fa-money-bill" }),
+        _vm._v(" COBROS RESTANTES DEL MES"),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "callout callout-info" }, [
+          _c("h5", [
+            _c("strong", [
+              _c("i", { staticClass: "fa fa-info" }),
+              _vm._v(" Nota: "),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "Pantalla de información de clientes con pagos que no han sido cobrados del mes."
+            ),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "small-box-footer", attrs: { href: "/" } }, [
+      _c("i", { staticClass: "fas fa-arrow-circle-left" }),
+      _vm._v(" Regresar"),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("label", [_vm._v("Lista de Clientes")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      { staticClass: "nav nav-tabs mt-3", attrs: { role: "tablist" } },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active",
+              attrs: {
+                id: "morosos-tab",
+                "data-toggle": "tab",
+                href: "#morosos-tab-content",
+                role: "tab",
+                "aria-controls": "morosos-tab-content",
+                "aria-selected": "true",
+              },
+            },
+            [_vm._v("Morosos")]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "estado-credito-tab",
+                "data-toggle": "tab",
+                href: "#estado-credito-tab-content",
+                role: "tab",
+                "aria-controls": "estado-credito-tab-content",
+                "aria-selected": "false",
+              },
+            },
+            [_vm._v("Sin Mora")]
+          ),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-dark" }, [
+      _c("tr", [
+        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-left" }, [_vm._v("Venta")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-left" }, [_vm._v("Cliente")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-left" }, [_vm._v("Teléfono")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-left" }, [_vm._v("Fecha de Cobro")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Cobro Sugerido")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Estado")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-center" }, [_vm._v("Acciones")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-dark" }, [
+      _c("tr", [
+        _c("td", { staticClass: "text-left" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-left" }, [_vm._v("Venta")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-left" }, [_vm._v("Cliente")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-left" }, [_vm._v("TelÃ©fono")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-left" }, [_vm._v("Fecha de Cobro")]),
         _vm._v(" "),
         _c("td", { staticClass: "text-center" }, [_vm._v("Cobro Sugerido")]),
         _vm._v(" "),

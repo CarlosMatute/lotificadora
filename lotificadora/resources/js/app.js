@@ -24,6 +24,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 //Componentes del dashboard
 Vue.component('dashboard-component', require('./components/dashboard/dashboardComponent.vue').default);
 Vue.component('modal-cuotas-mes-component', require('./components/dashboard/modalCuotasMesComponent.vue').default);
+Vue.component('morosos-detalle-component', require('./components/dashboard/morososDetalleComponent.vue').default);
 //Componentes de modulo Residenciales
 Vue.component('residenciales-component', require('./components/registrarResidenciales/ResidencialesComponent.vue').default);
 Vue.component('modal-registrar-residencial-component', require('./components/registrarResidenciales/modalRegistrarResidencialComponent.vue').default);

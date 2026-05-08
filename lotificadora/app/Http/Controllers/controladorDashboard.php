@@ -219,7 +219,7 @@ class controladorDashboard extends Controller
         ), pagado as (
                 select coalesce(sum(cantidad_pago), 0) total_pagado from fechas_cobros where DATE_FORMAT(fecha_cobro,'%m-%Y') = DATE_FORMAT(now(),'%m-%Y') and estado = 'Pagado'
         )
-        select DATE_FORMAT(now(), '%M') mes_actual, FORMAT(total_cobrar,2) total_cobrar, FORMAT(total_pagado,2) total_pagado, FORMAT((total_cobrar - total_pagado),2) restante,
+        select month(now()) mes_actual_numero, year(now()) anio, DATE_FORMAT(now(), '%M') mes_actual, FORMAT(total_cobrar,2) total_cobrar, FORMAT(total_pagado,2) total_pagado, FORMAT((total_cobrar - total_pagado),2) restante,
         ROUND((total_pagado*100/total_cobrar), 1) porcentaje_cobrado
         from total 
         join pagado on true
@@ -248,7 +248,9 @@ class controladorDashboard extends Controller
             "totalCobrar"=>$movimientos->total_cobrar,
             "totalPagado"=>$movimientos->total_pagado,
             "totalRestante"=>$movimientos->restante,
-            "porcentajeCobrado"=>$movimientos->porcentaje_cobrado
+            "porcentajeCobrado"=>$movimientos->porcentaje_cobrado,
+            "mes_actual_numero"=>$movimientos->mes_actual_numero,
+            "anio"=>$movimientos->anio
         ];
 
         return $data;
@@ -335,23 +337,37 @@ class controladorDashboard extends Controller
         $anio = $id == 0 ? $anioActual->anio : $id;
         
  
-        $meses_anio_actual = DB::select("
-        with total as (
-            select DATE_FORMAT(fc.fecha_cobro,'%M') mes, coalesce(sum(CAST(replace(v.cuota_mensual, ',', '') AS UNSIGNED)), 0) total_cobrar from ventas v
-                right join fechas_cobros fc on v.id = fc.id_venta
-                where DATE_FORMAT(fc.fecha_cobro,'%Y') = ".$anio."
-                group by DATE_FORMAT(fc.fecha_cobro,'%M')
-                order by fc.fecha_cobro
-        ), pagado as (
-                select DATE_FORMAT(fecha_cobro,'%M') mes, coalesce(sum(cantidad_pago), 0) total_pagado from fechas_cobros where DATE_FORMAT(fecha_cobro,'%Y') = ".$anio." and estado = 'Pagado'
-                group by DATE_FORMAT(fecha_cobro,'%M')
-                order by fecha_cobro
-        )
-        select ".$anio." anio, t.mes, FORMAT(total_cobrar,2) total_cobrar, FORMAT(total_pagado,2) total_pagado, FORMAT((total_cobrar - total_pagado),2) restante,
-        ROUND((total_pagado*100/total_cobrar), 1) porcentaje_cobrado
-        from total t
-        join pagado p on t.mes = p.mes
-        ");
+        $meses_anio_actual = DB::select("WITH total AS (
+                SELECT 
+                    MONTH(fc.fecha_cobro) mes_num,
+                    DATE_FORMAT(fc.fecha_cobro,'%M') mes,
+                    SUM(CAST(REPLACE(v.cuota_mensual, ',', '') AS UNSIGNED)) total_cobrar
+                FROM ventas v
+                RIGHT JOIN fechas_cobros fc ON v.id = fc.id_venta
+                WHERE YEAR(fc.fecha_cobro) = $anio
+                GROUP BY mes_num, mes
+            ), 
+            pagado AS (
+                SELECT 
+                    MONTH(fecha_cobro) mes_num,
+                    DATE_FORMAT(fecha_cobro,'%M') mes,
+                    SUM(cantidad_pago) total_pagado
+                FROM fechas_cobros 
+                WHERE YEAR(fecha_cobro) = $anio
+                AND estado = 'Pagado'
+                GROUP BY mes_num, mes
+            )
+
+            SELECT 
+                $anio AS anio,
+                t.mes,
+                FORMAT(total_cobrar,2) total_cobrar,
+                FORMAT(total_pagado,2) total_pagado,
+                FORMAT((total_cobrar - total_pagado),2) restante,
+                ROUND((total_pagado*100/total_cobrar), 1) porcentaje_cobrado
+            FROM total t
+            JOIN pagado p ON t.mes_num = p.mes_num
+            ORDER BY t.mes_num;");
 
         return $meses_anio_actual;
     }
