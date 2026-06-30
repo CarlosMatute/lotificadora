@@ -109,6 +109,146 @@ class HomeController extends Controller
         return view('registrarResidenciales.detalleLoteVendido')->with('data', $data);
     }
 
+    public function resumen_financiero($id)
+    {
+        $residencial = \App\Models\Residenciale::find($id);
+
+        $resumen = collect(\DB::select("
+            SELECT
+                COUNT(DISTINCT v.id) total_ventas,
+                COUNT(DISTINCT CASE WHEN v.estado = 'Pagado' THEN v.id END) ventas_pagadas,
+                COUNT(DISTINCT CASE WHEN v.estado = 'Pendiente' THEN v.id END) ventas_pendientes,
+                COALESCE(SUM(CAST(REPLACE(v.total_contado, ',', '') AS DECIMAL(14,2))), 0) total_contado,
+                COALESCE(SUM(CAST(REPLACE(v.total_pagar, ',', '') AS DECIMAL(14,2))), 0) total_esperado,
+                COALESCE((
+                    SELECT SUM(CAST(REPLACE(fc2.cantidad_pago, ',', '') AS DECIMAL(14,2)))
+                    FROM fechas_cobros fc2
+                    WHERE fc2.estado = 'Pagado'
+                    AND fc2.id_venta IN (
+                        SELECT DISTINCT lv2.id_venta
+                        FROM lotes_vendidos lv2
+                        JOIN lotes l2 ON l2.id = lv2.id_lote
+                        JOIN bloques b2 ON b2.id = l2.id_bloque
+                        WHERE b2.id_residencial = ?
+                    )
+                ), 0) total_cobrado
+            FROM ventas v
+            WHERE v.id IN (
+                SELECT DISTINCT lv.id_venta
+                FROM lotes_vendidos lv
+                JOIN lotes l ON l.id = lv.id_lote
+                JOIN bloques b ON b.id = l.id_bloque
+                WHERE b.id_residencial = ?
+            )
+        ", [$id, $id]))->first();
+
+        $detalle = \DB::select("
+            SELECT
+                v.id id_venta,
+                CONCAT(c.primer_nombre, ' ', c.segundo_nombre, ' ', c.primer_apellido, ' ', c.segundo_apellido) cliente,
+                c.identidad,
+                c.cel,
+                v.pago,
+                v.estado,
+                CAST(REPLACE(v.total_contado, ',', '') AS DECIMAL(14,2)) total_contado,
+                CAST(REPLACE(v.total_pagar, ',', '') AS DECIMAL(14,2)) total_pagar,
+                CAST(REPLACE(v.cuota_mensual, ',', '') AS DECIMAL(14,2)) cuota_mensual,
+                v.cuotas,
+                v.anios_financiamiento,
+                v.tasa_interes,
+                DATE_FORMAT(v.created_at, '%d/%m/%Y') fecha_venta,
+                COALESCE((
+                    SELECT SUM(CAST(REPLACE(fc.cantidad_pago, ',', '') AS DECIMAL(14,2)))
+                    FROM fechas_cobros fc
+                    WHERE fc.id_venta = v.id AND fc.estado = 'Pagado'
+                ), 0) cobrado
+            FROM ventas v
+            JOIN clientes c ON c.id = v.id_cliente
+            WHERE v.id IN (
+                SELECT DISTINCT lv.id_venta
+                FROM lotes_vendidos lv
+                JOIN lotes l ON l.id = lv.id_lote
+                JOIN bloques b ON b.id = l.id_bloque
+                WHERE b.id_residencial = ?
+            )
+            ORDER BY v.created_at DESC
+        ", [$id]);
+
+        $lotesPorVenta = \DB::select("
+            SELECT lv.id_venta, GROUP_CONCAT(CONCAT('L-', l.nombre) SEPARATOR ', ') lotes
+            FROM lotes_vendidos lv
+            JOIN lotes l ON l.id = lv.id_lote
+            JOIN bloques b ON b.id = l.id_bloque
+            WHERE b.id_residencial = ?
+            GROUP BY lv.id_venta
+        ", [$id]);
+
+        $lotesMap = [];
+        foreach ($lotesPorVenta as $row) {
+            $lotesMap[$row->id_venta] = $row->lotes;
+        }
+
+        foreach ($detalle as $row) {
+            $row->lotes_texto = $lotesMap[$row->id_venta] ?? '';
+            $row->saldo = $row->pago == 'Credito'
+                ? $row->total_pagar - $row->cobrado
+                : ($row->estado == 'Pagado' ? 0 : $row->total_contado);
+        }
+
+        $data = [
+            'residencial' => $residencial,
+            'resumen' => $resumen,
+            'detalle' => $detalle
+        ];
+
+        return view('registrarResidenciales.resumenFinanciero')->with('data', $data);
+    }
+
+    public function detalle_venta($id)
+    {
+        $venta = collect(\DB::select("
+            SELECT v.*,
+                CONCAT(c.primer_nombre, ' ', c.segundo_nombre, ' ', c.primer_apellido, ' ', c.segundo_apellido) cliente,
+                c.identidad, c.cel, c.cel2, c.correo, c.direccion
+            FROM ventas v
+            JOIN clientes c ON c.id = v.id_cliente
+            WHERE v.id = ?
+        ", [$id]))->first();
+
+        $lotes = \DB::select("
+            SELECT l.nombre, l.precio, l.area, l.norte, l.sur, l.este, l.oeste,
+                b.nombre as bloque, r.nombre as residencial
+            FROM lotes_vendidos lv
+            JOIN lotes l ON l.id = lv.id_lote
+            JOIN bloques b ON b.id = l.id_bloque
+            JOIN residenciales r ON r.id = b.id_residencial
+            WHERE lv.id_venta = ?
+        ", [$id]);
+
+        $historialCuotas = \DB::select("
+            SELECT fc.id, fc.fecha_cobro, fc.fecha_pago,
+                CAST(REPLACE(fc.cantidad_pago, ',', '') AS DECIMAL(14,2)) cantidad_pago,
+                fc.estado estadoFC
+            FROM fechas_cobros fc
+            WHERE fc.id_venta = ?
+            ORDER BY fc.fecha_cobro
+        ", [$id]);
+
+        $totalCobrado = collect(\DB::select("
+            SELECT COALESCE(SUM(CAST(REPLACE(cantidad_pago, ',', '') AS DECIMAL(14,2))), 0) total
+            FROM fechas_cobros WHERE id_venta = ? AND estado = 'Pagado'
+        ", [$id]))->first()->total;
+
+        $data = [
+            'venta' => $venta,
+            'lotes' => $lotes,
+            'historialCuotas' => $historialCuotas,
+            'totalCobrado' => $totalCobrado
+        ];
+
+        return view('registrarResidenciales.detalleVentaFinanciero')->with('data', $data);
+    }
+
     public function detalle_morosos($anio, $mes)
     {
         DB::select("SET lc_time_names = 'es_MX';");

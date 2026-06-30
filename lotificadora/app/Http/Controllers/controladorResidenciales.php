@@ -39,13 +39,27 @@ class controladorResidenciales extends Controller
                             ->get();
            
 
+            $totalCobrado = collect(DB::select("
+                SELECT COALESCE(SUM(CAST(REPLACE(fc.cantidad_pago, ',', '') AS DECIMAL(12,2))), 0) as total
+                FROM fechas_cobros fc
+                WHERE fc.estado = 'Pagado'
+                AND fc.id_venta IN (
+                    SELECT DISTINCT lv.id_venta
+                    FROM lotes_vendidos lv
+                    JOIN lotes l ON l.id = lv.id_lote
+                    JOIN bloques b ON b.id = l.id_bloque
+                    WHERE b.id_residencial = ?
+                )
+            ", [$idResidencial]))->first()->total;
+
             $data[]=[
                 "nombre" => $res->nombre,
                 "descripcion" => $res->descripcion,
                 "imagen" => $res->imagen,
                 "bloques" => $bloques,
                 "lotes" => $lotes,
-                "idR" => $idResidencial
+                "idR" => $idResidencial,
+                "totalCobrado" => $totalCobrado
             ];
         }
         return $data;
@@ -148,6 +162,19 @@ class controladorResidenciales extends Controller
             
 
             $totalL = count($lotes);
+
+            $totalCobrado = collect(DB::select("
+                SELECT COALESCE(SUM(CAST(REPLACE(fc.cantidad_pago, ',', '') AS DECIMAL(12,2))), 0) as total
+                FROM fechas_cobros fc
+                WHERE fc.estado = 'Pagado'
+                AND fc.id_venta IN (
+                    SELECT DISTINCT lv.id_venta
+                    FROM lotes_vendidos lv
+                    JOIN lotes l ON l.id = lv.id_lote
+                    JOIN bloques b ON b.id = l.id_bloque
+                    WHERE b.id_residencial = ?
+                )
+            ", [$id]))->first()->total;
         
 
         $data[]=[
@@ -158,7 +185,8 @@ class controladorResidenciales extends Controller
             "idResidencial" => $id,
             "totalB" => $totalB,
             "totalL" => $totalL,
-            "lotesEnBloques" => $lotesDist
+            "lotesEnBloques" => $lotesDist,
+            "totalCobrado" => $totalCobrado
         ];
 
         return $data;

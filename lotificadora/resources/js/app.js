@@ -41,6 +41,8 @@ Vue.component('modal-alerta-eliminar-residencial-component', require('./componen
 Vue.component('modal-reservar-lote-component', require('./components/registrarResidenciales/modalReservarLoteComponent.vue').default);
 Vue.component('modal-reservacion-lote-component', require('./components/registrarResidenciales/modalReservacionLoteComponent.vue').default);
 Vue.component('resumen-venta-lote-vendido-component', require('./components/registrarResidenciales/resumenVentaLoteVendidoComponent.vue').default);
+Vue.component('resumen-financiero-component', require('./components/registrarResidenciales/resumenFinancieroComponent.vue').default);
+Vue.component('detalle-venta-financiero-component', require('./components/registrarResidenciales/detalleVentaFinancieroComponent.vue').default);
 //Componentes de modulo Clientes
 Vue.component('clientes-component', require('./components/registrarClientes/clientesComponent.vue').default);
 Vue.component('modal-registrar-cliente-component', require('./components/registrarClientes/modalRegistrarClienteComponent.vue').default);

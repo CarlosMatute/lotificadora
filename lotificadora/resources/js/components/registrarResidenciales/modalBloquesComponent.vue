@@ -20,6 +20,7 @@
                                     <h2><b>Residencial:</b> {{residencial.nombre}}</h2>
                                     <p class="card-text"> {{residencial.descripcion}}</p>
                                     <p class="card-text"> <b>Bloques:</b> {{residencial.totalB}} &nbsp;&nbsp; <b>Lotes:</b> {{residencial.totalL}} &nbsp;&nbsp; 
+                                    <b>Total Cobrado:</b> L. {{residencial.totalCobrado}} &nbsp;&nbsp;
                                     <b>Bloques con lotes:</b> <a v-for="(lotesEnBloques) in residencial.lotesEnBloques">{{lotesEnBloques.nombre}} </a></p>
                                </div>
                         </div>
@@ -43,6 +44,7 @@
                     
                     <div class="modal-footer bg-warning" v-for="(residencial) in verBloques">
                         <button type="button" class="btn btn-dark btn-sm" v-on:click="eliminarResidencial(residencial.idResidencial)">Eliminar Residencial</button>
+                        <a :href="'/residenciales/'+residencial.idResidencial+'/resumen-financiero'" class="btn btn-info btn-sm" target="_blank"><i class="fa fa-chart-bar"></i> Resumen Financiero</a>
                         <button type="button" class="btn btn-danger btn-sm" v-on:click="cerrarModal">Cerrar</button>
                         <button type="button" class="btn btn-primary btn-sm" v-on:click="modoEditar(residencial.idResidencial)">Editar Residencial</button>
                     </div>

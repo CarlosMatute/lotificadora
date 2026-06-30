@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <h5 class="card-title"><b>Residencial:</b> {{residencial.nombre}}</h5>
-                            <p class="card-text"><b>Bloques:</b> {{residencial.bloques.length}} &nbsp; <b>Lotes:</b> {{residencial.lotes.length}}</p>
+                            <p class="card-text"><b>Bloques:</b> {{residencial.bloques.length}} &nbsp; <b>Lotes:</b> {{residencial.lotes.length}} &nbsp; <b>Cobrado:</b> L. {{residencial.totalCobrado}}</p>
                         </div>
                         <div class="col-md-3">
                             <button type="button" data-toggle="modal" v-on:click="bloques(residencial.idR)" class="btn btn-sm btn-primary float-right align-self-stretch">Entrar</button>

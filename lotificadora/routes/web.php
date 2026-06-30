@@ -22,6 +22,8 @@ Route::resource('/lotes/apoyo/III', App\Http\Controllers\ControladorLotesApoyoII
 Route::resource('/bloque', App\Http\Controllers\controladorBloque::class);
 Route::get('/detalle_lote_vendido/{id_lote}', [App\Http\Controllers\HomeController::class, 'detalle_lote_vendido']);
 Route::get('/detalle_morosos/anio/{anio}/mes/{mes}', [App\Http\Controllers\HomeController::class, 'detalle_morosos']);
+Route::get('/residenciales/{id}/resumen-financiero', [App\Http\Controllers\HomeController::class, 'resumen_financiero']);
+Route::get('/residenciales/venta/{id}/detalle', [App\Http\Controllers\HomeController::class, 'detalle_venta']);
 //Clientes
 Route::get('/registrarClientes', [App\Http\Controllers\HomeController::class, 'registrar_clientes']);
 Route::resource('/clientes', App\Http\Controllers\controladorClientes::class);
